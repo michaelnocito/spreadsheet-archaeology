@@ -37,6 +37,20 @@
   <div id="job-screen" hidden>
     <main class="stage">
       <aside class="rail">
+        <!-- BRIEF first: stakeholder-style task brief, reads as the directive. -->
+        <section class="brief-card brief-job">
+          <div class="brief-eyebrow">📋 Task brief</div>
+          <h2 id="job-brief-title" class="brief-title">Cursed file</h2>
+          <div id="job-brief-stage" class="brief-stage">On the job</div>
+          <p id="task-prompt" class="brief-prompt"></p>
+          <div id="job-brief-checklist-wrap" hidden>
+            <div class="brief-sublabel">Your checklist</div>
+            <ol id="job-brief-checklist" class="brief-checklist"></ol>
+          </div>
+          <p class="file-line">📄 Open: <span id="filename" class="filename">—</span></p>
+          <div id="job-brief-tip" class="brief-tip" hidden></div>
+        </section>
+
         <section class="voice">
           <div class="voice-head">
             <span class="avatar">🫥</span>
@@ -46,12 +60,6 @@
             </div>
           </div>
           <div id="predecessor-body" class="voice-body mood-intro"></div>
-        </section>
-
-        <section class="task-card">
-          <h2>Your move</h2>
-          <p id="task-prompt" class="task-prompt"></p>
-          <p class="file-line">📄 Open: <span id="filename" class="filename">—</span></p>
         </section>
 
         <section class="help">

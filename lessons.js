@@ -53,8 +53,11 @@ const LESSONS = [
     concept: { name: "The grid" },
     teaches_for: "—",
 
+    best_practice:
+      "Before you touch a single cell, learn how to <i>read</i> what's in front of you. Every analyst habit downstream depends on this one.",
+
     mentor_intro:
-      "Hey — Sam. Welcome to the team. Day one is the foundation: <b>how to read a spreadsheet</b>. Sounds like nothing. It's the thing every other lesson stands on. Five minutes. Let's go.",
+      "Hey — Sam. Welcome to the team. We start with the foundation: <b>how to read a spreadsheet</b>. Sounds like nothing. It's the thing every other module stands on. Five minutes. Let's go.",
 
     teach: {
       explain:
@@ -76,8 +79,14 @@ const LESSONS = [
       {
         mode: "guided",
         kind: "select_cell",
-        prompt: "Your turn — click cell <b>C2</b>. I've highlighted it so you can see it.",
+        prompt: "Click cell <b>C2</b>. I've highlighted it so you can see it.",
         hint: "Column C is the third column from the left. Row 2.",
+        checklist: [
+          "Find column <b>C</b> (third column across the top)",
+          "Find row <b>2</b> (down the left side)",
+          "Click where they meet",
+          "Hit <b>Confirm</b>"
+        ],
         artifact: {
           kind: "sheet",
           highlight_cell: "C2",
@@ -96,6 +105,12 @@ const LESSONS = [
         kind: "select_cell",
         prompt: "No highlight this time. Click cell <b>D3</b>.",
         hint: "D is the fourth column. Row 3.",
+        checklist: [
+          "Find column <b>D</b>",
+          "Find row <b>3</b>",
+          "Click where they meet",
+          "Hit <b>Confirm</b>"
+        ],
         artifact: {
           kind: "sheet",
           rows: [
@@ -106,12 +121,12 @@ const LESSONS = [
           ]
         },
         success_check: "selected_cell == 'D3'",
-        praise: "D3 — cold, no hints. You can read a cell address now. Every other lesson rides on this."
+        praise: "D3 — cold, no hints. You can read a cell address now. Every other module rides on this."
       }
     ],
 
     mentor_outro:
-      "That's it. You can read a sheet now — column letter + row number, any cell, anywhere. Tomorrow: figuring out which row actually <i>matters</i>."
+      "That's it. You can read a sheet now — column letter + row number, any cell, anywhere. Next: figuring out which row actually <i>matters</i>."
   },
   {
     id: "header_row",
@@ -120,8 +135,11 @@ const LESSONS = [
     concept: { name: "Find the real header row" },
     teaches_for: "orient_header", // → Job Wave 1
 
+    best_practice:
+      "Never assume row 1 is the header. <b>Verify before you edit</b> — every analyst gets burned by this once. Once is enough.",
+
     mentor_intro:
-      "Morning! Day two. Before you ever <i>clean</i> a file, you have to <i>read</i> it — and step one is finding the <b>header row</b>: the single row where every cell is a column's name. Sounds obvious. It's the #1 thing people get wrong, because row 1 is usually a title, a logo, or just… nothing.",
+      "Morning. Before you ever <i>clean</i> a file, you have to <i>read</i> it — and step one is finding the <b>header row</b>: the single row where every cell is a column's name. Sounds obvious. It's the #1 thing people get wrong, because row 1 is usually a title, a logo, or just… nothing.",
 
     teach: {
       explain:
@@ -146,8 +164,15 @@ const LESSONS = [
       {
         mode: "guided",
         kind: "select_row",
-        prompt: "Your turn — with a hand. Click the <b>header row</b>. I've highlighted it so you can see the shape.",
+        prompt: "Click the <b>header row</b>. I've highlighted it so you can see the shape.",
         hint: "Skip the title banner and the blank row. Find where the column names start.",
+        checklist: [
+          "Scan the file top to bottom",
+          "Skip any title banner (usually row 1)",
+          "Skip any blank rows",
+          "Find the first row where <i>every</i> cell is a column name",
+          "Click that row's number on the left, then <b>Confirm</b>"
+        ],
         artifact: {
           kind: "sheet",
           merged_title_row: 1,
@@ -170,6 +195,13 @@ const LESSONS = [
         kind: "select_row",
         prompt: "No highlight this time. Find the <b>header row</b> on your own.",
         hint: "Same idea — logo, blanks, then the row of column names.",
+        checklist: [
+          "Scan the file top to bottom",
+          "Skip the logo / title banner",
+          "Skip blank rows",
+          "Find the row of column names",
+          "Click its row number, then <b>Confirm</b>"
+        ],
         artifact: {
           kind: "sheet",
           merged_title_row: 1,

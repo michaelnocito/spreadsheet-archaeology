@@ -119,11 +119,72 @@ body {
   padding: 1px 7px; border-radius: 999px; margin-left: 6px; vertical-align: middle;
 }
 
-.task-card { padding: 16px; }
-.task-card h2 { margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--dim); }
-.task-prompt { margin: 0 0 10px; font-size: 15px; }
-.task-prompt b { color: var(--accent-d); }
-.file-line { margin: 0; font-size: 13px; color: var(--dim); }
+/* ---- Task brief (the directive card — pops as the primary guidance) ----- */
+.brief-card {
+  background: #ffffff;
+  border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: var(--shadow);
+  border-left: 5px solid var(--accent);
+  padding: 16px 18px 14px;
+}
+.brief-card.brief-job { border-left-color: #6639ba; }
+.brief-eyebrow {
+  font-size: 10.5px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-d); margin-bottom: 6px;
+}
+.brief-card.brief-job .brief-eyebrow { color: #6639ba; }
+.brief-title {
+  margin: 0 0 4px; font-size: 18px; line-height: 1.25; color: var(--ink);
+}
+.brief-stage {
+  display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--accent-d); background: #eef4ff; border: 1px solid #d4e1ff;
+  padding: 3px 9px; border-radius: 999px; margin-bottom: 10px;
+}
+.brief-card.brief-job .brief-stage {
+  color: #6639ba; background: #f3eefb; border-color: #ddccf3;
+}
+.brief-prompt {
+  margin: 0 0 12px; font-size: 14.5px; line-height: 1.5; color: var(--ink);
+}
+.brief-prompt b { color: var(--accent-d); }
+.brief-sublabel {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 6px;
+}
+.brief-checklist {
+  list-style: none; counter-reset: brief-step; padding: 0; margin: 0 0 12px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.brief-checklist li {
+  counter-increment: brief-step;
+  position: relative; padding: 7px 10px 7px 34px;
+  font-size: 13.5px; line-height: 1.45; color: #2b3240;
+  background: #f7faff; border: 1px solid #dde6f5; border-radius: 8px;
+}
+.brief-checklist li::before {
+  content: counter(brief-step);
+  position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-size: 11px; font-weight: 700;
+}
+.brief-card.brief-job .brief-checklist li {
+  background: #f9f5ff; border-color: #e7dcf6;
+}
+.brief-card.brief-job .brief-checklist li::before { background: #6639ba; }
+.brief-tip {
+  margin: 10px 0 0; padding: 9px 11px; border-radius: 8px;
+  background: #fbf7ec; border: 1px solid #e3d7a5; color: #3b2f10;
+  font-size: 13px; line-height: 1.45;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.tip-icon { flex: 0 0 auto; font-size: 14px; line-height: 1.45; }
+.tip-body { flex: 1 1 auto; min-width: 0; }
+.tip-label { font-weight: 700; color: var(--warm); margin-right: 2px; }
+.file-line { margin: 8px 0 0; font-size: 13px; color: var(--dim); }
 .filename { font-family: "Consolas", ui-monospace, monospace; color: var(--ink); }
 
 .help { padding: 14px 16px; }
@@ -444,8 +505,11 @@ body {
 /* ---- Responsive ----------------------------------------------------------- */
 @media (max-width: 880px) {
   .stage { grid-template-columns: 1fr; }
-  .rail { position: static; order: 2; }
-  .work { order: 1; }
+  /* Reading order on narrow screens: directive (rail) FIRST, then work surface.
+     The brief is now at the top of the rail, so this puts the brief at the
+     literal top of the page — "what to do" before "the file." */
+  .rail { position: static; order: 1; }
+  .work { order: 2; }
   .orient { gap: 10px; }
   .brand-text .sub { display: none; }
   .syl-stack { gap: 10px; }

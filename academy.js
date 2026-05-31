@@ -46,17 +46,24 @@
     $(SCREEN).innerHTML = `
       <main class="stage">
         <aside class="rail">
+          <!-- BRIEF first: it's the directive. Reads top-down before voice + work. -->
+          <section class="brief-card">
+            <div class="brief-eyebrow">📋 Task brief</div>
+            <h2 id="a-brief-title" class="brief-title">Module</h2>
+            <div id="a-brief-stage" class="brief-stage"></div>
+            <p id="a-prompt" class="brief-prompt"></p>
+            <div id="a-brief-checklist-wrap" hidden>
+              <div class="brief-sublabel">Your checklist</div>
+              <ol id="a-brief-checklist" class="brief-checklist"></ol>
+            </div>
+            <div id="a-brief-tip" class="brief-tip" hidden></div>
+          </section>
           <section class="voice">
             <div class="voice-head">
               <span class="avatar">${MENTOR.avatar}</span>
               <div><strong>${MENTOR.name}</strong><span class="role">${MENTOR.role}</span></div>
             </div>
             <div id="a-voice" class="voice-body mood-mentor"></div>
-          </section>
-          <section class="task-card">
-            <h2 id="a-stage-label">Module</h2>
-            <p id="a-prompt" class="task-prompt"></p>
-            <p class="file-line">🎓 <span id="a-daylabel"></span></p>
           </section>
           <section class="help" id="a-help" hidden>
             <button id="a-help-btn" class="help-btn">🙋 Need a hand?</button>
@@ -97,7 +104,30 @@
       dot.className = "dot" + (d.day < lesson.day ? " done" : d.day === lesson.day ? " active" : "");
       wrap.appendChild(dot);
     });
-    $("#a-daylabel").textContent = `Module ${lesson.day} — ${lesson.concept.name}`;
+    $("#a-brief-title").textContent = `Module ${lesson.day} · ${lesson.concept.name}`;
+    // Best-practice tip is a per-lesson constant — render once when the lesson loads.
+    if (lesson.best_practice) {
+      $("#a-brief-tip").innerHTML = `<span class="tip-icon">💡</span><span class="tip-body"><span class="tip-label">Pro tip:</span> ${lesson.best_practice}</span>`;
+      $("#a-brief-tip").hidden = false;
+    } else {
+      $("#a-brief-tip").hidden = true;
+    }
+  }
+
+  // Set the brief's stage-specific contents: subhead, prompt, optional checklist.
+  function setBrief(stage, opts) {
+    opts = opts || {};
+    $("#a-brief-stage").textContent = stage || "";
+    $("#a-prompt").innerHTML = opts.prompt || "";
+    const wrap = $("#a-brief-checklist-wrap");
+    if (opts.checklist && opts.checklist.length) {
+      $("#a-brief-checklist").innerHTML = opts.checklist
+        .map((c) => `<li>${c}</li>`).join("");
+      wrap.hidden = false;
+    } else {
+      $("#a-brief-checklist").innerHTML = "";
+      wrap.hidden = true;
+    }
   }
 
   const currentRep = () => lesson.practice[repIndex];
@@ -152,8 +182,9 @@
 
     if (stage === "intro") {
       voice(lesson.mentor_intro);
-      label("Module " + lesson.day, lesson.concept.name);
-      $("#a-prompt").innerHTML = "";
+      setBrief("Intro — listen to Sam", {
+        prompt: "Sam will introduce this module. When you're ready, click <b>Show me</b> to see the worked example."
+      });
       $("#a-sheet").innerHTML = "";
       workHint("");
       primary("Show me →");
@@ -162,8 +193,14 @@
 
     if (stage === "teach") {
       voice(lesson.teach.explain);
-      label("Watch — worked example", "I do");
-      $("#a-prompt").innerHTML = "Sam's walking through a quick example. Just watch.";
+      setBrief("Watch — worked example", {
+        prompt: "Sam's walking through a clean example. Just watch and follow what they're pointing at.",
+        checklist: [
+          "Read Sam's explanation",
+          "Notice what's highlighted in the file below",
+          "When it makes sense, click <b>Got it</b>"
+        ]
+      });
       SACore.renderSheet($("#a-sheet"), lesson.teach.example, {
         highlightRow: lesson.teach.example.highlight_row,
         highlightCell: lesson.teach.example.highlight_cell,
@@ -183,8 +220,10 @@
       voice(guided
         ? "Go ahead — I'll leave the answer highlighted and a hint up while you get the feel."
         : "Now without the training wheels. Take your time. Backup's right there if you want it.");
-      label(guided ? "Try it — guided" : "Try it — solo", guided ? "We do" : "You do");
-      $("#a-prompt").innerHTML = rep.prompt;
+      setBrief(guided ? "Try it — guided (we do)" : "Try it — solo (you do)", {
+        prompt: rep.prompt,
+        checklist: rep.checklist
+      });
 
       if (kind === "select_cell") {
         SACore.renderSheet($("#a-sheet"), rep.artifact, {
@@ -230,10 +269,11 @@
     if (stage === "outro") {
       const hasNextLesson = lessonIdx + 1 < LESSONS.length;
       voice(lesson.mentor_outro);
-      label("Module complete", "✓");
-      $("#a-prompt").innerHTML = hasNextLesson
-        ? "Skill banked. One more before we open the cursed drive."
-        : "You've got the skill. Time to use it for real.";
+      setBrief("Module complete ✓", {
+        prompt: hasNextLesson
+          ? "Skill banked. One more before we open the cursed drive."
+          : "You've got the skill. Time to use it for real."
+      });
       $("#a-sheet").innerHTML = "";
       workHint("");
       feedback("🎓 Skill learned: " + lesson.concept.name, "good");
@@ -298,9 +338,6 @@
 
   // ----- Small helpers --------------------------------------------------------
   function voice(html) { const v = $("#a-voice"); v.innerHTML = html; }
-  function label(main, tag) {
-    $("#a-stage-label").innerHTML = `${main} <span class="stage-tag">${tag}</span>`;
-  }
   function workHint(t) { $("#a-work-hint").textContent = t; }
   function primary(text, enabled) {
     const b = $("#a-primary");

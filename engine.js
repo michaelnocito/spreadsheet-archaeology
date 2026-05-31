@@ -32,9 +32,24 @@
 
     setOrientation();
     renderPredecessor(WAVE.scenario.intro, "intro");
+    $("#job-brief-title").textContent = `File ${state.index + 1} · ${WAVE.concept.name}`;
+    $("#job-brief-stage").textContent = "On the job — apply what you learned";
     $("#task-prompt").innerHTML = WAVE.task.prompt;
     $("#filename").textContent = WAVE.artifact ? WAVE.artifact.title : "";
     $(".tab-name").textContent = WAVE.artifact ? WAVE.artifact.title : "";
+    const checklist = WAVE.task && WAVE.task.checklist;
+    if (checklist && checklist.length) {
+      $("#job-brief-checklist").innerHTML = checklist.map((c) => `<li>${c}</li>`).join("");
+      $("#job-brief-checklist-wrap").hidden = false;
+    } else {
+      $("#job-brief-checklist-wrap").hidden = true;
+    }
+    if (WAVE.best_practice) {
+      $("#job-brief-tip").innerHTML = `<span class="tip-icon">💡</span><span class="tip-body"><span class="tip-label">Pro tip:</span> ${WAVE.best_practice}</span>`;
+      $("#job-brief-tip").hidden = false;
+    } else {
+      $("#job-brief-tip").hidden = true;
+    }
     renderArtifact();
     renderHelp();
     clearFeedback();

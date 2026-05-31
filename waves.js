@@ -67,10 +67,20 @@ const WAVES = [
       ]
     },
 
+    best_practice:
+      "<b>Orient before you touch.</b> On a real file, this 30-second scan saves hours of debugging later.",
+
     task: {
       kind: "select_row",
       prompt:
         "Row 1 is a merged title cell. Rows 2–3 are blank. Click the row number where the <b>real data labels</b> begin — before you touch a single cell.",
+      checklist: [
+        "Open the file but <b>don't edit yet</b>",
+        "Scan top to bottom — note the title banner and blank rows",
+        "Find the first row where every cell names a column",
+        "Click that row's number, then <b>Confirm</b>",
+        "Only <i>now</i> are you allowed to touch the data"
+      ],
       success_check: "selected_header_row == 4",
       fail_check: "selected_header_row == 1"
     },
