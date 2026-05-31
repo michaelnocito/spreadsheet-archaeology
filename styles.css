@@ -158,6 +158,46 @@ body {
 .tab-name { font-family: "Consolas", ui-monospace, monospace; font-weight: 500; }
 .hint-muted { font-size: 12px; color: var(--dim); }
 
+/* ---- Module stepper (lesson-arc "where you've been / are / going") ------ */
+.stepper {
+  list-style: none; margin: 0 0 14px; padding: 0;
+  display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
+}
+.stepper .step {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px 5px 6px; border-radius: 999px;
+  font-size: 12px; color: var(--dim);
+  background: #f3f5f8; border: 1px solid var(--line);
+  position: relative;
+}
+.stepper .step:not(:last-child)::after {
+  content: ""; display: inline-block; width: 8px; height: 1px;
+  background: var(--line); margin-left: 4px; margin-right: -8px;
+}
+.stepper .step-num {
+  display: inline-grid; place-items: center;
+  width: 18px; height: 18px; border-radius: 50%;
+  font-size: 11px; font-weight: 700;
+  background: #ffffff; color: var(--dim); border: 1px solid var(--line);
+}
+.stepper .step-label { font-weight: 500; }
+
+.stepper .step.is-active {
+  background: #eef4ff; border-color: #b6c8ee; color: var(--accent-d);
+}
+.stepper .step.is-active .step-num {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+  box-shadow: 0 0 0 3px #d8e4ff;
+}
+.stepper .step.is-active .step-label { font-weight: 700; }
+
+.stepper .step.is-done {
+  background: var(--good-bg); border-color: #bfe5ca; color: var(--good);
+}
+.stepper .step.is-done .step-num {
+  background: var(--good); color: #fff; border-color: var(--good);
+}
+
 .sheet { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
 .sheet.locked { opacity: .85; pointer-events: none; }
 
@@ -277,11 +317,15 @@ body {
   margin: 0 0 12px;
 }
 .syl-note { text-transform: none; letter-spacing: 0; color: var(--dim); font-weight: 400; font-size: 12px; margin-left: 6px; }
-.syl-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-.syl-week {
-  background: #f7f9fc; border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px;
+.syl-stack { display: flex; flex-direction: column; gap: 14px; }
+.syl-section {
+  background: #f7f9fc; border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px;
 }
-.syl-week h4 { margin: 0 0 8px; font-size: 13px; color: var(--accent-d); }
+.syl-section h4 {
+  margin: 0 0 10px; font-size: 13px; color: var(--accent-d);
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+.syl-progress { font-size: 11px; color: var(--dim); font-weight: 500; }
 .syl-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .syl-item {
   display: flex; align-items: center; gap: 8px;
@@ -353,7 +397,7 @@ body {
   .work { order: 1; }
   .orient { gap: 10px; }
   .brand-text .sub { display: none; }
-  .syl-grid { grid-template-columns: 1fr; }
+  .syl-stack { gap: 10px; }
   .curriculum-drawer { width: 100%; }
   .welcome-card { padding: 20px 18px; }
   .welcome-title h1 { font-size: 20px; }

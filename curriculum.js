@@ -66,12 +66,12 @@
       </div>
 
       <div class="cur-section">
-        <h4>🎓 The Academy <span class="cur-count" id="cur-count-academy"></span></h4>
+        <h4>🎓 Onboarding packet <span class="cur-count" id="cur-count-academy"></span></h4>
         <ol id="cur-lesson-list" class="cur-list"></ol>
       </div>
 
       <div class="cur-section">
-        <h4>💼 On the Job <span class="cur-count" id="cur-count-waves"></span></h4>
+        <h4>💼 On the job <span class="cur-count" id="cur-count-waves"></span></h4>
         <ol id="cur-wave-list" class="cur-list"></ol>
       </div>
     `;
@@ -106,7 +106,7 @@
       return `<li class="cur-item ${built ? "is-built" : "is-locked"}"
                   data-kind="lesson" data-idx="${idx}">
         <span class="cur-icon">${built ? "✅" : "🔒"}</span>
-        <span class="cur-week">W${d.week} D${d.day}</span>
+        <span class="cur-week">M${d.day}</span>
         <span class="cur-name">${d.name}</span>
       </li>`;
     }).join("");

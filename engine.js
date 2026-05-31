@@ -56,7 +56,7 @@
       d.className = "dot" + (i < state.index ? " done" : i === state.index ? " active" : "");
       wrap.appendChild(d);
     }
-    $("#wave-count").textContent = `Week One · File ${state.index + 1} of ${dots}`;
+    $("#wave-count").textContent = `File ${state.index + 1} of ${dots}`;
   }
 
   function renderPredecessor(text, mood) {

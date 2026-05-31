@@ -52,7 +52,7 @@
             <div id="a-voice" class="voice-body mood-mentor"></div>
           </section>
           <section class="task-card">
-            <h2 id="a-stage-label">Lesson</h2>
+            <h2 id="a-stage-label">Module</h2>
             <p id="a-prompt" class="task-prompt"></p>
             <p class="file-line">🎓 <span id="a-daylabel"></span></p>
           </section>
@@ -66,6 +66,7 @@
             <span class="tab">🎓 <span class="tab-name">Training file</span></span>
             <span id="a-work-hint" class="hint-muted"></span>
           </div>
+          <ol id="a-stepper" class="stepper" aria-label="Module progress"></ol>
           <div id="a-sheet" class="sheet"></div>
           <div id="a-feedback" class="feedback" hidden></div>
           <div class="action-row"><button id="a-primary" class="primary"></button></div>
@@ -83,10 +84,10 @@
   }
 
   function setOrientation() {
-    $("#phase-chip").textContent = "ACADEMY";
+    $("#phase-chip").textContent = "ONBOARDING";
     $("#phase-chip").className = "phase-chip phase-academy";
     $("#habit").textContent = lesson.concept.name;
-    $("#wave-count").textContent = `Week ${lesson.week} · Day ${lesson.day}`;
+    $("#wave-count").textContent = `Module ${lesson.day} of ${ACADEMY_PLAN.length}`;
     const wrap = $("#progress");
     wrap.innerHTML = "";
     ACADEMY_PLAN.forEach((d) => {
@@ -94,10 +95,44 @@
       dot.className = "dot" + (d.day < lesson.day ? " done" : d.day === lesson.day ? " active" : "");
       wrap.appendChild(dot);
     });
-    $("#a-daylabel").textContent = `Week ${lesson.week}, Day ${lesson.day} — ${lesson.concept.name}`;
+    $("#a-daylabel").textContent = `Module ${lesson.day} — ${lesson.concept.name}`;
   }
 
   const currentRep = () => lesson.practice[repIndex];
+
+  // ----- Lesson-arc stepper (where you've been / are / going) ----------------
+  // Data-driven: works for any lesson regardless of how many practice reps it has.
+  function lessonSteps() {
+    return [
+      { key: "intro", label: "Intro" },
+      { key: "teach", label: "Watch" },
+      ...lesson.practice.map((p, i) => ({
+        key: "p" + i,
+        label: p.mode === "guided" ? "Try (guided)" : "Try (solo)"
+      })),
+      { key: "done", label: "Done" }
+    ];
+  }
+
+  function currentStepIndex() {
+    if (stage === "intro") return 0;
+    if (stage === "teach") return 1;
+    if (stage === "practice" || stage === "practice-advance") return 2 + repIndex;
+    return 2 + lesson.practice.length; // outro-advance or outro
+  }
+
+  function renderStepper() {
+    const list = lessonSteps();
+    const cur = currentStepIndex();
+    $("#a-stepper").innerHTML = list.map((s, i) => {
+      const cls = i < cur ? "step is-done" : i === cur ? "step is-active" : "step";
+      const icon = i < cur ? "✓" : String(i + 1);
+      return `<li class="${cls}" aria-current="${i === cur ? "step" : "false"}">
+        <span class="step-num">${icon}</span>
+        <span class="step-label">${s.label}</span>
+      </li>`;
+    }).join("");
+  }
 
   // ----- Render the active stage ---------------------------------------------
   function render() {
@@ -105,11 +140,12 @@
     $("#a-sheet").classList.remove("locked");
     $("#a-help").hidden = true;
     helpShown = false;
+    renderStepper();
 
     if (stage === "intro") {
       voice(lesson.mentor_intro);
-      label("Lesson", "Day " + lesson.day);
-      $("#a-prompt").innerHTML = "Sam's about to show you how this works. No pressure — just watch first.";
+      label("Module " + lesson.day, lesson.concept.name);
+      $("#a-prompt").innerHTML = "";
       $("#a-sheet").innerHTML = "";
       workHint("");
       primary("Show me →");

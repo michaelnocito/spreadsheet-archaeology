@@ -17,22 +17,21 @@
   "use strict";
 
   function render(host, opts) {
-    const planByWeek = {};
-    ACADEMY_PLAN.forEach((d) => {
-      (planByWeek[d.week] = planByWeek[d.week] || []).push(d);
-    });
-
-    const weekHtml = (n, days) => `
-      <div class="syl-week">
-        <h4>Week ${n}</h4>
+    const lessonsHtml = `
+      <div class="syl-section">
+        <h4>🎓 Onboarding packet
+          <span class="syl-progress">${ACADEMY_PLAN.filter(d=>d.built).length}/${ACADEMY_PLAN.length} built</span>
+        </h4>
         <ol class="syl-list">
-          ${days.map((d) => syllabusItem("lesson", d)).join("")}
+          ${ACADEMY_PLAN.map((d) => syllabusItem("lesson", d)).join("")}
         </ol>
       </div>`;
 
     const wavesHtml = `
-      <div class="syl-week">
-        <h4>On the Job</h4>
+      <div class="syl-section">
+        <h4>💼 On the job
+          <span class="syl-progress">${WAVES.length}/5 built</span>
+        </h4>
         <ol class="syl-list">
           ${WAVES.map((w, i) => syllabusItem("wave", {
             day: i + 1, name: w.concept.name, built: true, idx: i
@@ -63,16 +62,15 @@
           </div>
 
           <div class="syllabus">
-            <h3>Your training plan <span class="syl-note">(${ACADEMY_PLAN.filter(d=>d.built).length}/${ACADEMY_PLAN.length} academy days · ${WAVES.length}/5 job waves built — live beta)</span></h3>
-            <div class="syl-grid">
-              ${weekHtml(1, planByWeek[1] || [])}
-              ${weekHtml(2, planByWeek[2] || [])}
+            <h3>Your training path <span class="syl-note">(live beta — build in progress)</span></h3>
+            <div class="syl-stack">
+              ${lessonsHtml}
               ${wavesHtml}
             </div>
           </div>
 
           <div class="welcome-cta">
-            <button id="welcome-start" class="primary primary-xl">Start Day 1 →</button>
+            <button id="welcome-start" class="primary primary-xl">Start Module 1 →</button>
             <p class="welcome-foot">Tip: the <b>📋 Curriculum</b> button up top lets you jump to any built lesson or wave anytime. It's live beta — feel free to explore.</p>
           </div>
         </div>
@@ -103,7 +101,7 @@
     const clickable = item.built && idx >= 0;
     const cls = "syl-item" + (clickable ? " is-built" : " is-locked");
     const icon = clickable ? "✅" : "🔒";
-    const label = type === "lesson" ? `Day ${item.day} — ${item.name}` : `Wave ${item.day} — ${item.name}`;
+    const label = type === "lesson" ? `Module ${item.day} — ${item.name}` : `Wave ${item.day} — ${item.name}`;
     return `<li class="${cls}" data-type="${type}" data-idx="${idx}">
       <span class="syl-icon">${icon}</span><span class="syl-label">${label}</span>
     </li>`;
