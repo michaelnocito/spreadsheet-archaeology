@@ -18,8 +18,11 @@
  *   callbacks      [] ids of earlier concepts this wave makes you reuse
  *   scenario       { intro (Predecessor voice), artifact_ref }
  *   artifact       { kind:"sheet", title, rows[][], merged_title_row, blank_rows[] }
- *   task           { kind, directive, prompt, success_check, fail_check }
+ *   task           { kind, directive, prompt, success_check, fail_check, status? }
  *                  directive = crisp brief headline ("do this"); prompt = context
+ *                  kind: "select_row" | "select_column" | "select_cell"
+ *                  status = {win,fail,miss} small inline pills (Predecessor voice
+ *                  carries the real narrative); engine falls back to generic text
  *   help           { tier1, tier2, tier3 }   <- pull-only, revealed one at a time
  *   feedback       { win, fail, miss? }       <- miss = chosen, but neither win nor the named blunder
  *   sets_up        [] ids of concepts this wave foreshadows
@@ -84,7 +87,12 @@ const WAVES = [
         "Only <i>now</i> are you allowed to touch the data"
       ],
       success_check: "selected_header_row == 4",
-      fail_check: "selected_header_row == 1"
+      fail_check: "selected_header_row == 1",
+      status: {
+        win: "✅ Right call. You oriented before you touched anything.",
+        fail: "Not the headers — but now you know why. Try again.",
+        miss: "Not quite. Look for the row of column names."
+      }
     },
 
     help: {
@@ -103,6 +111,86 @@ const WAVES = [
     },
 
     sets_up: ["type_integrity"]
+  },
+
+  /* ------------------------------------------------------------------------
+   * WAVE 2 — Type integrity (applies Academy M3 "Data types" + M4 "Numbers
+   * stored as text" under the Predecessor's mess).
+   * Interaction: select_column. The Revenue column LOOKS numeric but every
+   * cell is stored as text (green corner flag via artifact.marker_cells) — so
+   * the Predecessor's SUM came back 0 and they hand-typed the total. The named
+   * blunder (fail_check) = blaming Units, a column that's actually fine.
+   * ---------------------------------------------------------------------- */
+  {
+    wave_id: 2,
+    concept: { id: "type_integrity", name: "Trust your number columns", prereqs: ["orient_header"] },
+    callbacks: ["orient_header"], // headers are pushed down again — orient first
+
+    scenario: {
+      intro:
+        "File two. The Q3 revenue sheet — the one finance keeps asking about. Confession: I built a SUM at the bottom of the Revenue column and it kept coming back <b>0</b>. Zero! So I just… typed the total in by hand and moved on. Worked fine for the board deck. Anyway — one of these number columns isn't behaving. Bet you can't tell which.",
+      artifact_ref: "sheet_02.json"
+    },
+
+    // Cursed file. Title banner row 1, headers row 2, data rows 3-8.
+    // Revenue (col D) is stored as TEXT — flagged with the green corner marker.
+    // Revenue == Units × Unit price, so the values look perfectly legit.
+    artifact: {
+      kind: "sheet",
+      title: "Q3_revenue_DONOTSEND_v4.xlsx",
+      merged_title_row: 1,
+      marker_cells: ["D3", "D4", "D5", "D6", "D7", "D8"],
+      rows: [
+        ["Q3 REVENUE — numbers are FINE, I checked (mostly) 💸", "", "", ""],
+        ["Account",   "Units", "Unit price", "Revenue"],
+        ["ACME-01",   "120",   "45.00",      "5400.00"],
+        ["GLOBEX-2",  "340",   "12.50",      "4250.00"],
+        ["INITECH",   "58",    "30.00",      "1740.00"],
+        ["UMBRELLA",  "76",    "19.95",      "1516.20"],
+        ["SOYLENT",   "210",   "8.00",       "1680.00"],
+        ["HOOLI-X",   "95",    "22.40",      "2128.00"]
+      ]
+    },
+
+    best_practice:
+      "Before you trust a total, confirm the column is actually <b>numeric</b>. Text-numbers (the green corner flag) silently break <code>SUM</code>, sorting, and charts — convert them <i>before</i> you report a single figure.",
+
+    task: {
+      kind: "select_column",
+      directive: "Click the column whose numbers are secretly <b>stored as text</b>.",
+      prompt:
+        "One of these columns looks like clean money but won't <code>SUM</code>. Find the one Excel is quietly treating as text — that's why the total came back zero.",
+      checklist: [
+        "Orient first — the real headers are in row 2",
+        "Scan the columns that look numeric",
+        "Spot the cells wearing a <b>green corner flag</b>",
+        "That's the column Excel can't add up — click its letter, then <b>Confirm</b>"
+      ],
+      success_check: "selected_column == 'D'",
+      fail_check: "selected_column == 'B'",
+      status: {
+        win: "✅ Found it — the column that won't add up.",
+        fail: "Not that one — Units is already numeric. Look again.",
+        miss: "Not quite. Hunt for the green-flagged column, or ask for backup."
+      }
+    },
+
+    help: {
+      tier1: "A column that won't <code>SUM</code> is usually text wearing a number costume. Which one looks numeric but isn't behaving?",
+      tier2: "Excel flags it for you — a tiny <b>green triangle</b> in the corner of each cell means \"stored as text.\" Find the column wearing those.",
+      tier3: "Look at <b>Revenue</b> (column D): every cell has a green corner flag. That's text, not numbers — <code>SUM</code> ignores it and returns 0. Click column D."
+    },
+
+    feedback: {
+      win:
+        "…Column D. Yeah. Excel was storing those as <i>text</i> — that's why my SUM kept spitting out zero and I 'fixed' it by typing the total in by hand. You found in ten seconds what cost me a quarter of wrong numbers in front of finance. Okay. You're better at this than I was. Next file.",
+      fail:
+        "Units? I blamed Units too — reformatted the whole column, felt productive, fixed nothing, because that one was always fine. The broken column is the one wearing the little green flags. Look again.",
+      miss:
+        "Nope — that column's behaving. Hunt for the green corner flags; that's the one Excel won't add up. Want backup? Ask me."
+    },
+
+    sets_up: ["consistency"]
   }
 ];
 

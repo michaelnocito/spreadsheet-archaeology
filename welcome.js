@@ -37,7 +37,7 @@
             day: i + 1, name: w.concept.name, built: true, idx: i
           })).join("")}
           ${Array.from({ length: Math.max(0, 5 - WAVES.length) }, (_, i) =>
-            syllabusItem("wave", { day: WAVES.length + i + 1, name: futureWaveName(WAVES.length + i), built: false })
+            syllabusItem("wave", { day: WAVES.length + i + 1, name: futureWaveName(WAVES.length + i - 1), built: false })
           ).join("")}
         </ol>
       </div>`;

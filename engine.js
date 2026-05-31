@@ -87,16 +87,42 @@
     box.innerHTML = text;
   }
 
+  const taskKind = () => (WAVE.task && WAVE.task.kind) || "select_row";
+
   function renderArtifact() {
-    SACore.renderSheet($("#sheet"), WAVE.artifact, {
-      selectable: true,
-      onSelectRow: (rnum) => {
-        if (state.solved) return;
-        state.interaction.selected_header_row = rnum;
-        setPrimary("Confirm →", true);
-        setFeedback(`Row ${rnum} marked as the header. Confirm when you're sure.`, "neutral");
-      }
-    });
+    const host = $("#sheet");
+    const kind = taskKind();
+    if (kind === "select_column") {
+      SACore.renderSheet(host, WAVE.artifact, {
+        selectableCols: true,
+        onSelectCol: (letter) => {
+          if (state.solved) return;
+          state.interaction.selected_column = letter;
+          setPrimary("Confirm →", true);
+          setFeedback(`Column ${letter} marked. Confirm when you're sure.`, "neutral");
+        }
+      });
+    } else if (kind === "select_cell") {
+      SACore.renderSheet(host, WAVE.artifact, {
+        selectableCells: true,
+        onSelectCell: (addr) => {
+          if (state.solved) return;
+          state.interaction.selected_cell = addr;
+          setPrimary("Confirm →", true);
+          setFeedback(`Cell ${addr} marked. Confirm when you're sure.`, "neutral");
+        }
+      });
+    } else {
+      SACore.renderSheet(host, WAVE.artifact, {
+        selectable: true,
+        onSelectRow: (rnum) => {
+          if (state.solved) return;
+          state.interaction.selected_header_row = rnum;
+          setPrimary("Confirm →", true);
+          setFeedback(`Row ${rnum} marked as the header. Confirm when you're sure.`, "neutral");
+        }
+      });
+    }
   }
 
   // ----- Pull-only help -------------------------------------------------------
@@ -129,44 +155,61 @@
     const b = $("#primary"); b.textContent = label; b.disabled = !enabled;
   }
 
+  // Whatever the player has picked this wave, regardless of interaction kind.
+  function currentPick() {
+    const kind = taskKind();
+    if (kind === "select_column") return state.interaction.selected_column;
+    if (kind === "select_cell") return state.interaction.selected_cell;
+    return state.interaction.selected_header_row;
+  }
+
   function submit() {
     if (state.solved) { advance(); return; }
-    if (state.interaction.selected_header_row == null) return;
+    if (currentPick() == null) return;
+
+    // Per-wave status pills (the small inline line); the Predecessor voice
+    // carries the real narrative. Fall back to generic wording if unset.
+    const status = (WAVE.task && WAVE.task.status) || {};
+    const kind = taskKind();
 
     if (SACore.evalCheck(WAVE.task.success_check, state.interaction)) {
       state.solved = true;
-      // 🎉 Tier 1: warm chime + pulse on the row they nailed
-      Celebrate.tap($("#sheet").querySelector("tr.selected"));
+      // 🎉 Tier 1: warm chime + pulse on the thing they nailed
+      const target =
+        kind === "select_column" ? $("#sheet").querySelector("th.col-selected") :
+        kind === "select_cell"   ? $("#sheet").querySelector("td.cell-selected") :
+                                   $("#sheet").querySelector("tr.selected");
+      Celebrate.tap(target);
       renderPredecessor(WAVE.feedback.win, "win");
-      setFeedback("✅ Right call. You oriented before you touched anything.", "good");
+      setFeedback(status.win || "✅ Nailed it.", "good");
       $("#sheet").classList.add("locked");
       const isLast = state.index + 1 >= WAVES.length;
       setPrimary(isLast ? "Week 1 — slice complete" : "Next file →", true);
-      if (isLast) {
-        $("#slice-note").hidden = false;
-        // 🎉 Tier 3: cleared the last available wave
-        Celebrate.moduleDone(`💼 File cleared — ${WAVE.concept.name}`);
-      } else {
-        // each non-final wave still gets a banner — it's a real moment
-        Celebrate.moduleDone(`💼 File cleared — ${WAVE.concept.name}`);
-      }
-    } else if (SACore.evalCheck(WAVE.task.fail_check, state.interaction)) {
+      $("#slice-note").hidden = !isLast;
+      // 🎉 Tier 3: every cleared file is a real moment — banner each time
+      Celebrate.moduleDone(`💼 File cleared — ${WAVE.concept.name}`);
+    } else if (WAVE.task.fail_check && SACore.evalCheck(WAVE.task.fail_check, state.interaction)) {
       Celebrate.wrong();
       renderPredecessor(WAVE.feedback.fail, "fail");
-      setFeedback("Not the headers — but now you know why. Try again.", "bad");
+      setFeedback(status.fail || "Not that one — but now you know why. Try again.", "bad");
       clearSelection();
     } else {
       Celebrate.wrong();
       renderPredecessor(WAVE.feedback.miss ||
-        "Not quite — that's not the header band. Look for the row of column names, or ask for backup.", "miss");
-      setFeedback("Not quite. Look for the row of column names.", "bad");
+        "Not quite — take another look, or ask for backup.", "miss");
+      setFeedback(status.miss || "Not quite. Take another look, or ask for backup.", "bad");
       clearSelection();
     }
   }
 
   function clearSelection() {
     state.interaction.selected_header_row = null;
-    $("#sheet").querySelectorAll("tr.selected").forEach((tr) => tr.classList.remove("selected"));
+    state.interaction.selected_column = null;
+    state.interaction.selected_cell = null;
+    const sheet = $("#sheet");
+    sheet.querySelectorAll("tr.selected").forEach((tr) => tr.classList.remove("selected"));
+    sheet.querySelectorAll(".col-selected").forEach((el) => el.classList.remove("col-selected"));
+    sheet.querySelectorAll("td.cell-selected").forEach((td) => td.classList.remove("cell-selected"));
     setPrimary("Confirm →", false);
   }
 
@@ -192,15 +235,27 @@
   // ----- Dev controls ---------------------------------------------------------
   function devReveal() {
     if (state.solved) return;
+    const kind = taskKind();
     const answer = SACore.rhsValue(WAVE.task.success_check);
     if (answer == null) return;
-    const tr = $("#sheet").querySelector(`tr[data-row="${answer}"]`);
-    if (tr) {
-      tr.classList.add("highlight");
-      const rh = tr.querySelector(".rowhead");
-      if (rh) rh.click();
+    const sheet = $("#sheet");
+    if (kind === "select_column") {
+      const th = sheet.querySelector(`th[data-col="${answer}"]`);
+      if (th) { th.classList.add("col-highlight"); th.click(); }
+      setFeedback(`🛠 Dev: the answer is column ${answer}.`, "neutral");
+    } else if (kind === "select_cell") {
+      const td = sheet.querySelector(`td[data-addr="${answer}"]`);
+      if (td) { td.classList.add("cell-highlight"); td.click(); }
+      setFeedback(`🛠 Dev: the answer is cell ${answer}.`, "neutral");
+    } else {
+      const tr = sheet.querySelector(`tr[data-row="${answer}"]`);
+      if (tr) {
+        tr.classList.add("highlight");
+        const rh = tr.querySelector(".rowhead");
+        if (rh) rh.click();
+      }
+      setFeedback(`🛠 Dev: the header is row ${answer}.`, "neutral");
     }
-    setFeedback(`🛠 Dev: the header is row ${answer}.`, "neutral");
   }
 
   window.Job = { start, dev: { reveal: devReveal } };
