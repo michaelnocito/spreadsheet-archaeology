@@ -19,8 +19,8 @@
   const state = { index: 0, interaction: {}, helpTier: 0, solved: false };
   let WAVE = null;
 
-  function start() {
-    state.index = 0;
+  function start(idx) {
+    state.index = idx || 0;
     boot();
   }
 
@@ -41,6 +41,7 @@
     $("#sheet").classList.remove("locked");
     $("#slice-note").hidden = true;
     setPrimary("Lock it in →", false);
+    if (window.DEV_AUTOREVEAL) devReveal();
   }
 
   function setOrientation() {
@@ -154,5 +155,19 @@
     $("#primary").addEventListener("click", submit);
   });
 
-  window.Job = { start };
+  // ----- Dev controls ---------------------------------------------------------
+  function devReveal() {
+    if (state.solved) return;
+    const answer = SACore.rhsValue(WAVE.task.success_check);
+    if (answer == null) return;
+    const tr = $("#sheet").querySelector(`tr[data-row="${answer}"]`);
+    if (tr) {
+      tr.classList.add("highlight");
+      const rh = tr.querySelector(".rowhead");
+      if (rh) rh.click();
+    }
+    setFeedback(`🛠 Dev: the header is row ${answer}.`, "neutral");
+  }
+
+  window.Job = { start, dev: { reveal: devReveal } };
 })();

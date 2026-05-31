@@ -15,6 +15,7 @@
 
   const SCREEN = "#academy-screen";
   let onGraduate = null;
+  let lessonIdx = 0;
   let lesson = null;
   let repIndex = 0;        // which practice rep
   let stage = "intro";     // intro | teach | practice | outro
@@ -22,11 +23,19 @@
   let helpShown = false;
 
   function start(opts) {
-    onGraduate = (opts && opts.onGraduate) || function () {};
+    opts = opts || {};
+    onGraduate = opts.onGraduate || function () {};
     buildShell();
-    lesson = LESSONS[0]; // slice: one lesson. (Loop LESSONS[] when more are built.)
-    setOrientation();
+    jumpToLesson(opts.initialLesson || 0);
+  }
+
+  // Dev / navigation: jump straight to any built lesson.
+  function jumpToLesson(idx) {
+    lessonIdx = Math.max(0, Math.min(idx, LESSONS.length - 1));
+    lesson = LESSONS[lessonIdx];
+    repIndex = 0;
     stage = "intro";
+    setOrientation();
     render();
   }
 
@@ -110,9 +119,10 @@
     if (stage === "teach") {
       voice(lesson.teach.explain);
       label("Watch — worked example", "I do");
-      $("#a-prompt").innerHTML = "Sam's walking through a clean file. The header row is highlighted.";
+      $("#a-prompt").innerHTML = "Sam's walking through a quick example. Just watch.";
       SACore.renderSheet($("#a-sheet"), lesson.teach.example, {
         highlightRow: lesson.teach.example.highlight_row,
+        highlightCell: lesson.teach.example.highlight_cell,
         selectable: false
       });
       workHint("👀 just look — nothing to click yet");
@@ -125,22 +135,36 @@
       const rep = currentRep();
       picked = null;
       const guided = rep.mode === "guided";
+      const kind = rep.kind || "select_row";
       voice(guided
         ? "Go ahead — I'll leave the answer highlighted and a hint up while you get the feel."
         : "Now without the training wheels. Take your time. Backup's right there if you want it.");
       label(guided ? "Try it — guided" : "Try it — solo", guided ? "We do" : "You do");
       $("#a-prompt").innerHTML = rep.prompt;
 
-      SACore.renderSheet($("#a-sheet"), rep.artifact, {
-        selectable: true,
-        highlightRow: guided ? rep.artifact.highlight_row : null,
-        onSelectRow: (r) => {
-          picked = r;
-          primary("Lock it in →", true);
-          feedback(`Row ${r} marked. Lock it in when you're ready.`, "neutral");
-        }
-      });
-      workHint("click a row number");
+      if (kind === "select_cell") {
+        SACore.renderSheet($("#a-sheet"), rep.artifact, {
+          selectableCells: true,
+          highlightCell: guided ? rep.artifact.highlight_cell : null,
+          onSelectCell: (addr) => {
+            picked = addr;
+            primary("Lock it in →", true);
+            feedback(`Cell ${addr} marked. Lock it in when you're ready.`, "neutral");
+          }
+        });
+        workHint("click a cell");
+      } else {
+        SACore.renderSheet($("#a-sheet"), rep.artifact, {
+          selectable: true,
+          highlightRow: guided ? rep.artifact.highlight_row : null,
+          onSelectRow: (r) => {
+            picked = r;
+            primary("Lock it in →", true);
+            feedback(`Row ${r} marked. Lock it in when you're ready.`, "neutral");
+          }
+        });
+        workHint("click a row number");
+      }
 
       // Push help: in guided the hint is shown for free; in solo it's offered.
       $("#a-help").hidden = false;
@@ -155,17 +179,21 @@
         $("#a-help-btn").textContent = "🙋 Need a hand?";
       }
       primary("Lock it in →", false);
+      if (window.DEV_AUTOREVEAL) devReveal();
       return;
     }
 
     if (stage === "outro") {
+      const hasNextLesson = lessonIdx + 1 < LESSONS.length;
       voice(lesson.mentor_outro);
       label("Lesson complete", "✓");
-      $("#a-prompt").innerHTML = "You've got the skill. Time to use it for real.";
+      $("#a-prompt").innerHTML = hasNextLesson
+        ? "Skill banked. One more before we open the cursed drive."
+        : "You've got the skill. Time to use it for real.";
       $("#a-sheet").innerHTML = "";
       workHint("");
       feedback("🎓 Skill learned: " + lesson.concept.name, "good");
-      primary("Head to the job →");
+      primary(hasNextLesson ? "Next lesson →" : "Head to the job →");
       return;
     }
   }
@@ -178,7 +206,11 @@
     if (stage === "practice") {
       const rep = currentRep();
       if (picked == null) return;
-      if (SACore.evalCheck(rep.success_check, { selected_header_row: picked })) {
+      const kind = rep.kind || "select_row";
+      const interaction = kind === "select_cell"
+        ? { selected_cell: picked }
+        : { selected_header_row: picked };
+      if (SACore.evalCheck(rep.success_check, interaction)) {
         lockSheet();
         voice(rep.praise);
         feedback("✅ " + rep.praise, "good");
@@ -188,8 +220,11 @@
           primary("Finish lesson →"); stage = "outro-advance";
         }
       } else {
-        voice("Not that one — that's data, or a blank, or the title. Look for the row where <i>every</i> cell is a column name. Try again.");
-        feedback("Not the header row. Find the row of column names.", "bad");
+        const wrongMsg = kind === "select_cell"
+          ? "Not that cell. Remember — column letter first, then row number. Try again."
+          : "Not that one — that's data, or a blank, or the title. Look for the row where <i>every</i> cell is a column name. Try again.";
+        voice(wrongMsg);
+        feedback(kind === "select_cell" ? "Not that cell. Try again." : "Not the header row. Find the row of column names.", "bad");
         clearSelection();
       }
       return;
@@ -197,7 +232,11 @@
 
     if (stage === "practice-advance") { repIndex++; stage = "practice"; render(); return; }
     if (stage === "outro-advance") { stage = "outro"; render(); return; }
-    if (stage === "outro") { onGraduate(); return; }
+    if (stage === "outro") {
+      if (lessonIdx + 1 < LESSONS.length) jumpToLesson(lessonIdx + 1);
+      else onGraduate();
+      return;
+    }
   }
 
   // ----- Small helpers --------------------------------------------------------
@@ -221,8 +260,36 @@
     picked = null;
     $("#a-sheet").classList.remove("locked");
     $("#a-sheet").querySelectorAll("tr.selected").forEach((tr) => tr.classList.remove("selected"));
+    $("#a-sheet").querySelectorAll("td.cell-selected").forEach((td) => td.classList.remove("cell-selected"));
     primary("Lock it in →", false);
   }
 
-  window.Academy = { start };
+  // ----- Dev controls ---------------------------------------------------------
+  function devReveal() {
+    if (stage !== "practice") return;
+    const rep = currentRep();
+    const kind = rep.kind || "select_row";
+    const answer = SACore.rhsValue(rep.success_check);
+    if (answer == null) return;
+    if (kind === "select_cell") {
+      const td = $("#a-sheet").querySelector(`td[data-addr="${answer}"]`);
+      if (td) { td.classList.add("cell-highlight"); td.click(); }
+      feedback(`🛠 Dev: the answer is cell ${answer}.`, "neutral");
+    } else {
+      const tr = $("#a-sheet").querySelector(`tr[data-row="${answer}"]`);
+      if (tr) {
+        tr.classList.add("highlight");
+        const rh = tr.querySelector(".rowhead");
+        if (rh) rh.click();
+      }
+      feedback(`🛠 Dev: the answer is row ${answer}.`, "neutral");
+    }
+  }
+
+  function devSolveStep() {
+    if (stage === "practice") picked = SACore.rhsValue(currentRep().success_check);
+    onPrimary();
+  }
+
+  window.Academy = { start, jumpToLesson, dev: { reveal: devReveal, solveStep: devSolveStep } };
 })();

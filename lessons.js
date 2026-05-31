@@ -33,7 +33,7 @@ const MENTOR = {
  * `built: true` lessons are playable now. The rest are authored next, to this
  * same schema — the curriculum is real and visible so nothing feels stubbed. */
 const ACADEMY_PLAN = [
-  { week: 1, day: 1,  name: "The grid",              teaches_for: "—",            built: false },
+  { week: 1, day: 1,  name: "The grid",              teaches_for: "—",            built: true  },
   { week: 1, day: 2,  name: "Find the real header",  teaches_for: "orient_header", built: true  },
   { week: 1, day: 3,  name: "Data types",            teaches_for: "type_integrity", built: false },
   { week: 1, day: 4,  name: "Numbers stored as text", teaches_for: "type_integrity", built: false },
@@ -46,6 +46,73 @@ const ACADEMY_PLAN = [
 ];
 
 const LESSONS = [
+  {
+    id: "the_grid",
+    week: 1,
+    day: 1,
+    concept: { name: "The grid" },
+    teaches_for: "—",
+
+    mentor_intro:
+      "Hey — Sam. Welcome to the team. Day one is the foundation: <b>how to read a spreadsheet</b>. Sounds like nothing. It's the thing every other lesson stands on. Five minutes. Let's go.",
+
+    teach: {
+      explain:
+        "A spreadsheet is a <b>grid</b>. <b>Columns</b> run top-to-bottom — labeled A, B, C, D… <b>Rows</b> run left-to-right — numbered 1, 2, 3… A single cell is named by its column letter, then its row number. The cell I've highlighted is <b>B3</b> — column B, row 3. That's how you point at any cell in any spreadsheet ever.",
+      example: {
+        kind: "sheet",
+        highlight_cell: "B3",
+        rows: [
+          ["alpha", "north", "100"],
+          ["beta",  "south", "200"],
+          ["gamma", "east",  "300"],
+          ["delta", "west",  "400"]
+        ]
+      },
+      callout: "B3 = column B, row 3. Every cell has an address like this."
+    },
+
+    practice: [
+      {
+        mode: "guided",
+        kind: "select_cell",
+        prompt: "Your turn — click cell <b>C2</b>. I've highlighted it so you can see it.",
+        hint: "Column C is the third column from the left. Row 2.",
+        artifact: {
+          kind: "sheet",
+          highlight_cell: "C2",
+          rows: [
+            ["apple",  "red",    "12"],
+            ["banana", "yellow", "8"],
+            ["cherry", "red",    "20"],
+            ["date",   "brown",  "5"]
+          ]
+        },
+        success_check: "selected_cell == 'C2'",
+        praise: "C2 — column C, row 2. Exactly."
+      },
+      {
+        mode: "solo",
+        kind: "select_cell",
+        prompt: "No highlight this time. Click cell <b>D3</b>.",
+        hint: "D is the fourth column. Row 3.",
+        artifact: {
+          kind: "sheet",
+          rows: [
+            ["Mon", "Sales", "100", "West"],
+            ["Tue", "Sales", "120", "East"],
+            ["Wed", "Sales", "145", "North"],
+            ["Thu", "Sales", "98",  "South"]
+          ]
+        },
+        success_check: "selected_cell == 'D3'",
+        praise: "D3 — cold, no hints. You can read a cell address now. Every other lesson rides on this."
+      }
+    ],
+
+    mentor_outro:
+      "That's it. You can read a sheet now — column letter + row number, any cell, anywhere. Tomorrow: figuring out which row actually <i>matters</i>."
+  },
   {
     id: "header_row",
     week: 1,
@@ -78,6 +145,7 @@ const LESSONS = [
     practice: [
       {
         mode: "guided",
+        kind: "select_row",
         prompt: "Your turn — with a hand. Click the <b>header row</b>. I've highlighted it so you can see the shape.",
         hint: "Skip the title banner and the blank row. Find where the column names start.",
         artifact: {
@@ -99,6 +167,7 @@ const LESSONS = [
       },
       {
         mode: "solo",
+        kind: "select_row",
         prompt: "No highlight this time. Find the <b>header row</b> on your own.",
         hint: "Same idea — logo, blanks, then the row of column names.",
         artifact: {

@@ -39,12 +39,24 @@
 
   const colLetter = (i) => String.fromCharCode(65 + i);
 
+  // Pull the expected answer out of a check like "selected_header_row == 4"
+  // or "selected_cell == 'C2'". Used by the dev controls to reveal / auto-solve.
+  function rhsValue(expr) {
+    const m = String(expr || "").match(/(?:==|>=|<=|>|<)\s*(.+?)\s*$/);
+    if (!m) return null;
+    const raw = m[1].replace(/^["']|["']$/g, "");
+    return raw !== "" && !isNaN(Number(raw)) ? Number(raw) : raw;
+  }
+
   // ----- Spreadsheet renderer -------------------------------------------------
   // renderSheet(host, artifact, opts)
-  //   opts.selectable   : clickable row gutter (calls opts.onSelectRow(rowNum))
-  //   opts.onSelectRow  : callback(rowNum)
-  //   opts.highlightRow : draw a soft "look here" highlight on this row (teach mode)
-  //   opts.locked       : ignore clicks
+  //   opts.selectable       : clickable row gutter (calls opts.onSelectRow(rowNum))
+  //   opts.onSelectRow      : callback(rowNum)
+  //   opts.highlightRow     : draw a soft "look here" highlight on this row
+  //   opts.selectableCells  : every cell is clickable (calls opts.onSelectCell(addr))
+  //   opts.onSelectCell     : callback("B3")
+  //   opts.highlightCell    : "B3" — soft glow on a single cell (teach mode)
+  //   opts.locked           : ignore clicks
   function renderSheet(host, a, opts) {
     opts = opts || {};
     host.innerHTML = "";
@@ -68,6 +80,13 @@
       tbody.querySelectorAll("tr").forEach((tr) =>
         tr.classList.toggle("selected", Number(tr.dataset.row) === rnum));
       if (opts.onSelectRow) opts.onSelectRow(rnum);
+    }
+
+    function selectCell(addr, td) {
+      if (opts.locked) return;
+      tbody.querySelectorAll("td.cell-selected").forEach((c) => c.classList.remove("cell-selected"));
+      td.classList.add("cell-selected");
+      if (opts.onSelectCell) opts.onSelectCell(addr);
     }
 
     a.rows.forEach((row, ri) => {
@@ -94,8 +113,23 @@
         tr.appendChild(td);
         tr.classList.add("is-title");
       } else {
-        for (let c = 0; c < nCols; c++)
-          tr.appendChild(cell("td", row[c] != null ? row[c] : "", isBlank ? "blank" : ""));
+        for (let c = 0; c < nCols; c++) {
+          const td = cell("td", row[c] != null ? row[c] : "", isBlank ? "blank" : "");
+          const addr = colLetter(c) + rnum;
+          td.dataset.addr = addr;
+          if (opts.highlightCell === addr) td.classList.add("cell-highlight");
+          if (opts.selectableCells) {
+            td.classList.add("clickable-cell");
+            td.tabIndex = 0;
+            td.setAttribute("role", "button");
+            td.setAttribute("aria-label", `Select cell ${addr}`);
+            td.addEventListener("click", (e) => { e.stopPropagation(); selectCell(addr, td); });
+            td.addEventListener("keydown", (e) => {
+              if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectCell(addr, td); }
+            });
+          }
+          tr.appendChild(td);
+        }
         if (isBlank) tr.classList.add("is-blank");
       }
 
@@ -115,5 +149,5 @@
     return el;
   }
 
-  window.SACore = { evalCheck, colLetter, renderSheet };
+  window.SACore = { evalCheck, colLetter, renderSheet, rhsValue };
 })();
