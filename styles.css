@@ -84,11 +84,22 @@ body {
 /* ---- Stage layout --------------------------------------------------------- */
 .stage {
   max-width: 1180px; margin: 22px auto; padding: 0 18px;
-  display: grid; grid-template-columns: 360px 1fr; gap: 22px; align-items: start;
+  display: grid; grid-template-columns: 280px 1fr; gap: 18px; align-items: start;
 }
 
 /* ---- Left rail ------------------------------------------------------------ */
-.rail { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 78px; }
+/* Sticky so the Task Brief stays visible while the user scrolls + interacts
+   with the training file. Internal scroll if rail content is taller than the
+   viewport (so Sam / Help below the fold are still reachable inside the rail). */
+.rail {
+  display: flex; flex-direction: column; gap: 14px;
+  position: sticky; top: 72px;
+  align-self: start;
+  max-height: calc(100vh - 92px);
+  overflow-y: auto;
+  /* a hair of horizontal padding so the focus outlines inside aren't clipped */
+  padding-right: 4px;
+}
 
 .voice, .task-card, .help, .work {
   background: var(--panel); border: 1px solid var(--line);
@@ -503,12 +514,17 @@ body {
 }
 
 /* ---- Responsive ----------------------------------------------------------- */
-@media (max-width: 880px) {
+/* Lowered breakpoint from 880 -> 720 so common desktop zoom levels (125%-200%
+   on a 1080p monitor) stay in the 2-col layout where the brief is visible
+   alongside the file. Real mobile widths still fall back to the stack below. */
+@media (max-width: 720px) {
   .stage { grid-template-columns: 1fr; }
   /* Reading order on narrow screens: directive (rail) FIRST, then work surface.
-     The brief is now at the top of the rail, so this puts the brief at the
-     literal top of the page — "what to do" before "the file." */
-  .rail { position: static; order: 1; }
+     Sticky no longer applies once stacked — natural document flow takes over. */
+  .rail {
+    position: static; order: 1;
+    max-height: none; overflow-y: visible; padding-right: 0;
+  }
   .work { order: 2; }
   .orient { gap: 10px; }
   .brand-text .sub { display: none; }
