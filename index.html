@@ -4,77 +4,78 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Getting It Wrong Gets You Good — Week One</title>
-  <meta name="description" content="A day-in-the-life data-analyst job sim. De-curse inherited spreadsheets. Getting it wrong gets you good." />
+  <meta name="description" content="A day-in-the-life data-analyst job sim. Train in the boot camp, then de-curse inherited spreadsheets on the job. Getting it wrong gets you good." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Orientation bar: where you are, what habit you're building, which file -->
+  <!-- Phase-aware orientation bar (both screens share it) -->
   <header class="topbar">
     <div class="brand">
       <span class="logo">▦</span>
       <div class="brand-text">
         <strong>Getting It Wrong Gets You Good</strong>
-        <span class="sub">Week One · Spreadsheet Archaeology</span>
+        <span class="sub">Spreadsheet Archaeology</span>
       </div>
     </div>
     <div class="orient">
+      <span id="phase-chip" class="phase-chip phase-academy">ACADEMY</span>
       <span class="habit-chip">🎯 <span id="habit">—</span></span>
       <div class="progress-wrap">
-        <span id="wave-count" class="wave-count">File 1 of 5</span>
+        <span id="wave-count" class="wave-count">—</span>
         <span id="progress" class="progress"></span>
       </div>
     </div>
   </header>
 
-  <main class="stage">
-    <!-- LEFT: the Predecessor + your task + backup -->
-    <aside class="rail">
-      <section class="voice">
-        <div class="voice-head">
-          <span class="avatar">🫥</span>
-          <div>
-            <strong>The Predecessor</strong>
-            <span class="role">analyst before you</span>
+  <!-- SCREEN 1: THE ACADEMY (filled by academy.js) -->
+  <div id="academy-screen"></div>
+
+  <!-- SCREEN 2: THE JOB (the Predecessor's cursed drive) -->
+  <div id="job-screen" hidden>
+    <main class="stage">
+      <aside class="rail">
+        <section class="voice">
+          <div class="voice-head">
+            <span class="avatar">🫥</span>
+            <div>
+              <strong>The Predecessor</strong>
+              <span class="role">analyst before you</span>
+            </div>
           </div>
+          <div id="predecessor-body" class="voice-body mood-intro"></div>
+        </section>
+
+        <section class="task-card">
+          <h2>Your move</h2>
+          <p id="task-prompt" class="task-prompt"></p>
+          <p class="file-line">📄 Open: <span id="filename" class="filename">—</span></p>
+        </section>
+
+        <section class="help">
+          <button id="help-btn" class="help-btn">🆘 Ask the Predecessor for backup</button>
+          <ul id="help-list" class="help-list"></ul>
+        </section>
+      </aside>
+
+      <section class="work">
+        <div class="work-head">
+          <span class="tab">📊 <span class="tab-name">file</span></span>
+          <span class="hint-muted">Click a row number to mark the header</span>
         </div>
-        <div id="predecessor-body" class="voice-body mood-intro"></div>
+        <div id="sheet" class="sheet"></div>
+        <div id="feedback" class="feedback" hidden></div>
+        <div class="action-row">
+          <button id="primary" class="primary" disabled>Lock it in →</button>
+        </div>
+        <div id="slice-note" class="slice-note" hidden>
+          <strong>✅ Vertical slice complete.</strong>
+          You trained the skill in the Academy, then applied it on the job. Waves 2–5
+          (type integrity → work on a copy → document → the stakeholder boss) and the
+          rest of the two-week Academy author to this same JSON schema — no engine changes.
+        </div>
       </section>
-
-      <section class="task-card">
-        <h2>Your move</h2>
-        <p id="task-prompt" class="task-prompt"></p>
-        <p class="file-line">📄 Open: <span id="filename" class="filename">—</span></p>
-      </section>
-
-      <section class="help">
-        <button id="help-btn" class="help-btn">🆘 Ask the Predecessor for backup</button>
-        <ul id="help-list" class="help-list"></ul>
-      </section>
-    </aside>
-
-    <!-- RIGHT: the artifact (always visible) + the one primary action -->
-    <section class="work">
-      <div class="work-head">
-        <span class="tab">📊 <span class="tab-name">Q3_FINAL_final_v2.xlsx</span></span>
-        <span class="hint-muted">Click a row number to mark the header</span>
-      </div>
-
-      <div id="sheet" class="sheet"></div>
-
-      <div id="feedback" class="feedback" hidden></div>
-
-      <div class="action-row">
-        <button id="primary" class="primary" disabled>Lock it in →</button>
-      </div>
-
-      <div id="slice-note" class="slice-note" hidden>
-        <strong>✅ Vertical slice complete.</strong>
-        Wave 1 of the Week One arc is playable. Waves 2–5 (type integrity → work on a
-        copy → document as you go → the stakeholder boss) author to this same JSON schema —
-        no engine changes needed.
-      </div>
-    </section>
-  </main>
+    </main>
+  </div>
 
   <footer class="foot">
     <span>Getting it wrong gets you good.</span>
@@ -86,7 +87,11 @@
       document.getElementById("build-ts").textContent = window.BUILD_TS;
     });
   </script>
+  <script src="core.js"></script>
+  <script src="lessons.js"></script>
   <script src="waves.js"></script>
+  <script src="academy.js"></script>
   <script src="engine.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

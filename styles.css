@@ -51,7 +51,13 @@ body {
 .brand-text strong { font-size: 15px; }
 .brand-text .sub { font-size: 12px; color: var(--dim); }
 
-.orient { display: flex; align-items: center; gap: 18px; }
+.orient { display: flex; align-items: center; gap: 14px; }
+.phase-chip {
+  font-size: 11px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase;
+  padding: 5px 10px; border-radius: 6px; white-space: nowrap;
+}
+.phase-chip.phase-academy { background: #eaf3ee; color: #1a7f37; border: 1px solid #bfe5ca; }
+.phase-chip.phase-job { background: #f3eefb; color: #6639ba; border: 1px solid #ddccf3; }
 .habit-chip {
   background: #eef4ff; color: var(--accent-d); border: 1px solid #d4e1ff;
   padding: 5px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 600; white-space: nowrap;
@@ -90,6 +96,16 @@ body {
 .voice-body.mood-win   { border-color: var(--good); }
 .voice-body.mood-fail  { border-color: var(--warm); }
 .voice-body.mood-miss  { border-color: var(--accent); }
+.voice-body.mood-mentor { border-color: var(--good); }
+.voice-body b { color: var(--accent-d); }
+.voice-body i { color: #2b3240; font-style: italic; }
+
+/* stage label tag in the Academy ("I do" / "We do" / "You do") */
+.stage-tag {
+  font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  color: #1a7f37; background: #eaf3ee; border: 1px solid #bfe5ca;
+  padding: 1px 7px; border-radius: 999px; margin-left: 6px; vertical-align: middle;
+}
 
 .task-card { padding: 16px; }
 .task-card h2 { margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--dim); }
@@ -160,6 +176,16 @@ body {
   background: var(--sel) !important;
 }
 .sheet-table tr.selected { box-shadow: inset 3px 0 0 var(--sel-line); }
+
+/* soft "look here" highlight used in Academy teach/guided modes */
+.sheet-table tr.highlight td,
+.sheet-table tr.highlight .rowhead {
+  background: #e3f1ff;
+  box-shadow: inset 0 0 0 9999px rgba(47,109,240,.06);
+}
+.sheet-table tr.highlight { outline: 2px dashed #8fb6f5; outline-offset: -2px; }
+.sheet-table tr.highlight.selected td,
+.sheet-table tr.highlight.selected .rowhead { background: var(--sel) !important; }
 
 /* ---- Feedback line (never covers the grid or the button) ------------------ */
 .feedback {
