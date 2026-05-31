@@ -53,6 +53,7 @@
             <div id="a-brief-stage" class="brief-stage"></div>
             <p id="a-brief-task" class="brief-task" hidden></p>
             <p id="a-prompt" class="brief-prompt"></p>
+            <p id="a-brief-recall" class="brief-recall" hidden></p>
             <div id="a-brief-checklist-wrap" hidden>
               <div class="brief-sublabel">Your checklist</div>
               <ol id="a-brief-checklist" class="brief-checklist"></ol>
@@ -108,6 +109,18 @@
       wrap.appendChild(dot);
     });
     $("#a-brief-title").textContent = `Module ${lesson.day} · ${lesson.concept.name}`;
+    // Spaced-retrieval recall chip — per-lesson constant, render once on load.
+    // `reinforces` holds ready-to-show skill names (decoupled from concept ids).
+    const recall = $("#a-brief-recall");
+    const names = (lesson.reinforces || []).filter(Boolean);
+    if (names.length) {
+      recall.innerHTML =
+        `<span class="recall-icon">🔁</span>` +
+        `<span class="recall-body"><b>Builds on:</b> ${names.join(", ")}</span>`;
+      recall.hidden = false;
+    } else {
+      recall.hidden = true; recall.innerHTML = "";
+    }
     // Best-practice tip is a per-lesson constant — render once when the lesson loads.
     if (lesson.best_practice) {
       $("#a-brief-tip").innerHTML = `<span class="tip-icon">💡</span><span class="tip-body"><span class="tip-label">Pro tip:</span> ${lesson.best_practice}</span>`;

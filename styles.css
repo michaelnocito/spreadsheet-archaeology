@@ -214,6 +214,18 @@ body {
 .tip-icon { flex: 0 0 auto; font-size: 14px; line-height: 1.45; }
 .tip-body { flex: 1 1 auto; min-width: 0; }
 .tip-label { font-weight: 700; color: var(--warm); margin-right: 2px; }
+/* Spaced-retrieval recall chip — calm teal, phase-agnostic so the "you're
+   reusing an earlier skill" signal reads the same in the Academy and the Job. */
+.brief-recall {
+  margin: 0 0 12px; padding: 8px 11px; border-radius: 8px;
+  background: #eafaf4; border: 1px solid #b7e3d2; color: #0f5132;
+  font-size: 13px; line-height: 1.45;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.brief-recall[hidden] { display: none; } /* flex would otherwise beat the hidden attr */
+.brief-recall .recall-icon { flex: 0 0 auto; font-size: 14px; line-height: 1.45; }
+.brief-recall .recall-body { flex: 1 1 auto; min-width: 0; }
+.brief-recall b { color: #0a6b46; font-weight: 700; }
 .file-line { margin: 8px 0 0; font-size: 13px; color: var(--dim); }
 .filename { font-family: "Consolas", ui-monospace, monospace; color: var(--ink); }
 

@@ -341,6 +341,7 @@ const LESSONS = [
     day: 4,
     concept: { name: "Numbers stored as text" },
     teaches_for: "type_integrity",
+    reinforces: ["Data types"], // spotting text-numbers reuses reading a column's type
 
     best_practice:
       "The tell is a tiny <b>green triangle</b> in the corner of a cell — Excel flagging <i>“this number is stored as text.”</i> Text-numbers won't <code>SUM</code>, won't sort right, and break formulas without an error. Spot them first; convert before you trust any math.",
@@ -440,6 +441,7 @@ const LESSONS = [
     day: 5,
     concept: { name: "Consistency gremlins" },
     teaches_for: "type_integrity",
+    reinforces: ["Data types"], // judging a category column reuses reading column types
 
     best_practice:
       "The same thing written two ways is <b>two things</b> to a computer. <code>Active</code>, <code>active</code>, and <code>ACTIVE</code> won't count, filter, or group together. Standardize your categories <i>before</i> you summarize anything.",

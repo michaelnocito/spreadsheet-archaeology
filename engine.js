@@ -42,6 +42,7 @@
       $("#job-brief-task").hidden = true;
     }
     $("#task-prompt").innerHTML = WAVE.task.prompt;
+    renderRecall();
     $("#filename").textContent = WAVE.artifact ? WAVE.artifact.title : "";
     $(".tab-name").textContent = WAVE.artifact ? WAVE.artifact.title : "";
     const checklist = WAVE.task && WAVE.task.checklist;
@@ -85,6 +86,27 @@
     const box = $("#predecessor-body");
     box.className = "voice-body mood-" + (mood || "intro");
     box.innerHTML = text;
+  }
+
+  // Resolve a concept id (e.g. "orient_header") to its display name by scanning
+  // the waves. Falls back to a humanized id so the chip never shows a raw key.
+  function conceptName(id) {
+    const hit = WAVES.find((w) => w.concept && w.concept.id === id);
+    if (hit) return hit.concept.name;
+    return String(id).replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  }
+
+  // Spaced-retrieval recall chip: surfaces the earlier skills this file makes
+  // the player reuse (the dormant `callbacks` data). Seeing it = the point.
+  function renderRecall() {
+    const chip = $("#job-brief-recall");
+    const ids = (WAVE.callbacks || []).filter(Boolean);
+    if (!ids.length) { chip.hidden = true; chip.innerHTML = ""; return; }
+    const names = ids.map(conceptName).join(", ");
+    chip.innerHTML =
+      `<span class="recall-icon">🔁</span>` +
+      `<span class="recall-body"><b>Reusing what you learned:</b> ${names}</span>`;
+    chip.hidden = false;
   }
 
   const taskKind = () => (WAVE.task && WAVE.task.kind) || "select_row";
