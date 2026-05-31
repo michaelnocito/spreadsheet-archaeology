@@ -148,8 +148,8 @@
           highlightCell: guided ? rep.artifact.highlight_cell : null,
           onSelectCell: (addr) => {
             picked = addr;
-            primary("Lock it in →", true);
-            feedback(`Cell ${addr} marked. Lock it in when you're ready.`, "neutral");
+            primary("Confirm →", true);
+            feedback(`Cell ${addr} marked. Confirm when you're ready.`, "neutral");
           }
         });
         workHint("click a cell");
@@ -159,8 +159,8 @@
           highlightRow: guided ? rep.artifact.highlight_row : null,
           onSelectRow: (r) => {
             picked = r;
-            primary("Lock it in →", true);
-            feedback(`Row ${r} marked. Lock it in when you're ready.`, "neutral");
+            primary("Confirm →", true);
+            feedback(`Row ${r} marked. Confirm when you're ready.`, "neutral");
           }
         });
         workHint("click a row number");
@@ -178,7 +178,7 @@
         $("#a-help-btn").disabled = false;
         $("#a-help-btn").textContent = "🙋 Need a hand?";
       }
-      primary("Lock it in →", false);
+      primary("Confirm →", false);
       if (window.DEV_AUTOREVEAL) devReveal();
       return;
     }
@@ -261,7 +261,7 @@
     $("#a-sheet").classList.remove("locked");
     $("#a-sheet").querySelectorAll("tr.selected").forEach((tr) => tr.classList.remove("selected"));
     $("#a-sheet").querySelectorAll("td.cell-selected").forEach((td) => td.classList.remove("cell-selected"));
-    primary("Lock it in →", false);
+    primary("Confirm →", false);
   }
 
   // ----- Dev controls ---------------------------------------------------------

@@ -40,7 +40,7 @@
     clearFeedback();
     $("#sheet").classList.remove("locked");
     $("#slice-note").hidden = true;
-    setPrimary("Lock it in →", false);
+    setPrimary("Confirm →", false);
     if (window.DEV_AUTOREVEAL) devReveal();
   }
 
@@ -71,8 +71,8 @@
       onSelectRow: (rnum) => {
         if (state.solved) return;
         state.interaction.selected_header_row = rnum;
-        setPrimary("Lock it in →", true);
-        setFeedback(`Row ${rnum} marked as the header. Lock it in when you're sure.`, "neutral");
+        setPrimary("Confirm →", true);
+        setFeedback(`Row ${rnum} marked as the header. Confirm when you're sure.`, "neutral");
       }
     });
   }
@@ -133,7 +133,7 @@
   function clearSelection() {
     state.interaction.selected_header_row = null;
     $("#sheet").querySelectorAll("tr.selected").forEach((tr) => tr.classList.remove("selected"));
-    setPrimary("Lock it in →", false);
+    setPrimary("Confirm →", false);
   }
 
   function advance() {
