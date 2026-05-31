@@ -342,6 +342,17 @@ body {
   background: #fff9e0 !important;
 }
 
+/* "numbers stored as text" — Excel's green corner flag (Module 4).
+   Intrinsic to the cell's data; layers under highlight/selected tints. */
+.sheet-table td.text-number { position: relative; }
+.sheet-table td.text-number .tn-flag {
+  position: absolute; top: 0; left: 0;
+  width: 0; height: 0;
+  border-top: 7px solid var(--good);
+  border-right: 7px solid transparent;
+  pointer-events: none;
+}
+
 /* soft "look here" highlight used in Academy teach/guided modes */
 .sheet-table tr.highlight td,
 .sheet-table tr.highlight .rowhead {

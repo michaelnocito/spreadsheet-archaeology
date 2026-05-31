@@ -60,6 +60,9 @@
   //   opts.onSelectCol      : callback("B")
   //   opts.highlightCol     : "B" — soft glow on a whole column (teach mode)
   //   opts.locked           : ignore clicks
+  // Artifact-intrinsic visuals (read off `a`, not opts): merged_title_row,
+  //   blank_rows[], and marker_cells[] (e.g. ["C2","C3"]) — the green corner
+  //   flag marking numbers stored as text (Module 4).
   function renderSheet(host, a, opts) {
     opts = opts || {};
     host.innerHTML = "";
@@ -150,6 +153,16 @@
           const addr = colL + rnum;
           td.dataset.addr = addr;
           td.dataset.col = colL;
+          // "Numbers stored as text" marker — Excel's little green corner flag.
+          // Intrinsic to the file's data (like blank_rows), so it travels with
+          // the artifact and renders identically in Academy and Job.
+          if ((a.marker_cells || []).includes(addr)) {
+            td.classList.add("text-number");
+            const flag = document.createElement("span");
+            flag.className = "tn-flag";
+            flag.setAttribute("aria-hidden", "true");
+            td.appendChild(flag);
+          }
           if (opts.highlightCell === addr) td.classList.add("cell-highlight");
           if (opts.highlightCol === colL) td.classList.add("col-highlight");
           if (opts.selectableCells) {

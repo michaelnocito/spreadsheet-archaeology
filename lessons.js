@@ -36,7 +36,7 @@ const ACADEMY_PLAN = [
   { week: 1, day: 1,  name: "The grid",              teaches_for: "—",            built: true  },
   { week: 1, day: 2,  name: "Find the real header",  teaches_for: "orient_header", built: true  },
   { week: 1, day: 3,  name: "Data types",            teaches_for: "type_integrity", built: true  },
-  { week: 1, day: 4,  name: "Numbers stored as text", teaches_for: "type_integrity", built: false },
+  { week: 1, day: 4,  name: "Numbers stored as text", teaches_for: "type_integrity", built: true  },
   { week: 1, day: 5,  name: "Consistency gremlins",  teaches_for: "type_integrity", built: false },
   { week: 2, day: 6,  name: "Source vs. copy",       teaches_for: "work_on_copy",  built: false },
   { week: 2, day: 7,  name: "Sane file names",       teaches_for: "document",      built: false },
@@ -316,7 +316,105 @@ const LESSONS = [
     ],
 
     mentor_outro:
-      "Solid. Text, number, date — three types, three different toolkits. …Okay. That's enough onboarding to get you dangerous. The analyst who had this desk before you? Let's just say they didn't always get types right. Their drive is waiting. Time to use what you know."
+      "Solid. Text, number, date — three types, three different toolkits. But here's the nasty one nobody warns you about: sometimes a column <i>looks</i> like numbers and <i>isn't</i>. Next module — the green-triangle trap that quietly breaks every total you'll ever build."
+  },
+
+  /* ------------------------------------------------------------------------
+   * MODULE 4 — Numbers stored as text
+   * Teaches: a column can LOOK numeric but be stored as text — Excel flags it
+   * with a tiny green corner triangle. Text-numbers won't SUM, won't sort, and
+   * silently break formulas. The skill: spot the flag on sight.
+   * Interaction: reuses kind: "select_column". New VISUAL: artifact.marker_cells
+   * draws the green corner flag (core.js renderSheet + .tn-flag in styles.css).
+   * Feeds: Job Wave 2 (type integrity). Last built module → hands off to the Job.
+   * ---------------------------------------------------------------------- */
+  {
+    id: "numbers_as_text",
+    week: 1,
+    day: 4,
+    concept: { name: "Numbers stored as text" },
+    teaches_for: "type_integrity",
+
+    best_practice:
+      "The tell is a tiny <b>green triangle</b> in the corner of a cell — Excel flagging <i>“this number is stored as text.”</i> Text-numbers won't <code>SUM</code>, won't sort right, and break formulas without an error. Spot them first; convert before you trust any math.",
+
+    mentor_intro:
+      "Last module you learned the three types. Here's the trap that burns <i>everyone</i> at least once: a column that looks like clean numbers — right values, nothing obviously wrong — but Excel is secretly storing them as <b>text</b>. You <code>SUM</code> it and get <b>0</b>. The tell? A little <b>green triangle</b> in the corner of each cell. Once you see it, you can't unsee it.",
+
+    teach: {
+      explain:
+        "Same kind of export as before. Look closely. <b>B</b> is real numbers — <i>In stock</i> counts, Excel can math on them. <b>C</b> is <i>Unit price</i>… and every cell has a tiny <b>green triangle</b> in its top-left corner. That's Excel telling you these aren't numbers — they're <b>text that looks like numbers</b>. <code>SUM(C2:C5)</code> would come back <b>0</b>. The flag is the whole tell.",
+      example: {
+        kind: "sheet",
+        highlight_col: "C",
+        marker_cells: ["C2", "C3", "C4", "C5"],
+        rows: [
+          ["Item",      "In stock", "Unit price"],
+          ["Bolt M4",   "120",      "0.45"],
+          ["Washer",    "340",      "0.12"],
+          ["Bracket",   "58",       "3.20"],
+          ["Hinge",     "76",       "1.95"]
+        ]
+      },
+      callout: "See the green corners in column C? Each one means \"stored as text.\" SUM(C2:C5) would return 0 — not the total you'd expect."
+    },
+
+    practice: [
+      {
+        mode: "guided",
+        kind: "select_column",
+        prompt: "Click the column where the numbers are <b>stored as text</b>. I've highlighted it — look for the green corner flags.",
+        hint: "Real numbers are clean. The text-numbers wear a tiny green triangle in the corner of every cell.",
+        checklist: [
+          "Skim each column of values",
+          "Look for the cells wearing a <b>green corner triangle</b>",
+          "That's the column Excel can't do math on",
+          "Click that column's letter at the top, then <b>Confirm</b>"
+        ],
+        artifact: {
+          kind: "sheet",
+          highlight_col: "B",
+          marker_cells: ["B2", "B3", "B4", "B5"],
+          rows: [
+            ["Region",  "Revenue",  "Orders",  "Quarter"],
+            ["West",    "12400",    "310",     "Q1"],
+            ["East",    "9800",     "245",     "Q1"],
+            ["North",   "15200",    "402",     "Q1"],
+            ["South",   "7600",     "190",     "Q1"]
+          ]
+        },
+        success_check: "selected_column == 'B'",
+        praise: "Column B — Revenue. Looks like money, but every cell is flagged text. SUM would've handed you a zero and a very confused meeting."
+      },
+      {
+        mode: "solo",
+        kind: "select_column",
+        prompt: "No highlight this time. Two columns look numeric — only one is <b>stored as text</b>. Click that one.",
+        hint: "Ignore the values themselves. Hunt for the green corner flags — that's the column with the problem.",
+        checklist: [
+          "Find every column that <i>looks</i> like numbers",
+          "Check which cells carry the <b>green corner triangle</b>",
+          "Skip the clean numeric column",
+          "Click the flagged column's letter, then <b>Confirm</b>"
+        ],
+        artifact: {
+          kind: "sheet",
+          marker_cells: ["D2", "D3", "D4", "D5"],
+          rows: [
+            ["Product",   "Units",  "In stock",  "List price"],
+            ["Widget A",  "1200",   "84",        "29.99"],
+            ["Widget B",  "950",    "0",         "39.99"],
+            ["Widget C",  "1740",   "61",        "19.99"],
+            ["Widget D",  "880",    "27",        "49.99"]
+          ]
+        },
+        success_check: "selected_column == 'D'",
+        praise: "Column D — List price. Units and In stock are real numbers; the prices are text in disguise. Cold catch — that's the instinct that saves you in the wild."
+      }
+    ],
+
+    mentor_outro:
+      "That's the one that'll save you over and over. A number that won't add up isn't a mystery anymore — it's a green triangle you already know to look for. …Okay. That's enough onboarding to get you dangerous. The analyst who had this desk before you? Let's just say they didn't always get types right. Their drive is waiting. Time to use what you know."
   }
 ];
 
