@@ -21,6 +21,7 @@
   let stage = "intro";     // intro | teach | practice | outro
   let picked = null;       // selected row in current rep
   let helpShown = false;
+  let lastStepIndex = -1;  // for stepper-advance chime
 
   function start(opts) {
     opts = opts || {};
@@ -35,6 +36,7 @@
     lesson = LESSONS[lessonIdx];
     repIndex = 0;
     stage = "intro";
+    lastStepIndex = -1; // suppress the welcome chime on the first render
     setOrientation();
     render();
   }
@@ -132,6 +134,12 @@
         <span class="step-label">${s.label}</span>
       </li>`;
     }).join("");
+    // Tier 2: subtle blip whenever the user moves forward (but not when a
+    // module resets or jumps backward via Curriculum).
+    if (cur > lastStepIndex && lastStepIndex >= 0 && cur !== list.length - 1) {
+      Celebrate.stepDone();
+    }
+    lastStepIndex = cur;
   }
 
   // ----- Render the active stage ---------------------------------------------
@@ -222,14 +230,16 @@
     if (stage === "outro") {
       const hasNextLesson = lessonIdx + 1 < LESSONS.length;
       voice(lesson.mentor_outro);
-      label("Lesson complete", "✓");
+      label("Module complete", "✓");
       $("#a-prompt").innerHTML = hasNextLesson
         ? "Skill banked. One more before we open the cursed drive."
         : "You've got the skill. Time to use it for real.";
       $("#a-sheet").innerHTML = "";
       workHint("");
       feedback("🎓 Skill learned: " + lesson.concept.name, "good");
-      primary(hasNextLesson ? "Next lesson →" : "Head to the job →");
+      primary(hasNextLesson ? "Next module →" : "Head to the job →");
+      // 🎉 Tier 3: module-complete chime + toast + soft confetti.
+      Celebrate.moduleDone(`🎓 Module ${lesson.day} cleared — ${lesson.concept.name}`);
       return;
     }
   }
@@ -247,6 +257,11 @@
         ? { selected_cell: picked }
         : { selected_header_row: picked };
       if (SACore.evalCheck(rep.success_check, interaction)) {
+        // 🎉 Tier 1: warm chime + pulse on the thing they clicked
+        const target = kind === "select_cell"
+          ? $("#a-sheet").querySelector("td.cell-selected")
+          : $("#a-sheet").querySelector("tr.selected");
+        Celebrate.tap(target);
         lockSheet();
         voice(rep.praise);
         feedback("✅ " + rep.praise, "good");
@@ -256,6 +271,7 @@
           primary("Finish lesson →"); stage = "outro-advance";
         }
       } else {
+        Celebrate.wrong();
         const wrongMsg = kind === "select_cell"
           ? "Not that cell. Remember — column letter first, then row number. Try again."
           : "Not that one — that's data, or a blank, or the title. Look for the row where <i>every</i> cell is a column name. Try again.";
@@ -269,8 +285,13 @@
     if (stage === "practice-advance") { repIndex++; stage = "practice"; render(); return; }
     if (stage === "outro-advance") { stage = "outro"; render(); return; }
     if (stage === "outro") {
-      if (lessonIdx + 1 < LESSONS.length) jumpToLesson(lessonIdx + 1);
-      else onGraduate();
+      if (lessonIdx + 1 < LESSONS.length) {
+        jumpToLesson(lessonIdx + 1);
+      } else {
+        // 🎉 Tier 4: graduation fanfare BEFORE handing off to the Job.
+        Celebrate.graduate("🎉 Onboarding complete — welcome to the job");
+        onGraduate();
+      }
       return;
     }
   }

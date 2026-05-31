@@ -59,6 +59,10 @@
       <div class="cur-controls">
         <button id="cur-reveal" class="primary primary-sm">🔓 Reveal answer (current step)</button>
         <label class="cur-toggle">
+          <input type="checkbox" id="cur-sound" />
+          <span>🔔 Sound (chimes + celebrations)</span>
+        </label>
+        <label class="cur-toggle">
           <input type="checkbox" id="cur-autoreveal" />
           <span>Auto-reveal answer on every step</span>
         </label>
@@ -79,6 +83,17 @@
 
     d.querySelector("#cur-close").addEventListener("click", close);
     d.querySelector("#cur-reveal").addEventListener("click", () => { opts.onReveal(); });
+
+    // Sound toggle (delegates to Celebrate; persisted by Celebrate itself)
+    const snd = d.querySelector("#cur-sound");
+    snd.checked = !!(window.Celebrate && Celebrate.isSoundOn());
+    snd.addEventListener("change", (e) => {
+      if (window.Celebrate) {
+        Celebrate.setSoundOn(e.target.checked);
+        if (e.target.checked) Celebrate.armAudio(); // gesture counts as unlock
+      }
+    });
+
     const cb = d.querySelector("#cur-autoreveal");
     cb.checked = !!window.DEV_AUTOREVEAL;
     cb.addEventListener("change", (e) => {

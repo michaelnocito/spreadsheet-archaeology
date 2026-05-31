@@ -113,16 +113,28 @@
 
     if (SACore.evalCheck(WAVE.task.success_check, state.interaction)) {
       state.solved = true;
+      // 🎉 Tier 1: warm chime + pulse on the row they nailed
+      Celebrate.tap($("#sheet").querySelector("tr.selected"));
       renderPredecessor(WAVE.feedback.win, "win");
       setFeedback("✅ Right call. You oriented before you touched anything.", "good");
       $("#sheet").classList.add("locked");
-      setPrimary(state.index + 1 < WAVES.length ? "Next file →" : "Week 1 — slice complete", true);
-      if (state.index + 1 >= WAVES.length) $("#slice-note").hidden = false;
+      const isLast = state.index + 1 >= WAVES.length;
+      setPrimary(isLast ? "Week 1 — slice complete" : "Next file →", true);
+      if (isLast) {
+        $("#slice-note").hidden = false;
+        // 🎉 Tier 3: cleared the last available wave
+        Celebrate.moduleDone(`💼 File cleared — ${WAVE.concept.name}`);
+      } else {
+        // each non-final wave still gets a banner — it's a real moment
+        Celebrate.moduleDone(`💼 File cleared — ${WAVE.concept.name}`);
+      }
     } else if (SACore.evalCheck(WAVE.task.fail_check, state.interaction)) {
+      Celebrate.wrong();
       renderPredecessor(WAVE.feedback.fail, "fail");
       setFeedback("Not the headers — but now you know why. Try again.", "bad");
       clearSelection();
     } else {
+      Celebrate.wrong();
       renderPredecessor(WAVE.feedback.miss ||
         "Not quite — that's not the header band. Look for the row of column names, or ask for backup.", "miss");
       setFeedback("Not quite. Look for the row of column names.", "bad");

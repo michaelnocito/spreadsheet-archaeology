@@ -76,8 +76,9 @@
         </div>
       </div>`;
 
-    // Start button
+    // Start button — also doubles as the audio-unlock gesture.
     host.querySelector("#welcome-start").addEventListener("click", () => {
+      if (window.Celebrate) Celebrate.armAudio();
       opts.onStart(0);
     });
 
