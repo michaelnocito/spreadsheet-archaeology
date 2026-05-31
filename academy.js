@@ -1,5 +1,5 @@
 /* ============================================================================
- * Getting It Wrong Gets You Good — THE ACADEMY (boot-camp player)
+ * Getting It Wrong Gets You There Faster — THE ACADEMY (boot-camp player)
  * ----------------------------------------------------------------------------
  * Runs LESSONS through gradual release: Teach (worked example) → Guided (hints
  * shown + answer softly highlighted) → Solo (cold). Mentor SAM narrates. Help

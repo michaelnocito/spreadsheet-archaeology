@@ -1,5 +1,5 @@
 /* ============================================================================
- * Getting It Wrong Gets You Good — SHARED CORE
+ * Getting It Wrong Gets You There Faster — SHARED CORE
  * ----------------------------------------------------------------------------
  * Pieces used by BOTH game modes:
  *   - the Academy (academy.js)  — teach the skill, calm and clean

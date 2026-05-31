@@ -1,5 +1,5 @@
 /* ============================================================================
- * Getting It Wrong Gets You Good — FLOW CONTROLLER
+ * Getting It Wrong Gets You There Faster — FLOW CONTROLLER
  * ----------------------------------------------------------------------------
  * Owns the three screens of the experience and the navigation between them:
  *   1. WELCOME  — premise, meet Sam, syllabus, "Start Day 1 →"   (welcome.js)

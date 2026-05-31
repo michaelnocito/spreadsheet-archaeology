@@ -1,8 +1,8 @@
-# Getting It Wrong Gets You Good
+# Getting It Wrong Gets You There Faster
 
 *A day-in-the-life data-analyst job sim. Setting: **Week One** on the job.*
 
-**Getting it wrong gets you good.** This is the job, not a textbook. You dive in,
+**Getting it wrong gets you there faster.** This is the job, not a textbook. You dive in,
 you type, you screw up — and every screw-up teaches you something, with backup
 right when you need it.
 

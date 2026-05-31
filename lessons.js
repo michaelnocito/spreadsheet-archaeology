@@ -1,5 +1,5 @@
 /* ============================================================================
- * Getting It Wrong Gets You Good — ACADEMY DATA (the two-week boot camp)
+ * Getting It Wrong Gets You There Faster — ACADEMY DATA (the two-week boot camp)
  * ----------------------------------------------------------------------------
  * Before you're handed the Predecessor's cursed drive, you train. Your mentor,
  * SAM, walks you through the basics calm and clean. Each lesson follows

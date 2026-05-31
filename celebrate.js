@@ -1,5 +1,5 @@
 /* ============================================================================
- * Getting It Wrong Gets You Good — CELEBRATE (juice / micro-feedback)
+ * Getting It Wrong Gets You There Faster — CELEBRATE (juice / micro-feedback)
  * ----------------------------------------------------------------------------
  * Research-backed micro-celebrations for skill learning (Duolingo-warm tier,
  * not arcade / not slot-machine):

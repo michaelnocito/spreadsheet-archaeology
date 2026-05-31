@@ -1,5 +1,5 @@
 /* ============================================================================
- * Getting It Wrong Gets You Good — WAVE DATA
+ * Getting It Wrong Gets You There Faster — WAVE DATA
  * ----------------------------------------------------------------------------
  * The engine (engine.js) is GENERIC. All game content lives here as pure data.
  * To add a wave: push another object to WAVES. No engine changes required.

@@ -1,5 +1,5 @@
 /* ============================================================================
- * Getting It Wrong Gets You Good — CURRICULUM / BETA-NAV PANEL
+ * Getting It Wrong Gets You There Faster — CURRICULUM / BETA-NAV PANEL
  * ----------------------------------------------------------------------------
  * A side drawer the player can open anytime (📋 Curriculum button, top right):
  *   - See where they are

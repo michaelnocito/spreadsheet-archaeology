@@ -1,5 +1,5 @@
 /* ============================================================================
- * Getting It Wrong Gets You Good — WELCOME / LANDING
+ * Getting It Wrong Gets You There Faster — WELCOME / LANDING
  * ----------------------------------------------------------------------------
  * The first thing a brand-new player sees. Sets the premise, introduces the
  * mentor, shows the full Two-Week Academy + 5-wave Job syllabus so they know
@@ -50,7 +50,7 @@
               <span class="logo welcome-logo">▦</span>
               <div>
                 <h1>You just got hired.</h1>
-                <p class="welcome-sub">Junior data analyst, day one. <i>Getting It Wrong Gets You Good</i> — a job sim.</p>
+                <p class="welcome-sub">Junior data analyst, day one. <i>Getting It Wrong Gets You There Faster</i> — a job sim.</p>
               </div>
             </div>
           </div>
@@ -58,7 +58,7 @@
           <div class="welcome-premise">
             <p><b>Here's the deal.</b> The analyst who had this desk before you — the Predecessor — left in a hurry, and their drive is a mess. Cursed spreadsheets, mystery files, no documentation. You're going to inherit it.</p>
             <p><b>First, you train.</b> Two weeks with <b>${MENTOR.name}</b>, your mentor ${MENTOR.avatar} — calm files, one skill at a time. <b>Then you're on the job</b> — same skills, but under the Predecessor's mess. Help is right there when you want it.</p>
-            <p class="welcome-taglineline">Failing is the curriculum. <b>Getting it wrong gets you good.</b></p>
+            <p class="welcome-taglineline">Failing is the curriculum. <b>Getting it wrong gets you there faster.</b></p>
           </div>
 
           <div class="syllabus">

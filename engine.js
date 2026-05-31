@@ -1,5 +1,5 @@
 /* ============================================================================
- * Getting It Wrong Gets You Good — THE JOB (generic on-the-job engine)
+ * Getting It Wrong Gets You There Faster — THE JOB (generic on-the-job engine)
  * ----------------------------------------------------------------------------
  * Where you APPLY what the Academy taught — under the Predecessor's mess.
  * Knows nothing about any specific wave; renders whatever WAVES[] hands it:
