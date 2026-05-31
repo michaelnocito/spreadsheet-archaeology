@@ -350,7 +350,7 @@
         Celebrate.wrong();
         const wrongMsg =
           kind === "select_cell"   ? "Not that cell. Remember — column letter first, then row number. Try again." :
-          kind === "select_column" ? "Not that column. Look at the values down each column — which one matches the type you're hunting for?" :
+          kind === "select_column" ? "Not that column. Read down each column's values — which one fits what the task is asking for? Try again." :
                                      "Not that one — that's data, or a blank, or the title. Look for the row where <i>every</i> cell is a column name. Try again.";
         voice(wrongMsg);
         const fb =

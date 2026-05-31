@@ -38,7 +38,7 @@ const ACADEMY_PLAN = [
   { week: 1, day: 2,  name: "Find the real header",  teaches_for: "orient_header", built: true  },
   { week: 1, day: 3,  name: "Data types",            teaches_for: "type_integrity", built: true  },
   { week: 1, day: 4,  name: "Numbers stored as text", teaches_for: "type_integrity", built: true  },
-  { week: 1, day: 5,  name: "Consistency gremlins",  teaches_for: "type_integrity", built: false },
+  { week: 1, day: 5,  name: "Consistency gremlins",  teaches_for: "type_integrity", built: true  },
   { week: 2, day: 6,  name: "Source vs. copy",       teaches_for: "work_on_copy",  built: false },
   { week: 2, day: 7,  name: "Sane file names",       teaches_for: "document",      built: false },
   { week: 2, day: 8,  name: "The data dictionary",   teaches_for: "document",      built: false },
@@ -423,7 +423,106 @@ const LESSONS = [
     ],
 
     mentor_outro:
-      "That's the one that'll save you over and over. A number that won't add up isn't a mystery anymore — it's a green triangle you already know to look for. …Okay. That's enough onboarding to get you dangerous. The analyst who had this desk before you? Let's just say they didn't always get types right. Their drive is waiting. Time to use what you know."
+      "That's the one that'll save you over and over. A number that won't add up isn't a mystery anymore — it's a green triangle you already know to look for. One more gremlin before we open the drive: values that look fine on their own but don't <i>agree</i> with each other. That's next."
+  },
+
+  /* ------------------------------------------------------------------------
+   * MODULE 5 — Consistency gremlins
+   * Teaches: the same category recorded several ways ("Active"/"active"/
+   * "ACTIVE") is several values to a computer — it splits counts, pivots, and
+   * filters. The skill: spot the column that's inconsistent (vs. one that
+   * merely holds different legit categories). Interaction: select_column.
+   * Last built module → carries the handoff to the Job.
+   * ---------------------------------------------------------------------- */
+  {
+    id: "consistency_gremlins",
+    week: 1,
+    day: 5,
+    concept: { name: "Consistency gremlins" },
+    teaches_for: "type_integrity",
+
+    best_practice:
+      "The same thing written two ways is <b>two things</b> to a computer. <code>Active</code>, <code>active</code>, and <code>ACTIVE</code> won't count, filter, or group together. Standardize your categories <i>before</i> you summarize anything.",
+
+    mentor_intro:
+      "Last one. You can spot a number that's secretly text — here's its sneakier cousin. Values that look fine one at a time but don't <i>agree</i>: <code>Active</code>, <code>active</code>, <code>ACTIVE</code>. To you, same status. To Excel, <b>three different groups</b>. Build a pivot and your count splits into three rows, all wrong. We call these <b>consistency gremlins</b>.",
+
+    teach: {
+      explain:
+        "Look at the <b>Status</b> column. Every value <i>means</i> \"open\" or \"closed\" — but read them literally: <code>Open</code>, <code>open</code>, <code>OPEN</code>. Three spellings of one thing. The moment you count tickets by status, Excel gives you three separate \"open\" buckets. Note the difference from a column like <b>Owner</b>: different names there are <i>supposed</i> to be different. Inconsistency is the same thing written differently — not different things.",
+      example: {
+        kind: "sheet",
+        highlight_col: "B",
+        rows: [
+          ["Ticket", "Status",  "Owner"],
+          ["T-01",   "Open",    "Dana"],
+          ["T-02",   "open",    "Raj"],
+          ["T-03",   "OPEN",    "Dana"],
+          ["T-04",   "Closed",  "Mei"],
+          ["T-05",   "open",    "Raj"]
+        ]
+      },
+      callout: "Column B is one status in three costumes — Open / open / OPEN. Count by status and you'd get three \"open\" rows instead of one."
+    },
+
+    practice: [
+      {
+        mode: "guided",
+        kind: "select_column",
+        task: "Click the column whose values are <b>inconsistent</b> — the same thing written several ways.",
+        prompt: "It's highlighted. Notice one category showing up in a few different spellings.",
+        hint: "You're not looking for different things — you're looking for one thing recorded inconsistently (case, abbreviations).",
+        checklist: [
+          "Read down each column's values",
+          "Find the column where one category appears in <b>multiple spellings</b>",
+          "Ignore columns where the values are genuinely different things",
+          "Click that column's letter at the top, then <b>Confirm</b>"
+        ],
+        artifact: {
+          kind: "sheet",
+          highlight_col: "C",
+          rows: [
+            ["Rep",    "Region",  "Priority"],
+            ["Alvarez", "West",   "High"],
+            ["Bso",     "East",   "high"],
+            ["Chen",    "West",   "HIGH"],
+            ["Diaz",    "North",  "Low"],
+            ["Eze",     "East",   "high"]
+          ]
+        },
+        success_check: "selected_column == 'C'",
+        praise: "Column C — Priority. High / high / HIGH is one priority written three ways. Region's fine: West, East, North are genuinely different places."
+      },
+      {
+        mode: "solo",
+        kind: "select_column",
+        task: "Click the column with <b>inconsistent</b> categories.",
+        prompt: "No highlight this time. Two columns hold categories — only one is written inconsistently.",
+        hint: "One column varies for a good reason (real, distinct values). The other repeats one category in different spellings — that's the gremlin.",
+        checklist: [
+          "Spot the two columns that hold <b>categories</b> (not IDs, not numbers)",
+          "One holds genuinely different values — leave it",
+          "One repeats a single category in mixed case or spellings",
+          "Click that column's letter, then <b>Confirm</b>"
+        ],
+        artifact: {
+          kind: "sheet",
+          rows: [
+            ["Store", "Region",  "Segment"],
+            ["S-1",   "North",   "Retail"],
+            ["S-2",   "South",   "retail"],
+            ["S-3",   "North",   "Wholesale"],
+            ["S-4",   "East",    "RETAIL"],
+            ["S-5",   "South",   "Retail"]
+          ]
+        },
+        success_check: "selected_column == 'C'",
+        praise: "Column C — Segment. Retail / retail / RETAIL is the gremlin. Region looked busy too, but North/South/East are real distinct values — that one's clean. Cold catch."
+      }
+    ],
+
+    mentor_outro:
+      "Nice — \"Active,\" \"active,\" \"ACTIVE\" will never slip into one of your pivot tables again. …Okay. That's enough onboarding to get you dangerous. The analyst who had this desk before you? Let's just say they weren't big on consistency — or types, or headers. Their drive is waiting. Time to use what you know."
   }
 ];
 
