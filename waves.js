@@ -18,7 +18,8 @@
  *   callbacks      [] ids of earlier concepts this wave makes you reuse
  *   scenario       { intro (Predecessor voice), artifact_ref }
  *   artifact       { kind:"sheet", title, rows[][], merged_title_row, blank_rows[] }
- *   task           { kind, prompt, success_check, fail_check }
+ *   task           { kind, directive, prompt, success_check, fail_check }
+ *                  directive = crisp brief headline ("do this"); prompt = context
  *   help           { tier1, tier2, tier3 }   <- pull-only, revealed one at a time
  *   feedback       { win, fail, miss? }       <- miss = chosen, but neither win nor the named blunder
  *   sets_up        [] ids of concepts this wave foreshadows
@@ -72,8 +73,9 @@ const WAVES = [
 
     task: {
       kind: "select_row",
+      directive: "Click the row where the <b>real column labels</b> begin — before you edit anything.",
       prompt:
-        "Row 1 is a merged title cell. Rows 2–3 are blank. Click the row number where the <b>real data labels</b> begin — before you touch a single cell.",
+        "Row 1 is a merged title cell and rows 2–3 are blank. The real labels are buried below — find where they actually start.",
       checklist: [
         "Open the file but <b>don't edit yet</b>",
         "Scan top to bottom — note the title banner and blank rows",

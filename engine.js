@@ -34,6 +34,13 @@
     renderPredecessor(WAVE.scenario.intro, "intro");
     $("#job-brief-title").textContent = `File ${state.index + 1} · ${WAVE.concept.name}`;
     $("#job-brief-stage").textContent = "On the job — apply what you learned";
+    if (WAVE.task && WAVE.task.directive) {
+      $("#job-brief-task").innerHTML =
+        `<span class="task-icon">🎯</span><span class="task-do">${WAVE.task.directive}</span>`;
+      $("#job-brief-task").hidden = false;
+    } else {
+      $("#job-brief-task").hidden = true;
+    }
     $("#task-prompt").innerHTML = WAVE.task.prompt;
     $("#filename").textContent = WAVE.artifact ? WAVE.artifact.title : "";
     $(".tab-name").textContent = WAVE.artifact ? WAVE.artifact.title : "";

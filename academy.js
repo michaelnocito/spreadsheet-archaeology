@@ -51,6 +51,7 @@
             <div class="brief-eyebrow">📋 Task brief</div>
             <h2 id="a-brief-title" class="brief-title">Module</h2>
             <div id="a-brief-stage" class="brief-stage"></div>
+            <p id="a-brief-task" class="brief-task" hidden></p>
             <p id="a-prompt" class="brief-prompt"></p>
             <div id="a-brief-checklist-wrap" hidden>
               <div class="brief-sublabel">Your checklist</div>
@@ -120,6 +121,16 @@
   function setBrief(stage, opts) {
     opts = opts || {};
     $("#a-brief-stage").textContent = stage || "";
+    // The crisp directive — the one thing to do right now, scannable at a glance.
+    const taskEl = $("#a-brief-task");
+    if (opts.task) {
+      taskEl.innerHTML =
+        `<span class="task-icon">${opts.taskIcon || "🎯"}</span>` +
+        `<span class="task-do">${opts.task}</span>`;
+      taskEl.hidden = false;
+    } else {
+      taskEl.hidden = true;
+    }
     $("#a-prompt").innerHTML = opts.prompt || "";
     const wrap = $("#a-brief-checklist-wrap");
     if (opts.checklist && opts.checklist.length) {
@@ -185,7 +196,9 @@
     if (stage === "intro") {
       voice(lesson.mentor_intro);
       setBrief("Intro — listen to Sam", {
-        prompt: "Sam will introduce this module. When you're ready, click <b>Show me</b> to see the worked example."
+        taskIcon: "▶️",
+        task: "Press <b>Show me</b> to watch Sam's worked example.",
+        prompt: "Sam will introduce this module first — read it on the left, then start when you're ready."
       });
       $("#a-sheet").innerHTML = "";
       workHint("");
@@ -196,7 +209,9 @@
     if (stage === "teach") {
       voice(lesson.teach.explain);
       setBrief("Watch — worked example", {
-        prompt: "Sam's walking through a clean example. Just watch and follow what they're pointing at.",
+        taskIcon: "👀",
+        task: "Just watch what's highlighted below — then press <b>Got it</b>.",
+        prompt: "Sam's walking through a clean example. Nothing to click yet — follow what they point at.",
         checklist: [
           "Read Sam's explanation",
           "Notice what's highlighted in the file below",
@@ -224,6 +239,7 @@
         ? "Go ahead — I'll leave the answer highlighted and a hint up while you get the feel."
         : "Now without the training wheels. Take your time. Backup's right there if you want it.");
       setBrief(guided ? "Try it — guided (we do)" : "Try it — solo (you do)", {
+        task: rep.task,
         prompt: rep.prompt,
         checklist: rep.checklist
       });
@@ -284,6 +300,10 @@
       const hasNextLesson = lessonIdx + 1 < LESSONS.length;
       voice(lesson.mentor_outro);
       setBrief("Module complete ✓", {
+        taskIcon: "✅",
+        task: hasNextLesson
+          ? "Press <b>Next module</b> to keep going."
+          : "Press <b>Head to the job</b> to start for real.",
         prompt: hasNextLesson
           ? "Skill banked. One more before we open the cursed drive."
           : "You've got the skill. Time to use it for real."

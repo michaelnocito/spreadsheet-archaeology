@@ -19,7 +19,8 @@
  *   id, week, day, concept:{name}, teaches_for
  *   mentor_intro                       Sam's warm setup
  *   teach   { explain, example:{sheet…, highlight_row, callout} }
- *   practice[]  { mode:"guided"|"solo", prompt, hint?, artifact, success_check, praise }
+ *   practice[]  { mode:"guided"|"solo", task, prompt, hint?, artifact, success_check, praise }
+ *               task = the one crisp directive (brief headline); prompt = context
  *   mentor_outro
  * ========================================================================== */
 
@@ -79,7 +80,8 @@ const LESSONS = [
       {
         mode: "guided",
         kind: "select_cell",
-        prompt: "Click cell <b>C2</b>. I've highlighted it so you can see it.",
+        task: "Click cell <b>C2</b>.",
+        prompt: "It's highlighted so you can see exactly where to look.",
         hint: "Column C is the third column from the left. Row 2.",
         checklist: [
           "Find column <b>C</b> (third column across the top)",
@@ -103,7 +105,8 @@ const LESSONS = [
       {
         mode: "solo",
         kind: "select_cell",
-        prompt: "No highlight this time. Click cell <b>D3</b>.",
+        task: "Click cell <b>D3</b>.",
+        prompt: "No highlight this time — you've got this.",
         hint: "D is the fourth column. Row 3.",
         checklist: [
           "Find column <b>D</b>",
@@ -164,7 +167,8 @@ const LESSONS = [
       {
         mode: "guided",
         kind: "select_row",
-        prompt: "Click the <b>header row</b>. I've highlighted it so you can see the shape.",
+        task: "Click the <b>header row</b> — the row where every cell is a column name.",
+        prompt: "It's highlighted so you can see the shape you're hunting for.",
         hint: "Skip the title banner and the blank row. Find where the column names start.",
         checklist: [
           "Scan the file top to bottom",
@@ -193,7 +197,8 @@ const LESSONS = [
       {
         mode: "solo",
         kind: "select_row",
-        prompt: "No highlight this time. Find the <b>header row</b> on your own.",
+        task: "Click the <b>header row</b>.",
+        prompt: "No highlight this time — find it on your own.",
         hint: "Same idea — logo, blanks, then the row of column names.",
         checklist: [
           "Scan the file top to bottom",
@@ -266,7 +271,8 @@ const LESSONS = [
       {
         mode: "guided",
         kind: "select_column",
-        prompt: "Click the column that holds <b>dates</b>. I've highlighted it so you can see the shape.",
+        task: "Click the column that holds <b>dates</b>.",
+        prompt: "It's highlighted so you can see the shape you're after.",
         hint: "Dates look like calendar values — year-month-day, slashes, or month names.",
         checklist: [
           "Skim each column top to bottom",
@@ -291,7 +297,8 @@ const LESSONS = [
       {
         mode: "solo",
         kind: "select_column",
-        prompt: "No highlight this time. Click the column that holds <b>numbers</b> (the kind you'd actually do math on).",
+        task: "Click the column that holds <b>numbers</b> — the kind you'd do math on.",
+        prompt: "No highlight this time. Watch out for IDs and codes that only look numeric.",
         hint: "Look past IDs and codes — find the column you'd reach for if someone asked you to <code>SUM</code> it.",
         checklist: [
           "Scan each column's values",
@@ -363,7 +370,8 @@ const LESSONS = [
       {
         mode: "guided",
         kind: "select_column",
-        prompt: "Click the column where the numbers are <b>stored as text</b>. I've highlighted it — look for the green corner flags.",
+        task: "Click the column whose numbers are <b>stored as text</b>.",
+        prompt: "It's highlighted — look for the green corner flags on every cell.",
         hint: "Real numbers are clean. The text-numbers wear a tiny green triangle in the corner of every cell.",
         checklist: [
           "Skim each column of values",
@@ -389,7 +397,8 @@ const LESSONS = [
       {
         mode: "solo",
         kind: "select_column",
-        prompt: "No highlight this time. Two columns look numeric — only one is <b>stored as text</b>. Click that one.",
+        task: "Click the column that's <b>stored as text</b>.",
+        prompt: "No highlight this time. Two columns look numeric — only one is actually text.",
         hint: "Ignore the values themselves. Hunt for the green corner flags — that's the column with the problem.",
         checklist: [
           "Find every column that <i>looks</i> like numbers",

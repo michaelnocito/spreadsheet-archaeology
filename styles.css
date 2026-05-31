@@ -156,6 +156,25 @@ body {
 .brief-card.brief-job .brief-stage {
   color: #6639ba; background: #f3eefb; border-color: #ddccf3;
 }
+/* The single crisp directive — "what do I do right now." Most prominent line
+   in the brief so the action never has to be decoded out of the context prose
+   (player-orientation principle). Sits above the supporting prompt. */
+.brief-task {
+  margin: 0 0 12px; padding: 11px 13px;
+  background: #eef4ff; border: 1px solid #cfe0fb; border-left: 4px solid var(--accent);
+  border-radius: 9px; color: var(--ink);
+  font-size: 15px; font-weight: 600; line-height: 1.4;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.brief-task[hidden] { display: none; } /* flex would otherwise beat the hidden attr */
+.brief-task .task-icon { flex: 0 0 auto; }
+.brief-task .task-do { flex: 1 1 auto; min-width: 0; }
+.brief-task b { color: var(--accent-d); }
+.brief-card.brief-job .brief-task {
+  background: #f3eefb; border-color: #ddccf3; border-left-color: #7c4dff;
+}
+.brief-card.brief-job .brief-task b { color: #6639ba; }
+
 .brief-prompt {
   margin: 0 0 12px; font-size: 14.5px; line-height: 1.5; color: var(--ink);
 }
