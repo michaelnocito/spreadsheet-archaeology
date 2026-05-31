@@ -206,6 +206,7 @@
       SACore.renderSheet($("#a-sheet"), lesson.teach.example, {
         highlightRow: lesson.teach.example.highlight_row,
         highlightCell: lesson.teach.example.highlight_cell,
+        highlightCol: lesson.teach.example.highlight_col,
         selectable: false
       });
       workHint("👀 just look — nothing to click yet");
@@ -238,6 +239,17 @@
           }
         });
         workHint("click a cell");
+      } else if (kind === "select_column") {
+        SACore.renderSheet($("#a-sheet"), rep.artifact, {
+          selectableCols: true,
+          highlightCol: guided ? rep.artifact.highlight_col : null,
+          onSelectCol: (letter) => {
+            picked = letter;
+            primary("Confirm →", true);
+            feedback(`Column ${letter} marked. Confirm when you're ready.`, "neutral");
+          }
+        });
+        workHint("click a column letter");
       } else {
         SACore.renderSheet($("#a-sheet"), rep.artifact, {
           selectable: true,
@@ -295,14 +307,16 @@
       const rep = currentRep();
       if (picked == null) return;
       const kind = rep.kind || "select_row";
-      const interaction = kind === "select_cell"
-        ? { selected_cell: picked }
-        : { selected_header_row: picked };
+      const interaction =
+        kind === "select_cell"   ? { selected_cell: picked }   :
+        kind === "select_column" ? { selected_column: picked } :
+                                   { selected_header_row: picked };
       if (SACore.evalCheck(rep.success_check, interaction)) {
         // 🎉 Tier 1: warm chime + pulse on the thing they clicked
-        const target = kind === "select_cell"
-          ? $("#a-sheet").querySelector("td.cell-selected")
-          : $("#a-sheet").querySelector("tr.selected");
+        const target =
+          kind === "select_cell"   ? $("#a-sheet").querySelector("td.cell-selected") :
+          kind === "select_column" ? $("#a-sheet").querySelector("th.col-selected")  :
+                                     $("#a-sheet").querySelector("tr.selected");
         Celebrate.tap(target);
         lockSheet();
         voice(rep.praise);
@@ -314,11 +328,16 @@
         }
       } else {
         Celebrate.wrong();
-        const wrongMsg = kind === "select_cell"
-          ? "Not that cell. Remember — column letter first, then row number. Try again."
-          : "Not that one — that's data, or a blank, or the title. Look for the row where <i>every</i> cell is a column name. Try again.";
+        const wrongMsg =
+          kind === "select_cell"   ? "Not that cell. Remember — column letter first, then row number. Try again." :
+          kind === "select_column" ? "Not that column. Look at the values down each column — which one matches the type you're hunting for?" :
+                                     "Not that one — that's data, or a blank, or the title. Look for the row where <i>every</i> cell is a column name. Try again.";
         voice(wrongMsg);
-        feedback(kind === "select_cell" ? "Not that cell. Try again." : "Not the header row. Find the row of column names.", "bad");
+        const fb =
+          kind === "select_cell"   ? "Not that cell. Try again." :
+          kind === "select_column" ? "Not that column. Try again." :
+                                     "Not the header row. Find the row of column names.";
+        feedback(fb, "bad");
         clearSelection();
       }
       return;
@@ -357,6 +376,7 @@
     $("#a-sheet").classList.remove("locked");
     $("#a-sheet").querySelectorAll("tr.selected").forEach((tr) => tr.classList.remove("selected"));
     $("#a-sheet").querySelectorAll("td.cell-selected").forEach((td) => td.classList.remove("cell-selected"));
+    $("#a-sheet").querySelectorAll(".col-selected").forEach((el) => el.classList.remove("col-selected"));
     primary("Confirm →", false);
   }
 
@@ -371,6 +391,10 @@
       const td = $("#a-sheet").querySelector(`td[data-addr="${answer}"]`);
       if (td) { td.classList.add("cell-highlight"); td.click(); }
       feedback(`🛠 Dev: the answer is cell ${answer}.`, "neutral");
+    } else if (kind === "select_column") {
+      const th = $("#a-sheet").querySelector(`th[data-col="${answer}"]`);
+      if (th) { th.classList.add("col-highlight"); th.click(); }
+      feedback(`🛠 Dev: the answer is column ${answer}.`, "neutral");
     } else {
       const tr = $("#a-sheet").querySelector(`tr[data-row="${answer}"]`);
       if (tr) {

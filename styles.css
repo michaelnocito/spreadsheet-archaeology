@@ -320,6 +320,28 @@ body {
   font-weight: 600;
 }
 
+/* clickable column headers (Module 3+ "tag this column's type" lessons) */
+.sheet-table th.clickable-col { cursor: pointer; }
+.sheet-table th.clickable-col:hover { background: #e7ecf4; color: var(--ink); }
+.sheet-table th.clickable-col:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+/* highlight — the whole column lights up softly (teach + guided modes) */
+.sheet-table th.col-highlight,
+.sheet-table td.col-highlight {
+  background: #e3f1ff !important;
+  outline: 2px dashed #8fb6f5; outline-offset: -2px;
+}
+
+/* selected — the column header is the anchor, body cells get a gentle tint */
+.sheet-table th.col-selected {
+  background: var(--sel) !important;
+  outline: 3px solid var(--good); outline-offset: -3px;
+  color: var(--ink); font-weight: 700;
+}
+.sheet-table td.col-selected {
+  background: #fff9e0 !important;
+}
+
 /* soft "look here" highlight used in Academy teach/guided modes */
 .sheet-table tr.highlight td,
 .sheet-table tr.highlight .rowhead {

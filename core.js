@@ -56,6 +56,9 @@
   //   opts.selectableCells  : every cell is clickable (calls opts.onSelectCell(addr))
   //   opts.onSelectCell     : callback("B3")
   //   opts.highlightCell    : "B3" — soft glow on a single cell (teach mode)
+  //   opts.selectableCols   : column headers (A,B,C…) are clickable
+  //   opts.onSelectCol      : callback("B")
+  //   opts.highlightCol     : "B" — soft glow on a whole column (teach mode)
   //   opts.locked           : ignore clicks
   function renderSheet(host, a, opts) {
     opts = opts || {};
@@ -69,7 +72,23 @@
     const thead = document.createElement("thead");
     const hr = document.createElement("tr");
     hr.appendChild(cell("th", "", "corner"));
-    for (let c = 0; c < nCols; c++) hr.appendChild(cell("th", colLetter(c), "colhead"));
+    for (let c = 0; c < nCols; c++) {
+      const letter = colLetter(c);
+      const th = cell("th", letter, "colhead");
+      th.dataset.col = letter;
+      if (opts.highlightCol === letter) th.classList.add("col-highlight");
+      if (opts.selectableCols) {
+        th.classList.add("clickable-col");
+        th.tabIndex = 0;
+        th.setAttribute("role", "button");
+        th.setAttribute("aria-label", `Select column ${letter}`);
+        th.addEventListener("click", () => selectCol(letter));
+        th.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectCol(letter); }
+        });
+      }
+      hr.appendChild(th);
+    }
     thead.appendChild(hr);
     table.appendChild(thead);
 
@@ -87,6 +106,18 @@
       tbody.querySelectorAll("td.cell-selected").forEach((c) => c.classList.remove("cell-selected"));
       td.classList.add("cell-selected");
       if (opts.onSelectCell) opts.onSelectCell(addr);
+    }
+
+    function selectCol(letter) {
+      if (opts.locked) return;
+      // Clear any prior column selection (header + cells).
+      thead.querySelectorAll("th.col-selected").forEach((c) => c.classList.remove("col-selected"));
+      tbody.querySelectorAll("td.col-selected").forEach((c) => c.classList.remove("col-selected"));
+      // Apply to this column's header AND every td in the column.
+      const head = thead.querySelector(`th[data-col="${letter}"]`);
+      if (head) head.classList.add("col-selected");
+      tbody.querySelectorAll(`td[data-col="${letter}"]`).forEach((c) => c.classList.add("col-selected"));
+      if (opts.onSelectCol) opts.onSelectCol(letter);
     }
 
     a.rows.forEach((row, ri) => {
@@ -115,9 +146,12 @@
       } else {
         for (let c = 0; c < nCols; c++) {
           const td = cell("td", row[c] != null ? row[c] : "", isBlank ? "blank" : "");
-          const addr = colLetter(c) + rnum;
+          const colL = colLetter(c);
+          const addr = colL + rnum;
           td.dataset.addr = addr;
+          td.dataset.col = colL;
           if (opts.highlightCell === addr) td.classList.add("cell-highlight");
+          if (opts.highlightCol === colL) td.classList.add("col-highlight");
           if (opts.selectableCells) {
             td.classList.add("clickable-cell");
             td.tabIndex = 0;

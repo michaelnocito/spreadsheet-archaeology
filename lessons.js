@@ -35,7 +35,7 @@ const MENTOR = {
 const ACADEMY_PLAN = [
   { week: 1, day: 1,  name: "The grid",              teaches_for: "—",            built: true  },
   { week: 1, day: 2,  name: "Find the real header",  teaches_for: "orient_header", built: true  },
-  { week: 1, day: 3,  name: "Data types",            teaches_for: "type_integrity", built: false },
+  { week: 1, day: 3,  name: "Data types",            teaches_for: "type_integrity", built: true  },
   { week: 1, day: 4,  name: "Numbers stored as text", teaches_for: "type_integrity", built: false },
   { week: 1, day: 5,  name: "Consistency gremlins",  teaches_for: "type_integrity", built: false },
   { week: 2, day: 6,  name: "Source vs. copy",       teaches_for: "work_on_copy",  built: false },
@@ -222,7 +222,101 @@ const LESSONS = [
     ],
 
     mentor_outro:
-      "That's it. You'll be amazed how often row 1 <i>isn't</i> the answer. …Okay. Fair warning before I let you loose: the analyst who had this desk before you? Never learned this. Their drive is — a lot. Let's open one and you'll see exactly what I mean."
+      "That's it. You'll be amazed how often row 1 <i>isn't</i> the answer. Next up: once you've found the labels, you need to know what <i>kind</i> of stuff lives in each column."
+  },
+
+  /* ------------------------------------------------------------------------
+   * MODULE 3 — Data types
+   * Teaches: every column holds a TYPE (text / number / date). Knowing the
+   * type is upstream of every formula, sort, and filter.
+   * New interaction: kind: "select_column" — clicking a column header.
+   * Feeds: Job Wave 2 (type integrity).
+   * ---------------------------------------------------------------------- */
+  {
+    id: "data_types",
+    week: 1,
+    day: 3,
+    concept: { name: "Data types" },
+    teaches_for: "type_integrity",
+
+    best_practice:
+      "Know each column's <b>type</b> before you touch a formula. Excel can't <code>SUM</code> text and can't sort dates correctly if they're stored as text. Type is upstream of everything.",
+
+    mentor_intro:
+      "Okay — next thing. Every column in a sheet holds a <b>type</b>. The three you'll see daily: <b>text</b> (names, codes, words), <b>numbers</b> (counts, amounts, anything you'd math on), and <b>dates</b> (when something happened). Knowing which is which is what stops Excel from sorting your dates as text or summing your IDs.",
+
+    teach: {
+      explain:
+        "Here's a clean little export. Look at it column by column. <b>A</b> = customer names (<i>text</i>). <b>B</b> = order amounts (<i>numbers</i> — Excel can sum these). <b>C</b> = order dates (<i>dates</i>). <b>D</b> = status labels (<i>text</i>). I've highlighted the <b>amounts</b> column — that's the one you'd run <code>SUM</code> or <code>AVERAGE</code> on. The others? Different tools.",
+      example: {
+        kind: "sheet",
+        highlight_col: "B",
+        rows: [
+          ["Customer",    "Amount", "Order date",  "Status"],
+          ["Acme",        "240",    "2024-07-01",  "Paid"],
+          ["Globex",      "180",    "2024-07-02",  "Paid"],
+          ["Initech",     "95",     "2024-07-04",  "Refunded"],
+          ["Umbrella",    "420",    "2024-07-05",  "Paid"]
+        ]
+      },
+      callout: "Column B holds NUMBERS — sum, average, sort low-to-high all work. Different type = different tools."
+    },
+
+    practice: [
+      {
+        mode: "guided",
+        kind: "select_column",
+        prompt: "Click the column that holds <b>dates</b>. I've highlighted it so you can see the shape.",
+        hint: "Dates look like calendar values — year-month-day, slashes, or month names.",
+        checklist: [
+          "Skim each column top to bottom",
+          "Find the one whose values look like <b>calendar dates</b>",
+          "Ignore amounts (numbers) and names (text)",
+          "Click that column's letter at the top, then <b>Confirm</b>"
+        ],
+        artifact: {
+          kind: "sheet",
+          highlight_col: "C",
+          rows: [
+            ["Product",  "Price",  "Launched",    "Region"],
+            ["Widget A", "29.99",  "2023-04-12",  "West"],
+            ["Widget B", "39.99",  "2023-09-30",  "East"],
+            ["Widget C", "19.99",  "2024-01-15",  "North"],
+            ["Widget D", "49.99",  "2024-06-08",  "South"]
+          ]
+        },
+        success_check: "selected_column == 'C'",
+        praise: "Column C — dates. Year-month-day, every row. You'd never want Excel sorting these alphabetically."
+      },
+      {
+        mode: "solo",
+        kind: "select_column",
+        prompt: "No highlight this time. Click the column that holds <b>numbers</b> (the kind you'd actually do math on).",
+        hint: "Look past IDs and codes — find the column you'd reach for if someone asked you to <code>SUM</code> it.",
+        checklist: [
+          "Scan each column's values",
+          "Skip text columns (names, labels)",
+          "Skip dates",
+          "Find the column of <b>mathable</b> values — counts, amounts, measurements",
+          "Click its column letter, then <b>Confirm</b>"
+        ],
+        artifact: {
+          kind: "sheet",
+          rows: [
+            ["Order ID", "Customer",   "Order date",  "Total"],
+            ["O-1001",   "Acme",       "2024-08-02",  "240"],
+            ["O-1002",   "Globex",     "2024-08-05",  "1180"],
+            ["O-1003",   "Initech",    "2024-08-09",  "95"],
+            ["O-1004",   "Stark Ind.", "2024-08-12",  "640"]
+          ]
+        },
+        success_check: "selected_column == 'D'",
+        praise: "Column D — totals. Those are the numbers you'd sum. Order IDs <i>look</i> like numbers but they're really identifiers (text) — Excel shouldn't be doing math on them."
+      }
+    ],
+
+    mentor_outro:
+      "Solid. Text, number, date — three types, three different toolkits. …Okay. That's enough onboarding to get you dangerous. The analyst who had this desk before you? Let's just say they didn't always get types right. Their drive is waiting. Time to use what you know."
   }
 ];
 
