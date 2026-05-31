@@ -199,6 +199,11 @@ body {
 .filename { font-family: "Consolas", ui-monospace, monospace; color: var(--ink); }
 
 .help { padding: 14px 16px; }
+/* Help when it lives inside the work surface (not the rail) — softer treatment
+   so it reads as adjacent to the table, not a stacked card. */
+.help.help-inline {
+  background: transparent; border: 0; box-shadow: none; padding: 14px 0 4px;
+}
 .help-btn {
   width: 100%; padding: 10px 12px; border-radius: 10px;
   border: 1px dashed #c3ccd8; background: #f7f9fc; color: var(--accent-d);

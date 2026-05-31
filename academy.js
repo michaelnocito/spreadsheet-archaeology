@@ -65,10 +65,6 @@
             </div>
             <div id="a-voice" class="voice-body mood-mentor"></div>
           </section>
-          <section class="help" id="a-help" hidden>
-            <button id="a-help-btn" class="help-btn">🙋 Need a hand?</button>
-            <ul id="a-help-list" class="help-list"></ul>
-          </section>
         </aside>
         <section class="work">
           <div class="work-head">
@@ -78,6 +74,12 @@
           <ol id="a-stepper" class="stepper" aria-label="Module progress"></ol>
           <div id="a-sheet" class="sheet"></div>
           <div id="a-feedback" class="feedback" hidden></div>
+          <!-- Help (button + hint) sits below the table where there's natural
+               space, contextual to where the player is actually working. -->
+          <section class="help help-inline" id="a-help" hidden>
+            <button id="a-help-btn" class="help-btn">🙋 Need a hand?</button>
+            <ul id="a-help-list" class="help-list"></ul>
+          </section>
           <div class="action-row"><button id="a-primary" class="primary"></button></div>
         </section>
       </main>`;
