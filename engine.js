@@ -251,7 +251,7 @@
       setFeedback(status.win || "✅ Nailed it.", "good");
       $("#sheet").classList.add("locked");
       const isLast = state.index + 1 >= WAVES.length;
-      setPrimary(isLast ? "Week 1 — slice complete" : "Next file →", true);
+      setPrimary(isLast ? "🎉 Sim complete" : "Next file →", true);
       $("#slice-note").hidden = !isLast;
       // 🎉 Tier 3: every cleared file is a real moment — banner each time
       Celebrate.moduleDone(`💼 File cleared — ${WAVE.concept.name}`);

@@ -294,6 +294,10 @@ body {
   border-color: var(--good); border-width: 2px; background: var(--sel);
 }
 .option-card.option-selected .option-label { color: var(--accent-d); }
+/* Teach mode: options are read-only (worked example), so don't invite clicks. */
+.options-locked .option-card { cursor: default; }
+.options-locked .option-card:hover { border-color: #dde6f5; background: #fff; }
+.options-locked .option-card.option-highlight:hover { border-color: #8fb6f5; background: #e3f1ff; }
 
 .help { padding: 14px 16px; }
 /* Help when it lives inside the work surface (not the rail) — softer treatment

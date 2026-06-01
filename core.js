@@ -206,7 +206,7 @@
   function renderOptions(host, options, opts) {
     opts = opts || {};
     const wrap = document.createElement("div");
-    wrap.className = "options";
+    wrap.className = "options" + (opts.locked ? " options-locked" : "");
     (options || []).forEach((o) => {
       const btn = document.createElement("button");
       btn.type = "button";

@@ -534,7 +534,7 @@ const LESSONS = [
     ],
 
     mentor_outro:
-      "Nice — \"Active,\" \"active,\" \"ACTIVE\" will never slip into one of your pivot tables again. That's week one done: you can <i>read</i> a file and <i>trust</i> what's in it. Week two is a different muscle — the habits that stop you from <i>creating</i> the next cursed file. First one's a big one."
+      "Nice — \"Active,\" \"active,\" \"ACTIVE\" will never slip into one of your pivot tables again. That's the foundation done: you can <i>read</i> a file and <i>trust</i> what's in it. The next stretch is a different muscle — the habits that stop you from <i>creating</i> the next cursed file. First one's a big one."
   },
 
   /* ========================================================================
@@ -557,7 +557,7 @@ const LESSONS = [
       "Never edit the only copy. Before you touch an inherited or shared file, <b>duplicate it and work on the copy</b> — the untouched original is your undo button when something goes sideways.",
 
     mentor_intro:
-      "Week two. This one's a habit that'll save your job someday. When you're handed an important file — a master list, the source of truth — the instinct is to just start cleaning. Don't. <b>Work on a copy.</b> Duplicate it first, edit the duplicate. Wreck something? The original's still sitting there. Pros do this <i>every single time</i>.",
+      "Onto the second half. This one's a habit that'll save your job someday. When you're handed an important file — a master list, the source of truth — the instinct is to just start cleaning. Don't. <b>Work on a copy.</b> Duplicate it first, edit the duplicate. Wreck something? The original's still sitting there. Pros do this <i>every single time</i>.",
 
     teach: {
       explain:

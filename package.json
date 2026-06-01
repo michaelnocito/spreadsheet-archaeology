@@ -1,0 +1,24 @@
+{
+  "name": "spreadsheet-archaeology",
+  "version": "1.0.0",
+  "description": "*A day-in-the-life data-analyst job sim. Setting: **Week One** on the job.*",
+  "main": "academy.js",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelnocito/spreadsheet-archaeology.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/michaelnocito/spreadsheet-archaeology/issues"
+  },
+  "homepage": "https://github.com/michaelnocito/spreadsheet-archaeology#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0"
+  }
+}
