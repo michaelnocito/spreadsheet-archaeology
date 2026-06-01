@@ -56,8 +56,20 @@
     }
     $("#task-prompt").innerHTML = WAVE.task.prompt;
     renderRecall();
-    $("#filename").textContent = WAVE.artifact ? WAVE.artifact.title : "";
-    $(".tab-name").textContent = WAVE.artifact ? WAVE.artifact.title : "";
+    const fname = WAVE.artifact ? WAVE.artifact.title : "";
+    $("#filename").textContent = fname;
+    $(".tab-name").textContent = fname || WAVE.concept.name;
+    // File line only makes sense when there's a file to open.
+    const fileLine = document.querySelector("#job-brief-more .file-line");
+    if (fileLine) fileLine.hidden = !WAVE.artifact;
+    // Work-head hint matches this wave's interaction kind.
+    const kindHint = {
+      select_row: "Click a row number",
+      select_column: "Click a column letter",
+      select_cell: "Click a cell",
+      select_option: "Pick the best answer below"
+    };
+    $("#job-work-hint").textContent = kindHint[taskKind()] || "";
     const checklist = WAVE.task && WAVE.task.checklist;
     if (checklist && checklist.length) {
       $("#job-brief-checklist").innerHTML = checklist.map((c) => `<li>${c}</li>`).join("");

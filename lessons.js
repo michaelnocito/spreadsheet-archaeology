@@ -44,11 +44,11 @@ const ACADEMY_PLAN = [
   { week: 1, day: 3,  name: "Data types",            teaches_for: "type_integrity", built: true  },
   { week: 1, day: 4,  name: "Numbers stored as text", teaches_for: "type_integrity", built: true  },
   { week: 1, day: 5,  name: "Consistency gremlins",  teaches_for: "type_integrity", built: true  },
-  { week: 2, day: 6,  name: "Source vs. copy",       teaches_for: "work_on_copy",  built: false },
-  { week: 2, day: 7,  name: "Sane file names",       teaches_for: "document",      built: false },
-  { week: 2, day: 8,  name: "The data dictionary",   teaches_for: "document",      built: false },
-  { week: 2, day: 9,  name: "The ask",               teaches_for: "clarify",       built: false },
-  { week: 2, day: 10, name: "Sanity-check & say it", teaches_for: "clarify",       built: false }
+  { week: 2, day: 6,  name: "Source vs. copy",       teaches_for: "work_on_copy",  built: true  },
+  { week: 2, day: 7,  name: "Sane file names",       teaches_for: "document",      built: true  },
+  { week: 2, day: 8,  name: "The data dictionary",   teaches_for: "document",      built: true  },
+  { week: 2, day: 9,  name: "The ask",               teaches_for: "clarify",       built: true  },
+  { week: 2, day: 10, name: "Sanity-check & say it", teaches_for: "clarify",       built: true  }
 ];
 
 const LESSONS = [
@@ -534,7 +534,336 @@ const LESSONS = [
     ],
 
     mentor_outro:
-      "Nice — \"Active,\" \"active,\" \"ACTIVE\" will never slip into one of your pivot tables again. …Okay. That's enough onboarding to get you dangerous. The analyst who had this desk before you? Let's just say they weren't big on consistency — or types, or headers. Their drive is waiting. Time to use what you know."
+      "Nice — \"Active,\" \"active,\" \"ACTIVE\" will never slip into one of your pivot tables again. That's week one done: you can <i>read</i> a file and <i>trust</i> what's in it. Week two is a different muscle — the habits that stop you from <i>creating</i> the next cursed file. First one's a big one."
+  },
+
+  /* ========================================================================
+   * WEEK 2 — the habits that keep you from creating the next cursed file.
+   * These are judgment lessons, not click-the-grid lessons, so they use the
+   * select_option interaction (multiple-choice). Each still follows gradual
+   * release: a worked example (right answer shown), then guided, then solo.
+   * ====================================================================== */
+
+  /* ---- MODULE 6 — Source vs. copy (→ Job Wave 3) ----------------------- */
+  {
+    id: "source_vs_copy",
+    week: 2,
+    day: 6,
+    concept: { name: "Source vs. copy" },
+    teaches_for: "work_on_copy",
+    ask: "Decide how to change an important file without risking the original.",
+
+    best_practice:
+      "Never edit the only copy. Before you touch an inherited or shared file, <b>duplicate it and work on the copy</b> — the untouched original is your undo button when something goes sideways.",
+
+    mentor_intro:
+      "Week two. This one's a habit that'll save your job someday. When you're handed an important file — a master list, the source of truth — the instinct is to just start cleaning. Don't. <b>Work on a copy.</b> Duplicate it first, edit the duplicate. Wreck something? The original's still sitting there. Pros do this <i>every single time</i>.",
+
+    teach: {
+      explain:
+        "You're handed <code>customers_master.xlsx</code> — the company's one true customer list. Marketing wants cleanup. Here's the move a careful analyst makes versus the one that ends careers. I've marked the right call — notice <i>why</i> it's safe.",
+      example: {
+        answer: "b",
+        options: [
+          { id: "a", label: "Open the master and start editing", note: "One slip and there's no clean original left to fall back on." },
+          { id: "b", label: "Save a copy first, then edit the copy", note: "The original stays pristine — your safety net." },
+          { id: "c", label: "Delete the rows that look wrong", note: "Destructive and irreversible on a shared file." }
+        ]
+      },
+      callout: "Always (b): duplicate first, edit the copy. The untouched master is your undo button."
+    },
+
+    practice: [
+      {
+        mode: "guided",
+        kind: "select_option",
+        task: "Pick the <b>safe first move</b>.",
+        prompt: "You've been handed the company's only sales master. Finance asked for some cleanup.",
+        hint: "Which option still leaves you a clean original if you make a mistake?",
+        options: [
+          { id: "a", label: "Start editing the master right away", note: "Fast — until you need an undo that doesn't exist." },
+          { id: "b", label: "Duplicate it, then work on the copy", note: "Original untouched and safe." },
+          { id: "c", label: "Sort and delete what looks off", note: "Irreversible on the real file." }
+        ],
+        success_check: "selected_option == 'b'",
+        praise: "Exactly. Copy first, edit the copy. If the cleanup goes wrong, the master is right where you left it."
+      },
+      {
+        mode: "solo",
+        kind: "select_option",
+        task: "Choose the right move.",
+        prompt: "A shared budget file lives on the team drive — everyone pulls from it. Your manager asks you to \"fix the formatting.\"",
+        hint: "It's shared and it's the only copy. Protect the original before you change anything.",
+        options: [
+          { id: "a", label: "Email everyone to stop using it, then edit live", note: "Still editing the only copy." },
+          { id: "b", label: "Reformat it in place — it's just formatting", note: "\"Just formatting\" is how originals die." },
+          { id: "c", label: "Save your own copy, format that, share it back", note: "Original safe; your work is reviewable." }
+        ],
+        success_check: "selected_option == 'c'",
+        praise: "Right — your own copy, formatted, shared back for review. The shared original never took the risk. That's the habit."
+      }
+    ],
+
+    mentor_outro:
+      "Good. \"Work on a copy\" is muscle memory for every analyst worth trusting. Naming that copy is the next thing — because a safety net called <code>FINAL_final_v2</code> isn't much of a safety net."
+  },
+
+  /* ---- MODULE 7 — Sane file names (→ Job Wave 4) ---------------------- */
+  {
+    id: "sane_file_names",
+    week: 2,
+    day: 7,
+    concept: { name: "Sane file names" },
+    teaches_for: "document",
+    ask: "Pick a file name your future self — and your teammates — can actually understand.",
+
+    best_practice:
+      "A good file name reads itself: <b>what it is, when, which version</b>. <code>sales_2024-Q3_v2.xlsx</code> beats <code>FINAL_final_v2 (use this one).xlsx</code> every time. Dates as <code>YYYY-MM-DD</code> so they sort; no mystery acronyms.",
+
+    mentor_intro:
+      "You've already met <code>Q3_FINAL_final_v2.xlsx</code>. You know the pain. A file name is a tiny act of documentation — done right, anyone (you in six months included) knows what's inside without opening it. Done wrong, you get a drive full of \"final\"s. Let's learn the difference.",
+
+    teach: {
+      explain:
+        "Three names for the same monthly sales export. One of them you could find, trust, and sort a year from now. The other two start the next \"which file is real?\" crisis. I've marked the one a pro would save.",
+      example: {
+        answer: "b",
+        options: [
+          { id: "a", label: "<code>report FINAL (1) copy.xlsx</code>", note: "Which final? Whose copy? Useless within a month." },
+          { id: "b", label: "<code>sales_2024-07_v2.xlsx</code>", note: "What it is, when, which version — and it sorts itself." },
+          { id: "c", label: "<code>stuff_new.xlsx</code>", note: "Tells you nothing. \"New\" expires immediately." }
+        ]
+      },
+      callout: "(b) wins: subject, date as YYYY-MM, version. Reads itself, sorts itself, survives the handoff."
+    },
+
+    practice: [
+      {
+        mode: "guided",
+        kind: "select_option",
+        task: "Pick the <b>best file name</b>.",
+        prompt: "You just built the Q3 regional revenue summary. Time to save it.",
+        hint: "What it is, when, which version — and dates that sort in order.",
+        options: [
+          { id: "a", label: "<code>revenue_2024-Q3_regional_v1.xlsx</code>", note: "Subject, period, detail, version. Clean." },
+          { id: "b", label: "<code>FINAL revenue (newest).xlsx</code>", note: "\"Final\" and \"newest\" never stay true." },
+          { id: "c", label: "<code>rev.xlsx</code>", note: "Which revenue? When? No idea." }
+        ],
+        success_check: "selected_option == 'a'",
+        praise: "Yes — anyone reads that and knows exactly what it is and when it's from. And it sorts next to its siblings."
+      },
+      {
+        mode: "solo",
+        kind: "select_option",
+        task: "Choose the name that'll still make sense next year.",
+        prompt: "You're saving a daily snapshot of signups, one file per day, into a shared folder.",
+        hint: "It's one of many dated files. Which naming makes the folder sort cleanly by date?",
+        options: [
+          { id: "a", label: "<code>signups today.xlsx</code>", note: "\"Today\" is wrong tomorrow; spaces invite chaos." },
+          { id: "b", label: "<code>signups_2024-08-14.xlsx</code>", note: "ISO date sorts perfectly; unambiguous." },
+          { id: "c", label: "<code>8-14 signups FINAL.xlsx</code>", note: "M-D dates sort wrong; \"final\" means nothing daily." }
+        ],
+        success_check: "selected_option == 'b'",
+        praise: "Right — <code>YYYY-MM-DD</code> means the folder sorts itself in true date order. Future-you says thank you."
+      }
+    ],
+
+    mentor_outro:
+      "Nice. Naming the <i>file</i> is step one of documenting. Step two: naming what's <i>inside</i> it — so nobody has to guess what column <code>val</code> means. That's next."
+  },
+
+  /* ---- MODULE 8 — The data dictionary (→ Job Wave 4) ------------------ */
+  {
+    id: "data_dictionary",
+    week: 2,
+    day: 8,
+    concept: { name: "The data dictionary" },
+    teaches_for: "document",
+    ask: "Make sure every column's meaning is written down, so no one has to guess.",
+    reinforces: ["Data types"], // documenting a column means knowing its type + units
+
+    best_practice:
+      "A <b>data dictionary</b> is a short note saying what each column means, its units, and its valid values. <code>amt</code> = ? Dollars or units? Net or gross? Write it once and save everyone — including future-you — the guessing.",
+
+    mentor_intro:
+      "Ever opened a file with a column called <code>val</code> or <code>flag2</code> and had no clue what it meant? That's a missing <b>data dictionary</b>. It's just a short note: column name, what it means, units, valid values. Boring — and the single kindest thing you can leave the next analyst. Who, plot twist, is sometimes you.",
+
+    teach: {
+      explain:
+        "Here's a column literally named <code>amt</code>. Three ways to document it. Two of them leave the reader exactly as lost as before. One actually answers the questions a reader would have — units, sign, precision. I've marked it.",
+      example: {
+        answer: "b",
+        options: [
+          { id: "a", label: "<code>amt</code> — \"the amount\"", note: "Circular. Amount of what? In what units?" },
+          { id: "b", label: "<code>amt</code> — order total in USD, pre-tax, 2 decimals", note: "Answers the real questions: what, units, sign, precision." },
+          { id: "c", label: "<code>amt</code> — \"a number\"", note: "Technically true, totally useless." }
+        ]
+      },
+      callout: "(b): meaning + units + precision. A reader never has to guess or ask."
+    },
+
+    practice: [
+      {
+        mode: "guided",
+        kind: "select_option",
+        task: "Pick the <b>most useful dictionary entry</b>.",
+        prompt: "A column is named <code>status</code>. You're documenting it for the next person.",
+        hint: "The best entry tells a reader the meaning AND the exact allowed values.",
+        options: [
+          { id: "a", label: "<code>status</code> — the status", note: "Says nothing new." },
+          { id: "b", label: "<code>status</code> — account state; one of: Active, Churned, Trial", note: "Meaning plus the exact valid values." },
+          { id: "c", label: "<code>status</code> — text", note: "That's a data type, not a definition." }
+        ],
+        success_check: "selected_option == 'b'",
+        praise: "Exactly — meaning plus the allowed values. Now nobody invents a fourth spelling of \"Active.\" (You'd catch it anyway.)"
+      },
+      {
+        mode: "solo",
+        kind: "select_option",
+        task: "Choose the best documentation move.",
+        prompt: "You're handing off a file with columns <code>q</code>, <code>p</code>, and <code>tot</code>. The next analyst has never seen it.",
+        hint: "What single thing saves them the most guessing across the whole file?",
+        options: [
+          { id: "a", label: "Add a small tab defining each column, its units, and valid values", note: "One note, every column explained." },
+          { id: "b", label: "Rename the file to <code>important.xlsx</code>", note: "Doesn't explain a single column." },
+          { id: "c", label: "Assume they'll figure out q × p = tot", note: "Maybe. Or they'll guess wrong and report it." }
+        ],
+        success_check: "selected_option == 'a'",
+        praise: "Right — a tiny data-dictionary tab. <code>q</code> = quantity, <code>p</code> = unit price (USD), <code>tot</code> = line total. Five minutes, hours saved."
+      }
+    ],
+
+    mentor_outro:
+      "Solid. File named, columns documented — you leave files better than you find them now. Last two are about the <i>humans</i>: getting the question right, and saying the answer well. First, the question."
+  },
+
+  /* ---- MODULE 9 — The ask (→ Job Wave 5) ------------------------------ */
+  {
+    id: "the_ask",
+    week: 2,
+    day: 9,
+    concept: { name: "The ask" },
+    teaches_for: "clarify",
+    ask: "Pin down what the stakeholder actually wants before you touch the data.",
+
+    best_practice:
+      "Before you build anything, <b>clarify the ask</b>. \"Send me the sales numbers\" — which sales? which period? total or by region? Five minutes of questions up front beats a day rebuilding the wrong thing. Restating the ask back is how pros avoid rework.",
+
+    mentor_intro:
+      "Here's where analysts waste the most time: answering the wrong question, <i>beautifully</i>. Someone says \"just send me the numbers.\" Which numbers? What period? For what decision? The skill isn't the spreadsheet — it's <b>clarifying the ask</b> before you open one. Let's practice.",
+
+    teach: {
+      explain:
+        "Your manager messages: \"Can you get me the customer numbers by end of day?\" Three ways to respond. Two of them guarantee you build the wrong thing. One takes thirty seconds and saves the whole afternoon. Marked it.",
+      example: {
+        answer: "b",
+        options: [
+          { id: "a", label: "\"Sure!\" — then guess what they meant", note: "A coin flip on a deadline." },
+          { id: "b", label: "\"Happy to — total customers, new this quarter, or active? And which regions?\"", note: "Thirty seconds now; zero rework later." },
+          { id: "c", label: "Send every customer report you have", note: "Now they have to find the answer in your dump." }
+        ]
+      },
+      callout: "(b): a quick clarifying question. Confirm the ask, then build once."
+    },
+
+    practice: [
+      {
+        mode: "guided",
+        kind: "select_option",
+        task: "Pick the best <b>clarifying response</b>.",
+        prompt: "A stakeholder emails: \"Need the revenue figures for the meeting.\"",
+        hint: "Which reply nails down what \"revenue figures\" actually means before you build?",
+        options: [
+          { id: "a", label: "Reply: \"Which period, which products, and is this total or by region?\"", note: "Locks the scope before any work." },
+          { id: "b", label: "Build last year's full revenue workbook to be safe", note: "Probably the wrong period, definitely too much." },
+          { id: "c", label: "Reply \"On it!\" and start pulling everything", note: "On... what, exactly?" }
+        ],
+        success_check: "selected_option == 'a'",
+        praise: "Exactly. Pin down period, scope, and grain first. Now whatever you build is the thing they actually needed."
+      },
+      {
+        mode: "solo",
+        kind: "select_option",
+        task: "Choose the right first step.",
+        prompt: "\"Can you make me a dashboard of how we're doing?\" — no other detail.",
+        hint: "\"How we're doing\" could mean ten different things. What do you do before building anything?",
+        options: [
+          { id: "a", label: "Pick metrics you think matter and build it", note: "Guessing at the goal on their behalf." },
+          { id: "b", label: "Ask what decision it informs and which 2–3 metrics matter most", note: "Anchors the build to the real purpose." },
+          { id: "c", label: "Build the biggest dashboard possible to cover everything", note: "Noise, not an answer." }
+        ],
+        success_check: "selected_option == 'b'",
+        praise: "Right — anchor to the decision and the few metrics that drive it. A focused answer beats a giant guess every time."
+      }
+    ],
+
+    mentor_outro:
+      "That's the one that separates the trusted analysts from the busy ones. Last lesson: you've got an answer — now don't blow it at the finish line. Sanity-check it, then say it like a human."
+  },
+
+  /* ---- MODULE 10 — Sanity-check & say it (LAST → hands off to the Job) - */
+  {
+    id: "sanity_check",
+    week: 2,
+    day: 10,
+    concept: { name: "Sanity-check & say it" },
+    teaches_for: "clarify",
+    ask: "Before you hit send, sanity-check the result and communicate it with its caveats.",
+    reinforces: ["Numbers stored as text"], // a too-low total often = text-numbers/blanks
+
+    best_practice:
+      "A number with no gut-check is a liability. Before you report it: does the total look <i>roughly right</i>? Any blanks, dupes, or text-numbers skewing it? Then <b>say it plainly</b> — the figure, the caveat, the next step.",
+
+    mentor_intro:
+      "Last one. You've cleaned the file, you've got a number. <b>Don't just send it.</b> Sanity-check: is it in the right ballpark? Did a text-number or a blank throw it off? Then communicate like a person — the number, the caveat, the recommendation. That's the gap between \"someone who makes spreadsheets\" and \"an analyst people trust.\"",
+
+    teach: {
+      explain:
+        "You were asked for Q3 revenue. Your formula returns <b>$40</b>. Forty dollars, for a quarter. Three reactions. Two of them put a wrong number in front of the board. One of them is what a careful analyst does on reflex. Marked it.",
+      example: {
+        answer: "b",
+        options: [
+          { id: "a", label: "Send it: \"Q3 revenue is $40.\"", note: "$40 for a quarter? That's a red flag you ignored." },
+          { id: "b", label: "Pause — $40 is impossibly low; check for text-numbers or blanks first", note: "The gut-check that saves your reputation." },
+          { id: "c", label: "Round it to $0 and move on", note: "Now it's wrong AND lazy." }
+        ]
+      },
+      callout: "(b): the number failed the smell test — so you investigate (hello, text-numbers) before anyone sees it."
+    },
+
+    practice: [
+      {
+        mode: "guided",
+        kind: "select_option",
+        task: "Pick the right move when a result <b>looks off</b>.",
+        prompt: "You sum a 5,000-row orders file and get 12. Twelve.",
+        hint: "Twelve orders' worth for 5,000 rows is impossible — what does that usually mean?",
+        options: [
+          { id: "a", label: "Report 12 — the formula said so", note: "The formula trusted text-numbers; you shouldn't." },
+          { id: "b", label: "Investigate: the amount column is likely text, not numbers", note: "A too-low SUM screams text-numbers or blanks." },
+          { id: "c", label: "Multiply by 1,000 so it looks right", note: "Inventing a number is worse than a wrong one." }
+        ],
+        success_check: "selected_option == 'b'",
+        praise: "Exactly — a SUM that low almost always means text-numbers (those green flags) or blanks. Fix the cause, then report."
+      },
+      {
+        mode: "solo",
+        kind: "select_option",
+        task: "Choose the best way to <b>communicate</b> the result.",
+        prompt: "Revenue came to ~$1.2M, but two of the eight regions are missing from the file.",
+        hint: "Say the number, name the caveat, offer the next step — don't bury the gap or over-explain.",
+        options: [
+          { id: "a", label: "\"Revenue is $1,200,000.\"", note: "Hides that two regions are missing — that's misleading." },
+          { id: "b", label: "\"~$1.2M so far, but 2 of 8 regions are missing — want me to chase them before we finalize?\"", note: "Number, caveat, next step. Trustworthy." },
+          { id: "c", label: "Send the raw file and let them add it up", note: "That's not an answer, that's homework." }
+        ],
+        success_check: "selected_option == 'b'",
+        praise: "That's the whole craft in one sentence: the figure, the caveat, and the next step. People trust an analyst who talks like that."
+      }
+    ],
+
+    mentor_outro:
+      "That's it — the whole craft. Read it, trust it, work on a copy, document it, clarify the ask, sanity-check, then say it. …Okay. You're ready. The analyst who had this desk before you left a drive full of exactly these mistakes. Time to clean it up — for real."
   }
 ];
 

@@ -196,6 +196,204 @@ const WAVES = [
     },
 
     sets_up: ["consistency"]
+  },
+
+  /* ------------------------------------------------------------------------
+   * WAVE 3 — Work on a copy (applies Academy M6). Judgment call, so it's a
+   * select_option. The Predecessor saved over the master once and lost years
+   * of history. Named blunder (fail_check) = editing the master directly.
+   * ---------------------------------------------------------------------- */
+  {
+    wave_id: 3,
+    concept: { id: "work_on_copy", name: "Work on a copy", prereqs: ["orient_header"] },
+    callbacks: [],
+    ask: "Sales wants edits to the customer master — make the change without risking the original.",
+
+    scenario: {
+      intro:
+        "File three: the customer master. The <i>real</i> one — everything downstream pulls from it. Confession: last time Sales wanted edits, I just opened it and started deleting. Saved right over the original. We lost three years of history and I told everyone the system \"glitched.\" …Sales wants edits again. What's your first move?",
+      artifact_ref: "sheet_03.json"
+    },
+
+    artifact: {
+      kind: "sheet",
+      title: "customers_master.xlsx",
+      rows: [
+        ["Customer ID", "Customer Name", "Tier", "Signup Date"],
+        ["1001", "Acme Corp", "Gold", "2021-01-14"],
+        ["1002", "Globex", "Silver", "2021-03-22"],
+        ["1003", "Initech", "Gold", "2020-11-09"],
+        ["1004", "Umbrella", "Bronze", "2022-02-01"]
+      ]
+    },
+
+    best_practice:
+      "<b>Work on a copy.</b> On a shared source-of-truth file, duplicate it first and edit the duplicate — the untouched original is the only undo button that always works.",
+
+    task: {
+      kind: "select_option",
+      directive: "Choose your <b>first move</b> before changing the master.",
+      prompt:
+        "<code>customers_master.xlsx</code> is the company's only customer list. Sales flagged some rows to update. What do you do before editing?",
+      options: [
+        { id: "a", label: "Open the master and make Sales' edits directly", note: "One slip and there's no clean original — ask the Predecessor how that goes." },
+        { id: "b", label: "Save a copy, edit the copy, share it back for review", note: "Original untouched; your changes are reviewable." },
+        { id: "c", label: "Delete the rows Sales flagged, then re-add them clean", note: "Destructive on the source of truth." }
+      ],
+      success_check: "selected_option == 'b'",
+      fail_check: "selected_option == 'a'",
+      status: {
+        win: "✅ Copy first. The master never took the risk.",
+        fail: "That's editing the only original — exactly the move that cost the last analyst. Try again.",
+        miss: "Not the safest move on a source-of-truth file. Look again, or ask for backup."
+      }
+    },
+
+    help: {
+      tier1: "It's the <i>only</i> copy and everyone depends on it. What protects the original if your edit goes wrong?",
+      tier2: "You never edit a source-of-truth file in place. You duplicate it, change the duplicate, and let someone review before it replaces anything.",
+      tier3: "Save a copy first, edit the copy, share it back (option b). The master stays pristine. That's the habit that would've saved my three years of history."
+    },
+
+    feedback: {
+      win:
+        "A copy. Of course. You make a backup before you breathe on it — so when something breaks, and it always does, the original's still there. I learned that the expensive way. You just… knew. Next file.",
+      fail:
+        "Yeah. Straight into the master. That's the exact move — I did it, hit save, and watched three years evaporate. \"Glitch,\" I called it. Do it the safe way: copy first, edit the copy.",
+      miss:
+        "Careful — that's still risky on the one file everyone relies on. The safe play protects the original no matter what. Want backup? Ask."
+    },
+
+    sets_up: ["document"]
+  },
+
+  /* ------------------------------------------------------------------------
+   * WAVE 4 — Document as you go (applies Academy M7 + M8). select_option.
+   * The Predecessor is *trying* to leave it better: cryptic columns + a bad
+   * name. Best move = rename sanely + add a data dictionary.
+   * ---------------------------------------------------------------------- */
+  {
+    wave_id: 4,
+    concept: { id: "document", name: "Document as you go", prereqs: [] },
+    callbacks: ["type_integrity"],
+    ask: "You're handing this file off — make it understandable to whoever opens it next.",
+
+    scenario: {
+      intro:
+        "File four. I'm… actually trying to leave this one better than I found it. Baby steps. Problem is I named it <code>newnew_USE THIS.xlsx</code> and the columns are <code>q</code>, <code>p</code>, <code>tot</code>, <code>flag2</code>. Made sense to me at 2am. What's the most useful thing you can do before passing it to the next person?",
+      artifact_ref: "sheet_04.json"
+    },
+
+    artifact: {
+      kind: "sheet",
+      title: "newnew_USE THIS.xlsx",
+      rows: [
+        ["q", "p", "tot", "flag2"],
+        ["12", "45.00", "540.00", "Y"],
+        ["8", "12.50", "100.00", "N"],
+        ["20", "30.00", "600.00", "Y"],
+        ["5", "19.95", "99.75", "N"]
+      ]
+    },
+
+    best_practice:
+      "Documenting is two moves: a <b>sane file name</b> (what / when / version) and a <b>data dictionary</b> (what each column means, its units, valid values). Together they let the next person understand the file without opening your inbox.",
+
+    task: {
+      kind: "select_option",
+      directive: "Pick the most useful thing to do <b>before handing it off</b>.",
+      prompt:
+        "The file is named <code>newnew_USE THIS.xlsx</code> with columns <code>q</code>, <code>p</code>, <code>tot</code>, <code>flag2</code>. The next analyst has never seen it.",
+      options: [
+        { id: "a", label: "Rename it sanely and add a small data-dictionary tab", note: "Both documentation moves — name + meanings." },
+        { id: "b", label: "Add a sticky note that says \"ask me if confused\"", note: "You won't be here. That's the whole point." },
+        { id: "c", label: "Send it as-is — q × p = tot is obvious enough", note: "Obvious to you. A guess for them — and flag2 is anyone's guess." }
+      ],
+      success_check: "selected_option == 'a'",
+      fail_check: "selected_option == 'c'",
+      status: {
+        win: "✅ Named + documented. The next person never has to guess.",
+        fail: "\"Obvious\" only to the person who built it. Try again.",
+        miss: "That doesn't actually explain the file. Look again, or ask for backup."
+      }
+    },
+
+    help: {
+      tier1: "The next analyst can't read your mind. What makes the file explain <i>itself</i>?",
+      tier2: "Two moves leave a file better than you found it: a name that says what/when/version, and a note defining every column.",
+      tier3: "Rename it (e.g. <code>orders_2024-Q3_v1.xlsx</code>) and add a tab: <code>q</code> = quantity, <code>p</code> = unit price USD, <code>tot</code> = line total, <code>flag2</code> = whatever it actually means. Option a."
+    },
+
+    feedback: {
+      win:
+        "You documented it. A real name, a note explaining every column. I never did that once — figured if <i>I</i> knew what <code>flag2</code> meant, that was enough. It wasn't. Leaving it better than you found it… yeah. That's the job. Next file.",
+      fail:
+        "\"Obvious enough\" — that's what I always said, right before someone built a report on <code>flag2</code> meaning the opposite of what I meant. Spell it out. Rename it, define the columns.",
+      miss:
+        "That won't save the next person any guessing. Documentation is a name plus column meanings. Want backup? Ask."
+    },
+
+    sets_up: ["clarify"]
+  },
+
+  /* ------------------------------------------------------------------------
+   * WAVE 5 — The stakeholder ask (applies M9 + M10). FINALE. select_option.
+   * The board request that broke the Predecessor. Win triggers the reveal:
+   * the Predecessor is you, on day one. Named blunder = dump-everything panic.
+   * ---------------------------------------------------------------------- */
+  {
+    wave_id: 5,
+    concept: { id: "clarify", name: "The stakeholder ask", prereqs: [] },
+    callbacks: ["type_integrity"],
+    ask: "The boss sent a one-line request for the board — figure out the right first move.",
+
+    scenario: {
+      intro:
+        "Last file. This is the one that broke me. The email just says: <i>\"Need the Q3 numbers for the board by 5. Thx.\"</i> I panicked, dumped every number I had into a 40-tab workbook, sent it at 4:59 — and it was the <b>wrong quarter</b>. Nobody trusted me with the board again. Here's the same email, sitting in your inbox. What do you do?",
+      artifact_ref: null
+    },
+
+    // No sheet — this one is pure judgment, like the real moment.
+    artifact: null,
+
+    best_practice:
+      "Two skills, one breath: <b>clarify the ask</b> (which numbers, which period, for what decision) and <b>sanity-check before you send</b> (does it look right? any caveats?). Confirm, verify, then communicate — number, caveat, next step.",
+
+    task: {
+      kind: "select_option",
+      directive: "Pick your <b>first move</b> on the board request.",
+      prompt:
+        "The email: <i>\"Need the Q3 numbers for the board by 5. Thx.\"</i> It's 1pm. What's the right first move?",
+      options: [
+        { id: "a", label: "Reply to confirm exactly which metrics, which segments, and the decision — and note you'll sanity-check before sending", note: "Clarify the ask, promise a checked answer." },
+        { id: "b", label: "Pull every number you have into one big workbook and send it early", note: "The Predecessor's exact move. Volume isn't an answer." },
+        { id: "c", label: "Forward last quarter's deck — close enough, saves time", note: "Wrong quarter, unchecked. The way trust dies." }
+      ],
+      success_check: "selected_option == 'a'",
+      fail_check: "selected_option == 'b'",
+      status: {
+        win: "✅ Clarified the ask, promised a checked answer. That's the whole craft.",
+        fail: "That's the panic-dump that sent the wrong quarter to the board. Try again.",
+        miss: "Close enough isn't an answer for a board meeting. Look again, or ask for backup."
+      }
+    },
+
+    help: {
+      tier1: "\"The Q3 numbers\" could mean ten things. What do you owe the board before you build anything?",
+      tier2: "Clarify first (which metrics, which segments, for what decision), then verify before you send. Never guess and dump.",
+      tier3: "Reply and pin the ask down — which metrics, which segments, what decision it informs — and say you'll sanity-check the figures before they go out. Option a."
+    },
+
+    feedback: {
+      win:
+        "You asked the question first. Clarified it, said you'd check the numbers before they went out. Calm. …I keep watching you do every single thing I didn't, and it's like watching a tape of myself with all the mistakes edited out. <br><br>Open the drawer. Read the name on the offer letter. …Yeah. The analyst before you was <b>me</b> — and I was <b>you</b>, on day one, before any of this stuck. This was always day one. Go be the one who gets it right. You already are.",
+      fail:
+        "The 40-tab dump. I know it feels like progress — look how much I sent! It isn't. It's noise with a deadline, and mine was the wrong quarter. Ask what they actually need first.",
+      miss:
+        "Not for the board, not unchecked. The move is to clarify the ask, then verify before you send. Want backup? Ask."
+    },
+
+    sets_up: []
   }
 ];
 
