@@ -52,8 +52,8 @@
             <div class="brief-eyebrow">📋 Task brief</div>
             <h2 id="a-brief-title" class="brief-title">Module</h2>
             <div id="a-brief-stage" class="brief-stage"></div>
-            <!-- ALWAYS VISIBLE: the ask (why) → the directive (what now) -->
-            <div id="a-brief-ask" class="brief-ask" hidden></div>
+            <!-- ALWAYS VISIBLE: the directive (what now). The ask now leads the
+                 work area, directly under the training-file tab. -->
             <p id="a-brief-task" class="brief-task" hidden></p>
             <!-- COLLAPSIBLE: steps & context (open on desktop, closed on mobile) -->
             <details id="a-brief-more" class="brief-more">
@@ -85,6 +85,9 @@
             <span class="tab">🎓 <span class="tab-name">Training file</span></span>
             <span id="a-work-hint" class="hint-muted"></span>
           </div>
+          <!-- THE ASK — the standing goal, first line under the training-file tab
+               so it stays in view while you work (was in the left rail). -->
+          <div id="a-brief-ask" class="brief-ask brief-ask-lead" hidden></div>
           <ol id="a-stepper" class="stepper" aria-label="Module progress"></ol>
           <div id="a-sheet" class="sheet"></div>
           <div id="a-feedback" class="feedback" hidden></div>

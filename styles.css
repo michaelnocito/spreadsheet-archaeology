@@ -683,3 +683,6 @@ body {
   padding: 0 0 12px; margin: 0 0 14px; border-bottom: 1px solid var(--line);
 }
 .voice-lead .voice-body.is-clamped { max-height: 7em; }
+
+/* The ask relocated to lead the work area, directly under the training-file tab. */
+.brief-ask-lead { margin: 2px 0 12px; }
