@@ -5,6 +5,7 @@
  * ========================================================================== */
 
 :root {
+  color-scheme: light;          /* pin light — stop browser auto-dark inversion */
   --bg:        #eef1f5;
   --panel:     #ffffff;
   --ink:       #1f2328;
