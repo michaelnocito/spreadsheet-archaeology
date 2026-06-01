@@ -67,6 +67,7 @@
           <span>Auto-reveal answer on every step</span>
         </label>
         <button id="cur-restart" class="ghost-btn">↺ Back to welcome screen</button>
+        <button id="cur-reset" class="ghost-btn">🗑 Start over (clear my ✅ progress)</button>
       </div>
 
       <div class="cur-section">
@@ -102,6 +103,13 @@
       if (opts.onAutoRevealToggle) opts.onAutoRevealToggle(e.target.checked);
     });
     d.querySelector("#cur-restart").addEventListener("click", () => { close(); opts.onRestart(); });
+    // Start over — wipe completion, then drop back to the (now-cleared) welcome.
+    d.querySelector("#cur-reset").addEventListener("click", () => {
+      if (window.Progress) Progress.reset();
+      refresh();
+      close();
+      opts.onRestart();
+    });
 
     // Click-outside to close
     document.addEventListener("click", (e) => {
@@ -115,28 +123,39 @@
   function refresh() {
     const lessonList = document.getElementById("cur-lesson-list");
     const waveList = document.getElementById("cur-wave-list");
+    const lessonDone = (idx) => idx >= 0 && window.Progress && Progress.isLessonDone(LESSONS[idx].id);
+    const waveDone = (id) => window.Progress && Progress.isWaveDone(id);
     lessonList.innerHTML = ACADEMY_PLAN.map((d) => {
       const idx = LESSONS.findIndex((l) => l.day === d.day);
       const built = d.built && idx >= 0;
-      return `<li class="cur-item ${built ? "is-built" : "is-locked"}"
+      const done = built && lessonDone(idx);
+      // 🔒 locked · ○ available, not played · ✅ completed.
+      const icon = !built ? "🔒" : done ? "✅" : "○";
+      return `<li class="cur-item ${built ? "is-built" : "is-locked"}${done ? " is-done" : ""}"
                   data-kind="lesson" data-idx="${idx}">
-        <span class="cur-icon">${built ? "✅" : "🔒"}</span>
+        <span class="cur-icon">${icon}</span>
         <span class="cur-week">M${d.day}</span>
         <span class="cur-name">${d.name}</span>
       </li>`;
     }).join("");
-    waveList.innerHTML = WAVES.map((w, i) =>
-      `<li class="cur-item is-built" data-kind="wave" data-idx="${i}">
-        <span class="cur-icon">✅</span>
+    waveList.innerHTML = WAVES.map((w, i) => {
+      const done = waveDone(w.concept.id);
+      return `<li class="cur-item is-built${done ? " is-done" : ""}" data-kind="wave" data-idx="${i}">
+        <span class="cur-icon">${done ? "✅" : "○"}</span>
         <span class="cur-week">W${i + 1}</span>
         <span class="cur-name">${w.concept.name}</span>
-      </li>`
-    ).join("");
+      </li>`;
+    }).join("");
 
+    const lDone = ACADEMY_PLAN.reduce((n, d) => {
+      const idx = LESSONS.findIndex((l) => l.day === d.day);
+      return n + (d.built && lessonDone(idx) ? 1 : 0);
+    }, 0);
+    const wDone = WAVES.reduce((n, w) => n + (waveDone(w.concept.id) ? 1 : 0), 0);
     document.getElementById("cur-count-academy").textContent =
-      `(${ACADEMY_PLAN.filter(d => d.built).length}/${ACADEMY_PLAN.length} built)`;
+      `(${lDone}/${ACADEMY_PLAN.length} done)`;
     document.getElementById("cur-count-waves").textContent =
-      `(${WAVES.length}/5 built)`;
+      `(${wDone}/5 done)`;
 
     document.querySelectorAll("#cur-lesson-list .cur-item.is-built").forEach((el) => {
       el.addEventListener("click", () => { close(); opts.onJumpLesson(Number(el.dataset.idx)); });

@@ -253,6 +253,8 @@
       const isLast = state.index + 1 >= WAVES.length;
       setPrimary(isLast ? "🎉 Sim complete" : "Next file →", true);
       $("#slice-note").hidden = !isLast;
+      // Record the win so the syllabus shows ✅ for files actually cleared.
+      if (window.Progress) Progress.markWave(WAVE.concept.id);
       // 🎉 Tier 3: every cleared file is a real moment — banner each time
       Celebrate.moduleDone(`💼 File cleared — ${WAVE.concept.name}`);
     } else if (WAVE.task.fail_check && SACore.evalCheck(WAVE.task.fail_check, state.interaction)) {

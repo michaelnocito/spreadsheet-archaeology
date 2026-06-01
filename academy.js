@@ -374,6 +374,9 @@
 
     if (stage === "outro") {
       const hasNextLesson = lessonIdx + 1 < LESSONS.length;
+      // Reaching the outro = the player finished this module's practice. Record it
+      // so the syllabus shows ✅ for what's actually done (not just what's built).
+      if (window.Progress) Progress.markLesson(lesson.id);
       voice(lesson.mentor_outro);
       setBrief("Module complete ✓", {
         taskIcon: "✅",

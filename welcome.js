@@ -20,7 +20,7 @@
     const lessonsHtml = `
       <div class="syl-section">
         <h4>🎓 Onboarding packet
-          <span class="syl-progress">${ACADEMY_PLAN.filter(d=>d.built).length}/${ACADEMY_PLAN.length} built</span>
+          <span class="syl-progress">${lessonsDone()}/${ACADEMY_PLAN.length} done</span>
         </h4>
         <ol class="syl-list">
           ${ACADEMY_PLAN.map((d) => syllabusItem("lesson", d)).join("")}
@@ -30,7 +30,7 @@
     const wavesHtml = `
       <div class="syl-section">
         <h4>💼 On the job
-          <span class="syl-progress">${WAVES.length}/5 built</span>
+          <span class="syl-progress">${wavesDone()}/5 done</span>
         </h4>
         <ol class="syl-list">
           ${WAVES.map((w, i) => syllabusItem("wave", {
@@ -72,6 +72,7 @@
           <div class="welcome-cta">
             <button id="welcome-start" class="primary primary-xl">Start Module 1 →</button>
             <p class="welcome-foot">Tip: the <b>📋 Curriculum</b> button up top lets you jump to any built lesson or wave anytime. It's live beta — feel free to explore.</p>
+            ${hasProgress() ? `<button id="welcome-reset" class="ghost-btn welcome-reset" type="button">↺ Start over (clear my ✅ progress)</button>` : ""}
           </div>
         </div>
       </div>`;
@@ -89,6 +90,32 @@
         else opts.onJumpWave(Number(el.dataset.idx));
       });
     });
+
+    // Start over — wipe completion and re-render so every ✅ clears back to ○.
+    const resetBtn = host.querySelector("#welcome-reset");
+    if (resetBtn) resetBtn.addEventListener("click", () => {
+      if (window.Progress) Progress.reset();
+      render(host, opts);
+    });
+  }
+
+  // ----- Completion helpers (read window.Progress; degrade to "nothing done") -
+  function itemDone(type, idx) {
+    if (!window.Progress || idx < 0) return false;
+    return type === "lesson" ? Progress.isLessonDone(LESSONS[idx].id)
+                             : Progress.isWaveDone(WAVES[idx].concept.id);
+  }
+  function lessonsDone() {
+    return ACADEMY_PLAN.reduce((n, d) => {
+      const idx = LESSONS.findIndex((l) => l.day === d.day);
+      return n + (d.built && itemDone("lesson", idx) ? 1 : 0);
+    }, 0);
+  }
+  function wavesDone() {
+    return WAVES.reduce((n, _w, i) => n + (itemDone("wave", i) ? 1 : 0), 0);
+  }
+  function hasProgress() {
+    return !!window.Progress && (Progress.counts().lessons + Progress.counts().waves) > 0;
   }
 
   // Render one syllabus row. Lessons map by day → LESSONS index; waves come with idx.
@@ -100,8 +127,10 @@
       idx = item.idx != null ? item.idx : -1;
     }
     const clickable = item.built && idx >= 0;
-    const cls = "syl-item" + (clickable ? " is-built" : " is-locked");
-    const icon = clickable ? "✅" : "🔒";
+    const done = clickable && itemDone(type, idx);
+    // 🔒 locked (not built) · ○ available, not played yet · ✅ actually completed.
+    const cls = "syl-item" + (clickable ? " is-built" : " is-locked") + (done ? " is-done" : "");
+    const icon = !clickable ? "🔒" : done ? "✅" : "○";
     const label = type === "lesson" ? `Module ${item.day} — ${item.name}` : `Wave ${item.day} — ${item.name}`;
     return `<li class="${cls}" data-type="${type}" data-idx="${idx}">
       <span class="syl-icon">${icon}</span><span class="syl-label">${label}</span>

@@ -547,7 +547,11 @@ body {
 .syl-item.is-built { cursor: pointer; transition: background .12s, border-color .12s; }
 .syl-item.is-built:hover { background: #eef4ff; border-color: #b6c8ee; }
 .syl-item.is-locked { color: var(--dim); background: #f3f5f8; }
+/* Available-but-unplayed: the ○ reads as a muted "to-do", distinct from a ✅. */
+.syl-item.is-built:not(.is-done) .syl-icon { color: var(--dim); }
+.syl-item.is-done { background: #f2fbf5; border-color: #bfe6cd; }
 .syl-icon { width: 18px; text-align: center; }
+.welcome-reset { margin-top: 14px; }
 
 .welcome-cta { margin-top: 24px; text-align: center; }
 .primary.primary-xl { padding: 14px 32px; font-size: 16px; border-radius: 12px; }
@@ -600,6 +604,8 @@ body {
 .cur-item.is-built { cursor: pointer; }
 .cur-item.is-built:hover { background: #eef4ff; border-color: #b6c8ee; }
 .cur-item.is-locked { color: var(--dim); background: #f6f7f9; }
+.cur-item.is-built:not(.is-done) .cur-icon { color: var(--dim); }
+.cur-item.is-done { background: #f2fbf5; border-color: #bfe6cd; }
 .cur-week { font-family: "Consolas", ui-monospace, monospace; font-size: 11.5px; color: var(--dim); }
 
 /* ---- Celebration FX (Duolingo-warm tier) --------------------------------- */
