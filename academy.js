@@ -49,7 +49,10 @@
           <!-- BRIEF first. Orientation backbone (the ask + the directive) stays
                always visible; everything else collapses behind a disclosure. -->
           <section class="brief-card">
-            <div class="brief-eyebrow">📋 Task brief</div>
+            <div class="brief-eyebrow-row">
+              <span class="brief-eyebrow">📋 Task brief</span>
+              <button id="a-restart" class="brief-restart" type="button" title="Start this module over from the beginning">↺ Restart module</button>
+            </div>
             <h2 id="a-brief-title" class="brief-title">Module</h2>
             <div id="a-brief-stage" class="brief-stage"></div>
             <!-- ALWAYS VISIBLE: the directive (what now). The ask now leads the
@@ -102,6 +105,8 @@
       </main>`;
 
     $("#a-primary").addEventListener("click", onPrimary);
+    // ↺ Restart module — replay the current module from its intro.
+    $("#a-restart").addEventListener("click", () => jumpToLesson(lessonIdx));
     $("#a-help-btn").addEventListener("click", () => {
       const list = $("#a-help-list");
       list.innerHTML = `<li><span class="tier-tag">Hint</span> ${currentRep().hint || lesson.teach.callout}</li>`;

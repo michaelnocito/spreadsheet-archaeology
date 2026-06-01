@@ -299,6 +299,9 @@
   window.addEventListener("DOMContentLoaded", () => {
     $("#help-btn").addEventListener("click", askForHelp);
     $("#primary").addEventListener("click", submit);
+    // ↺ Restart file — replay the current job file from the top.
+    const jr = $("#job-restart");
+    if (jr) jr.addEventListener("click", () => boot());
     const toggle = $("#predecessor-toggle");
     if (toggle) toggle.addEventListener("click", () => {
       const box = $("#predecessor-body");

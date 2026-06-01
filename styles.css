@@ -687,3 +687,13 @@ body {
 
 /* The ask relocated to lead the work area, directly under the training-file tab. */
 .brief-ask-lead { margin: 2px 0 12px; }
+
+/* ↺ Restart control in the brief eyebrow — start the current module/file over. */
+.brief-eyebrow-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.brief-eyebrow-row .brief-eyebrow { margin-bottom: 0; }
+.brief-restart {
+  background: none; border: 1px solid var(--line); color: var(--dim);
+  border-radius: 8px; padding: 3px 9px; font-size: 11.5px; font-weight: 700;
+  cursor: pointer; white-space: nowrap; transition: background .12s, color .12s, border-color .12s;
+}
+.brief-restart:hover { color: var(--accent-d); border-color: #b6c8ee; background: #eef4ff; }
