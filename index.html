@@ -42,15 +42,23 @@
           <div class="brief-eyebrow">📋 Task brief</div>
           <h2 id="job-brief-title" class="brief-title">Cursed file</h2>
           <div id="job-brief-stage" class="brief-stage">On the job</div>
+          <!-- ALWAYS VISIBLE: the ask (stakeholder request) → the directive -->
+          <div id="job-brief-ask" class="brief-ask" hidden></div>
           <p id="job-brief-task" class="brief-task" hidden></p>
-          <p id="task-prompt" class="brief-prompt"></p>
-          <p id="job-brief-recall" class="brief-recall" hidden></p>
-          <div id="job-brief-checklist-wrap" hidden>
-            <div class="brief-sublabel">Your checklist</div>
-            <ol id="job-brief-checklist" class="brief-checklist"></ol>
-          </div>
-          <p class="file-line">📄 Open: <span id="filename" class="filename">—</span></p>
-          <div id="job-brief-tip" class="brief-tip" hidden></div>
+          <!-- COLLAPSIBLE: steps & context -->
+          <details id="job-brief-more" class="brief-more">
+            <summary class="brief-more-summary"><span class="more-label">Steps &amp; context</span></summary>
+            <div class="brief-more-body">
+              <p id="task-prompt" class="brief-prompt"></p>
+              <p id="job-brief-recall" class="brief-recall" hidden></p>
+              <div id="job-brief-checklist-wrap" hidden>
+                <div class="brief-sublabel">Your checklist</div>
+                <ol id="job-brief-checklist" class="brief-checklist"></ol>
+              </div>
+              <p class="file-line">📄 Open: <span id="filename" class="filename">—</span></p>
+              <div id="job-brief-tip" class="brief-tip" hidden></div>
+            </div>
+          </details>
         </section>
 
         <section class="voice">
@@ -61,7 +69,8 @@
               <span class="role">analyst before you</span>
             </div>
           </div>
-          <div id="predecessor-body" class="voice-body mood-intro"></div>
+          <div id="predecessor-body" class="voice-body mood-intro is-clamped"></div>
+          <button id="predecessor-toggle" class="voice-toggle" type="button" hidden>Show more ▾</button>
         </section>
       </aside>
 

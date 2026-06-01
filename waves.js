@@ -15,6 +15,8 @@
  * SCHEMA (per wave)
  *   wave_id        number
  *   concept        { id, name, prereqs[] }
+ *   ask            the stakeholder request driving the whole file (north star) —
+ *                  constant, always visible above the per-step directive
  *   callbacks      [] ids of earlier concepts this wave makes you reuse
  *   scenario       { intro (Predecessor voice), artifact_ref }
  *   artifact       { kind:"sheet", title, rows[][], merged_title_row, blank_rows[] }
@@ -38,6 +40,7 @@ const WAVES = [
     wave_id: 1,
     concept: { id: "orient_header", name: "Orient before you edit", prereqs: [] },
     callbacks: [],
+    ask: "Before you change anything in this inherited file, find where the real data actually starts.",
 
     scenario: {
       intro:
@@ -125,6 +128,7 @@ const WAVES = [
     wave_id: 2,
     concept: { id: "type_integrity", name: "Trust your number columns", prereqs: ["orient_header"] },
     callbacks: ["orient_header"], // headers are pushed down again — orient first
+    ask: "Finance needs the Q3 revenue total — but first make sure these numbers can actually be trusted.",
 
     scenario: {
       intro:

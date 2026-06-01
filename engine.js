@@ -34,6 +34,19 @@
     renderPredecessor(WAVE.scenario.intro, "intro");
     $("#job-brief-title").textContent = `File ${state.index + 1} · ${WAVE.concept.name}`;
     $("#job-brief-stage").textContent = "On the job — apply what you learned";
+    // THE ASK — the stakeholder request driving this whole file; the north star.
+    const askEl = $("#job-brief-ask");
+    if (WAVE.ask) {
+      askEl.innerHTML =
+        `<span class="ask-eyebrow">🧭 The ask</span><span class="ask-body">${WAVE.ask}</span>`;
+      askEl.hidden = false;
+    } else {
+      askEl.hidden = true; askEl.innerHTML = "";
+    }
+    // Steps & context: open on desktop, collapsed on narrow screens.
+    const more = $("#job-brief-more");
+    if (more) more.open = !(typeof window.matchMedia === "function" &&
+      window.matchMedia("(max-width: 720px)").matches);
     if (WAVE.task && WAVE.task.directive) {
       $("#job-brief-task").innerHTML =
         `<span class="task-icon">🎯</span><span class="task-do">${WAVE.task.directive}</span>`;
@@ -84,8 +97,15 @@
 
   function renderPredecessor(text, mood) {
     const box = $("#predecessor-body");
-    box.className = "voice-body mood-" + (mood || "intro");
+    box.className = "voice-body is-clamped mood-" + (mood || "intro");
     box.innerHTML = text;
+    const toggle = $("#predecessor-toggle");
+    if (toggle) {
+      toggle.textContent = "Show more ▾";
+      requestAnimationFrame(() => {
+        toggle.hidden = box.scrollHeight <= box.clientHeight + 2;
+      });
+    }
   }
 
   // Resolve a concept id (e.g. "orient_header") to its display name by scanning
@@ -252,6 +272,12 @@
   window.addEventListener("DOMContentLoaded", () => {
     $("#help-btn").addEventListener("click", askForHelp);
     $("#primary").addEventListener("click", submit);
+    const toggle = $("#predecessor-toggle");
+    if (toggle) toggle.addEventListener("click", () => {
+      const box = $("#predecessor-body");
+      const clamped = box.classList.toggle("is-clamped");
+      toggle.textContent = clamped ? "Show more ▾" : "Show less ▴";
+    });
   });
 
   // ----- Dev controls ---------------------------------------------------------

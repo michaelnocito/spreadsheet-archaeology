@@ -17,6 +17,8 @@
  *
  * SCHEMA (per lesson)
  *   id, week, day, concept:{name}, teaches_for
+ *   ask        the standing GOAL for the whole module (north star) — constant
+ *              across every step, always visible above the per-step directive
  *   mentor_intro                       Sam's warm setup
  *   teach   { explain, example:{sheet…, highlight_row, callout} }
  *   practice[]  { mode:"guided"|"solo", task, prompt, hint?, artifact, success_check, praise }
@@ -53,6 +55,7 @@ const LESSONS = [
     day: 1,
     concept: { name: "The grid" },
     teaches_for: "—",
+    ask: "Pinpoint a specific cell using its address — column letter, then row number.",
 
     best_practice:
       "Before you touch a single cell, learn how to <i>read</i> what's in front of you. Every analyst habit downstream depends on this one.",
@@ -137,6 +140,7 @@ const LESSONS = [
     day: 2,
     concept: { name: "Find the real header row" },
     teaches_for: "orient_header", // → Job Wave 1
+    ask: "Find the real header row — the one row where every cell is a column's name.",
 
     best_practice:
       "Never assume row 1 is the header. <b>Verify before you edit</b> — every analyst gets burned by this once. Once is enough.",
@@ -243,6 +247,7 @@ const LESSONS = [
     day: 3,
     concept: { name: "Data types" },
     teaches_for: "type_integrity",
+    ask: "Read each column and identify its data type: text, number, or date.",
 
     best_practice:
       "Know each column's <b>type</b> before you touch a formula. Excel can't <code>SUM</code> text and can't sort dates correctly if they're stored as text. Type is upstream of everything.",
@@ -341,6 +346,7 @@ const LESSONS = [
     day: 4,
     concept: { name: "Numbers stored as text" },
     teaches_for: "type_integrity",
+    ask: "Catch the column whose numbers are secretly stored as text.",
     reinforces: ["Data types"], // spotting text-numbers reuses reading a column's type
 
     best_practice:
@@ -441,6 +447,7 @@ const LESSONS = [
     day: 5,
     concept: { name: "Consistency gremlins" },
     teaches_for: "type_integrity",
+    ask: "Find the column where one category is written several inconsistent ways.",
     reinforces: ["Data types"], // judging a category column reuses reading column types
 
     best_practice:

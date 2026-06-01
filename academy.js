@@ -46,26 +46,36 @@
     $(SCREEN).innerHTML = `
       <main class="stage">
         <aside class="rail">
-          <!-- BRIEF first: it's the directive. Reads top-down before voice + work. -->
+          <!-- BRIEF first. Orientation backbone (the ask + the directive) stays
+               always visible; everything else collapses behind a disclosure. -->
           <section class="brief-card">
             <div class="brief-eyebrow">📋 Task brief</div>
             <h2 id="a-brief-title" class="brief-title">Module</h2>
             <div id="a-brief-stage" class="brief-stage"></div>
+            <!-- ALWAYS VISIBLE: the ask (why) → the directive (what now) -->
+            <div id="a-brief-ask" class="brief-ask" hidden></div>
             <p id="a-brief-task" class="brief-task" hidden></p>
-            <p id="a-prompt" class="brief-prompt"></p>
-            <p id="a-brief-recall" class="brief-recall" hidden></p>
-            <div id="a-brief-checklist-wrap" hidden>
-              <div class="brief-sublabel">Your checklist</div>
-              <ol id="a-brief-checklist" class="brief-checklist"></ol>
-            </div>
-            <div id="a-brief-tip" class="brief-tip" hidden></div>
+            <!-- COLLAPSIBLE: steps & context (open on desktop, closed on mobile) -->
+            <details id="a-brief-more" class="brief-more">
+              <summary class="brief-more-summary"><span class="more-label">Steps &amp; context</span></summary>
+              <div class="brief-more-body">
+                <p id="a-prompt" class="brief-prompt"></p>
+                <p id="a-brief-recall" class="brief-recall" hidden></p>
+                <div id="a-brief-checklist-wrap" hidden>
+                  <div class="brief-sublabel">Your checklist</div>
+                  <ol id="a-brief-checklist" class="brief-checklist"></ol>
+                </div>
+                <div id="a-brief-tip" class="brief-tip" hidden></div>
+              </div>
+            </details>
           </section>
           <section class="voice">
             <div class="voice-head">
               <span class="avatar">${MENTOR.avatar}</span>
               <div><strong>${MENTOR.name}</strong><span class="role">${MENTOR.role}</span></div>
             </div>
-            <div id="a-voice" class="voice-body mood-mentor"></div>
+            <div id="a-voice" class="voice-body mood-mentor is-clamped"></div>
+            <button id="a-voice-toggle" class="voice-toggle" type="button" hidden>Show more ▾</button>
           </section>
         </aside>
         <section class="work">
@@ -94,7 +104,20 @@
       $("#a-help-btn").disabled = true;
       $("#a-help-btn").textContent = "There you go 👍";
     });
+    // Steps & context disclosure: open on desktop, collapsed on narrow screens
+    // so the rail isn't a wall of text on mobile. The ask + directive stay out.
+    const more = $("#a-brief-more");
+    if (more) more.open = !isNarrow();
+    // Sam's voice clamps to a few lines with a "Show more" toggle.
+    $("#a-voice-toggle").addEventListener("click", () => {
+      const v = $("#a-voice");
+      const clamped = v.classList.toggle("is-clamped");
+      $("#a-voice-toggle").textContent = clamped ? "Show more ▾" : "Show less ▴";
+    });
   }
+
+  const isNarrow = () =>
+    typeof window.matchMedia === "function" && window.matchMedia("(max-width: 720px)").matches;
 
   function setOrientation() {
     $("#phase-chip").textContent = "ONBOARDING";
@@ -109,6 +132,17 @@
       wrap.appendChild(dot);
     });
     $("#a-brief-title").textContent = `Module ${lesson.day} · ${lesson.concept.name}`;
+    // THE ASK — the standing goal for the whole module (the player's north star).
+    // Constant across every step; always visible above the per-step directive.
+    const ask = $("#a-brief-ask");
+    if (lesson.ask) {
+      ask.innerHTML =
+        `<span class="ask-eyebrow">🧭 The ask</span>` +
+        `<span class="ask-body">${lesson.ask}</span>`;
+      ask.hidden = false;
+    } else {
+      ask.hidden = true; ask.innerHTML = "";
+    }
     // Spaced-retrieval recall chip — per-lesson constant, render once on load.
     // `reinforces` holds ready-to-show skill names (decoupled from concept ids).
     const recall = $("#a-brief-recall");
@@ -163,7 +197,7 @@
   function lessonSteps() {
     return [
       { key: "intro", label: "Intro" },
-      { key: "teach", label: "Watch" },
+      { key: "teach", label: "Study" },
       ...lesson.practice.map((p, i) => ({
         key: "p" + i,
         label: p.mode === "guided" ? "Try (guided)" : "Try (solo)"
@@ -221,9 +255,9 @@
 
     if (stage === "teach") {
       voice(lesson.teach.explain);
-      setBrief("Watch — worked example", {
-        taskIcon: "👀",
-        task: "Just watch what's highlighted below — then press <b>Got it</b>.",
+      setBrief("Study — worked example", {
+        taskIcon: "📖",
+        task: "Read Sam's example below, then press <b>Got it</b>.",
         prompt: "Sam's walking through a clean example. Nothing to click yet — follow what they point at.",
         checklist: [
           "Read Sam's explanation",
@@ -391,7 +425,18 @@
   }
 
   // ----- Small helpers --------------------------------------------------------
-  function voice(html) { const v = $("#a-voice"); v.innerHTML = html; }
+  function voice(html) {
+    const v = $("#a-voice");
+    v.innerHTML = html;
+    // Re-clamp on each new line, then reveal the toggle only if it overflows.
+    v.classList.add("is-clamped");
+    const toggle = $("#a-voice-toggle");
+    toggle.textContent = "Show more ▾";
+    // Measure after layout: scrollHeight > clientHeight means there's hidden text.
+    requestAnimationFrame(() => {
+      toggle.hidden = v.scrollHeight <= v.clientHeight + 2;
+    });
+  }
   function workHint(t) { $("#a-work-hint").textContent = t; }
   function primary(text, enabled) {
     const b = $("#a-primary");
