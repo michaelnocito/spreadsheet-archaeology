@@ -672,3 +672,14 @@ body {
   .welcome-card { padding: 20px 18px; }
   .welcome-title h1 { font-size: 20px; }
 }
+
+/* ----------------------------------------------------------------------------
+ * Sam's guidance moved into the work column, full-width directly ABOVE the
+ * training file (was cramped in the left rail). Flattened so it doesn't read as
+ * a card-inside-a-card; a divider separates it from the view.
+ * -------------------------------------------------------------------------- */
+.voice-lead {
+  background: transparent; border: 0; box-shadow: none; border-radius: 0;
+  padding: 0 0 12px; margin: 0 0 14px; border-bottom: 1px solid var(--line);
+}
+.voice-lead .voice-body.is-clamped { max-height: 7em; }

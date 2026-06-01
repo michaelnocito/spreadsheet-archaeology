@@ -69,7 +69,11 @@
               </div>
             </details>
           </section>
-          <section class="voice">
+        </aside>
+        <section class="work">
+          <!-- Sam's guidance sits full-width directly above the workbook so it's
+               easy to reference while working (was cramped in the left rail). -->
+          <section class="voice voice-lead">
             <div class="voice-head">
               <span class="avatar">${MENTOR.avatar}</span>
               <div><strong>${MENTOR.name}</strong><span class="role">${MENTOR.role}</span></div>
@@ -77,8 +81,6 @@
             <div id="a-voice" class="voice-body mood-mentor is-clamped"></div>
             <button id="a-voice-toggle" class="voice-toggle" type="button" hidden>Show more ▾</button>
           </section>
-        </aside>
-        <section class="work">
           <div class="work-head">
             <span class="tab">🎓 <span class="tab-name">Training file</span></span>
             <span id="a-work-hint" class="hint-muted"></span>
