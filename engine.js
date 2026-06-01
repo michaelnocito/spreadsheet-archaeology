@@ -154,6 +154,17 @@
           setFeedback(`Cell ${addr} marked. Confirm when you're sure.`, "neutral");
         }
       });
+    } else if (kind === "select_option") {
+      host.innerHTML = "";
+      if (WAVE.artifact) SACore.renderSheet(host, WAVE.artifact, { selectable: false });
+      SACore.renderOptions(host, WAVE.task.options, {
+        onSelect: (id) => {
+          if (state.solved) return;
+          state.interaction.selected_option = id;
+          setPrimary("Confirm →", true);
+          setFeedback("Answer marked. Confirm when you're sure.", "neutral");
+        }
+      });
     } else {
       SACore.renderSheet(host, WAVE.artifact, {
         selectable: true,
@@ -202,6 +213,7 @@
     const kind = taskKind();
     if (kind === "select_column") return state.interaction.selected_column;
     if (kind === "select_cell") return state.interaction.selected_cell;
+    if (kind === "select_option") return state.interaction.selected_option;
     return state.interaction.selected_header_row;
   }
 
@@ -220,6 +232,7 @@
       const target =
         kind === "select_column" ? $("#sheet").querySelector("th.col-selected") :
         kind === "select_cell"   ? $("#sheet").querySelector("td.cell-selected") :
+        kind === "select_option" ? $("#sheet").querySelector(".option-card.option-selected") :
                                    $("#sheet").querySelector("tr.selected");
       Celebrate.tap(target);
       renderPredecessor(WAVE.feedback.win, "win");
@@ -248,10 +261,12 @@
     state.interaction.selected_header_row = null;
     state.interaction.selected_column = null;
     state.interaction.selected_cell = null;
+    state.interaction.selected_option = null;
     const sheet = $("#sheet");
     sheet.querySelectorAll("tr.selected").forEach((tr) => tr.classList.remove("selected"));
     sheet.querySelectorAll(".col-selected").forEach((el) => el.classList.remove("col-selected"));
     sheet.querySelectorAll("td.cell-selected").forEach((td) => td.classList.remove("cell-selected"));
+    sheet.querySelectorAll(".option-card.option-selected").forEach((el) => el.classList.remove("option-selected"));
     setPrimary("Confirm →", false);
   }
 
@@ -295,6 +310,10 @@
       const td = sheet.querySelector(`td[data-addr="${answer}"]`);
       if (td) { td.classList.add("cell-highlight"); td.click(); }
       setFeedback(`🛠 Dev: the answer is cell ${answer}.`, "neutral");
+    } else if (kind === "select_option") {
+      const btn = sheet.querySelector(`.option-card[data-opt="${answer}"]`);
+      if (btn) { btn.classList.add("option-highlight"); btn.click(); }
+      setFeedback(`🛠 Dev: the answer is option "${answer}".`, "neutral");
     } else {
       const tr = sheet.querySelector(`tr[data-row="${answer}"]`);
       if (tr) {

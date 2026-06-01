@@ -265,12 +265,18 @@
           "When it makes sense, click <b>Got it</b>"
         ]
       });
-      SACore.renderSheet($("#a-sheet"), lesson.teach.example, {
-        highlightRow: lesson.teach.example.highlight_row,
-        highlightCell: lesson.teach.example.highlight_cell,
-        highlightCol: lesson.teach.example.highlight_col,
+      const ex = lesson.teach.example || {};
+      SACore.renderSheet($("#a-sheet"), ex, {
+        highlightRow: ex.highlight_row,
+        highlightCell: ex.highlight_cell,
+        highlightCol: ex.highlight_col,
         selectable: false
       });
+      // Judgment lessons teach with multiple-choice: show the options with the
+      // right one highlighted, locked, so Sam can walk through the reasoning.
+      if (ex.options) {
+        SACore.renderOptions($("#a-sheet"), ex.options, { locked: true, highlight: ex.answer });
+      }
       workHint("👀 just look — nothing to click yet");
       feedback(lesson.teach.callout, "neutral");
       primary("Got it — let me try →");
@@ -313,6 +319,19 @@
           }
         });
         workHint("click a column letter");
+      } else if (kind === "select_option") {
+        $("#a-sheet").innerHTML = "";
+        // Optional reference sheet above the choices (read-only context).
+        if (rep.artifact) SACore.renderSheet($("#a-sheet"), rep.artifact, { selectable: false });
+        SACore.renderOptions($("#a-sheet"), rep.options, {
+          highlight: guided ? SACore.rhsValue(rep.success_check) : null,
+          onSelect: (id) => {
+            picked = id;
+            primary("Confirm →", true);
+            feedback("Answer marked. Confirm when you're ready.", "neutral");
+          }
+        });
+        workHint("pick the best answer");
       } else {
         SACore.renderSheet($("#a-sheet"), rep.artifact, {
           selectable: true,
@@ -377,12 +396,14 @@
       const interaction =
         kind === "select_cell"   ? { selected_cell: picked }   :
         kind === "select_column" ? { selected_column: picked } :
+        kind === "select_option" ? { selected_option: picked } :
                                    { selected_header_row: picked };
       if (SACore.evalCheck(rep.success_check, interaction)) {
         // 🎉 Tier 1: warm chime + pulse on the thing they clicked
         const target =
           kind === "select_cell"   ? $("#a-sheet").querySelector("td.cell-selected") :
           kind === "select_column" ? $("#a-sheet").querySelector("th.col-selected")  :
+          kind === "select_option" ? $("#a-sheet").querySelector(".option-card.option-selected") :
                                      $("#a-sheet").querySelector("tr.selected");
         Celebrate.tap(target);
         lockSheet();
@@ -398,11 +419,13 @@
         const wrongMsg =
           kind === "select_cell"   ? "Not that cell. Remember — column letter first, then row number. Try again." :
           kind === "select_column" ? "Not that column. Read down each column's values — which one fits what the task is asking for? Try again." :
+          kind === "select_option" ? "Not the best call here. Re-read the choices against the ask — which one would a careful analyst pick? Try again." :
                                      "Not that one — that's data, or a blank, or the title. Look for the row where <i>every</i> cell is a column name. Try again.";
         voice(wrongMsg);
         const fb =
           kind === "select_cell"   ? "Not that cell. Try again." :
           kind === "select_column" ? "Not that column. Try again." :
+          kind === "select_option" ? "Not the best answer. Try again." :
                                      "Not the header row. Find the row of column names.";
         feedback(fb, "bad");
         clearSelection();
@@ -455,6 +478,7 @@
     $("#a-sheet").querySelectorAll("tr.selected").forEach((tr) => tr.classList.remove("selected"));
     $("#a-sheet").querySelectorAll("td.cell-selected").forEach((td) => td.classList.remove("cell-selected"));
     $("#a-sheet").querySelectorAll(".col-selected").forEach((el) => el.classList.remove("col-selected"));
+    $("#a-sheet").querySelectorAll(".option-card.option-selected").forEach((el) => el.classList.remove("option-selected"));
     primary("Confirm →", false);
   }
 
@@ -473,6 +497,10 @@
       const th = $("#a-sheet").querySelector(`th[data-col="${answer}"]`);
       if (th) { th.classList.add("col-highlight"); th.click(); }
       feedback(`🛠 Dev: the answer is column ${answer}.`, "neutral");
+    } else if (kind === "select_option") {
+      const btn = $("#a-sheet").querySelector(`.option-card[data-opt="${answer}"]`);
+      if (btn) { btn.classList.add("option-highlight"); btn.click(); }
+      feedback(`🛠 Dev: the answer is option "${answer}".`, "neutral");
     } else {
       const tr = $("#a-sheet").querySelector(`tr[data-row="${answer}"]`);
       if (tr) {

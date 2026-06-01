@@ -196,5 +196,37 @@
     return el;
   }
 
-  window.SACore = { evalCheck, colLetter, renderSheet, rhsValue };
+  // ----- Multiple-choice renderer --------------------------------------------
+  // renderOptions(host, options, opts)
+  //   options          : [{ id, label, note? }]
+  //   opts.onSelect    : callback(id)
+  //   opts.highlight   : id to softly pre-highlight (guided / teach modes)
+  //   opts.locked      : ignore clicks
+  // Appends to host (so a reference sheet can be rendered above it first).
+  function renderOptions(host, options, opts) {
+    opts = opts || {};
+    const wrap = document.createElement("div");
+    wrap.className = "options";
+    (options || []).forEach((o) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "option-card";
+      btn.dataset.opt = o.id;
+      if (opts.highlight === o.id) btn.classList.add("option-highlight");
+      btn.innerHTML =
+        `<span class="option-label">${o.label}</span>` +
+        (o.note ? `<span class="option-note">${o.note}</span>` : "");
+      btn.addEventListener("click", () => {
+        if (opts.locked) return;
+        wrap.querySelectorAll(".option-card.option-selected")
+          .forEach((c) => c.classList.remove("option-selected"));
+        btn.classList.add("option-selected");
+        if (opts.onSelect) opts.onSelect(o.id);
+      });
+      wrap.appendChild(btn);
+    });
+    host.appendChild(wrap);
+  }
+
+  window.SACore = { evalCheck, colLetter, renderSheet, renderOptions, rhsValue };
 })();

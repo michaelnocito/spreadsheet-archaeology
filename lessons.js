@@ -21,8 +21,11 @@
  *              across every step, always visible above the per-step directive
  *   mentor_intro                       Sam's warm setup
  *   teach   { explain, example:{sheet…, highlight_row, callout} }
- *   practice[]  { mode:"guided"|"solo", task, prompt, hint?, artifact, success_check, praise }
+ *   practice[]  { mode:"guided"|"solo", kind, task, prompt, hint?, artifact, success_check, praise }
  *               task = the one crisp directive (brief headline); prompt = context
+ *               kind: "select_row" | "select_cell" | "select_column" | "select_option"
+ *               select_option adds options:[{id,label,note?}] (+ optional artifact
+ *               sheet for reference). teach.example may carry options + `answer`.
  *   mentor_outro
  * ========================================================================== */
 

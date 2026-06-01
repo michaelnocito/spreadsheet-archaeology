@@ -276,6 +276,25 @@ body {
 .file-line { margin: 8px 0 0; font-size: 13px; color: var(--dim); }
 .filename { font-family: "Consolas", ui-monospace, monospace; color: var(--ink); }
 
+/* Multiple-choice options — judgment lessons (M6+) & document/stakeholder waves.
+   Rendered by SACore.renderOptions into the work area, optionally below a sheet. */
+.options { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+.option-card {
+  text-align: left; cursor: pointer; width: 100%; font: inherit; color: var(--ink);
+  background: #fff; border: 1.5px solid #dde6f5; border-radius: 10px;
+  padding: 12px 14px; display: flex; flex-direction: column; gap: 3px;
+  transition: border-color .12s, background .12s;
+}
+.option-card:hover { border-color: #b9cdf3; background: #f7faff; }
+.option-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.option-label { font-size: 14.5px; font-weight: 600; line-height: 1.35; }
+.option-note { font-size: 12.5px; color: var(--dim); line-height: 1.35; }
+.option-card.option-highlight { border-color: #8fb6f5; border-style: dashed; background: #e3f1ff; }
+.option-card.option-selected {
+  border-color: var(--good); border-width: 2px; background: var(--sel);
+}
+.option-card.option-selected .option-label { color: var(--accent-d); }
+
 .help { padding: 14px 16px; }
 /* Help when it lives inside the work surface (not the rail) — softer treatment
    so it reads as adjacent to the table, not a stacked card. */

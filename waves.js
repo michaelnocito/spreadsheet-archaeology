@@ -22,7 +22,8 @@
  *   artifact       { kind:"sheet", title, rows[][], merged_title_row, blank_rows[] }
  *   task           { kind, directive, prompt, success_check, fail_check, status? }
  *                  directive = crisp brief headline ("do this"); prompt = context
- *                  kind: "select_row" | "select_column" | "select_cell"
+ *                  kind: "select_row" | "select_column" | "select_cell" | "select_option"
+ *                  select_option adds task.options:[{id,label,note?}] (+ optional artifact)
  *                  status = {win,fail,miss} small inline pills (Predecessor voice
  *                  carries the real narrative); engine falls back to generic text
  *   help           { tier1, tier2, tier3 }   <- pull-only, revealed one at a time
