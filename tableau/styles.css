@@ -1,0 +1,826 @@
+/* ============================================================================
+ * Getting It Wrong Gets You There Faster — styles
+ * A believable, calm analyst workstation. Light, low-clutter, action always
+ * visible. The sheet and the single primary button never get covered.
+ * ========================================================================== */
+
+:root {
+  color-scheme: light;          /* pin light — stop browser auto-dark inversion */
+  --bg:        #eef1f5;
+  --panel:     #ffffff;
+  --ink:       #1f2328;
+  --dim:       #5b6470;
+  --line:      #d6dce4;
+  --accent:    #2f6df0;
+  --accent-d:  #1f4fc4;
+  --good:      #1a7f37;
+  --good-bg:   #e7f6ec;
+  --bad:       #cf222e;
+  --bad-bg:    #fdecee;
+  --warm:      #9a6700;
+  --sheet-head:#f3f5f8;
+  --sel:       #fff4cf;
+  --sel-line:  #e0a200;
+  --shadow:    0 1px 2px rgba(20,30,50,.06), 0 6px 20px rgba(20,30,50,.06);
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.55 -apple-system, "Segoe UI", Roboto, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Top orientation bar -------------------------------------------------- */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 10px 18px;
+  background: var(--panel); border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 5;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.logo {
+  font-size: 22px; color: var(--accent);
+  background: linear-gradient(135deg, #eaf1ff, #dbe7ff);
+  width: 38px; height: 38px; display: grid; place-items: center; border-radius: 9px;
+}
+.brand-text { display: flex; flex-direction: column; line-height: 1.2; }
+.brand-text strong { font-size: 15px; }
+.brand-text .sub { font-size: 12px; color: var(--dim); }
+
+.orient { display: flex; align-items: center; gap: 14px; }
+.orient.on-welcome > * { visibility: hidden; }
+
+.phase-chip {
+  font-size: 11px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase;
+  padding: 5px 10px; border-radius: 6px; white-space: nowrap;
+}
+.phase-chip.phase-academy { background: #eaf3ee; color: #1a7f37; border: 1px solid #bfe5ca; }
+.phase-chip.phase-job { background: #f3eefb; color: #6639ba; border: 1px solid #ddccf3; }
+
+/* ---- Curriculum button (always visible) ---------------------------------- */
+.curriculum-btn {
+  margin-left: 12px; padding: 6px 12px; border-radius: 8px;
+  background: #fff; color: var(--ink); border: 1px solid var(--line);
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+  transition: background .15s, border-color .15s;
+}
+.curriculum-btn:hover { background: #f3f6fb; border-color: #b6c2d4; }
+.habit-chip {
+  background: #eef4ff; color: var(--accent-d); border: 1px solid #d4e1ff;
+  padding: 5px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 600; white-space: nowrap;
+}
+.progress-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+.wave-count { font-size: 11.5px; color: var(--dim); }
+.progress { display: flex; gap: 6px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+.dot.active { background: var(--accent); box-shadow: 0 0 0 3px #d8e4ff; }
+.dot.done { background: var(--good); }
+
+/* ---- Stage layout --------------------------------------------------------- */
+.stage {
+  max-width: 1180px; margin: 22px auto; padding: 0 18px;
+  display: grid; grid-template-columns: 280px 1fr; gap: 18px; align-items: start;
+}
+
+/* ---- Left rail ------------------------------------------------------------ */
+/* Sticky so the Task Brief stays visible while the user scrolls + interacts
+   with the training file. Internal scroll if rail content is taller than the
+   viewport (so Sam / Help below the fold are still reachable inside the rail). */
+.rail {
+  display: flex; flex-direction: column; gap: 14px;
+  position: sticky; top: 72px;
+  align-self: start;
+  max-height: calc(100vh - 92px);
+  overflow-y: auto;
+  /* a hair of horizontal padding so the focus outlines inside aren't clipped */
+  padding-right: 4px;
+}
+
+.voice, .task-card, .help, .work {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 14px; box-shadow: var(--shadow);
+}
+.voice { padding: 16px; }
+.voice-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.voice-head .avatar { font-size: 26px; }
+.voice-head strong { display: block; font-size: 14px; }
+.voice-head .role { font-size: 11.5px; color: var(--dim); }
+.voice-body {
+  font-size: 14.5px; line-height: 1.6; color: #2b3240;
+  border-left: 3px solid var(--line); padding: 4px 0 4px 12px;
+  transition: border-color .25s ease;
+}
+.voice-body.mood-intro { border-color: #b8c2d0; }
+.voice-body.mood-win   { border-color: var(--good); }
+.voice-body.mood-fail  { border-color: var(--warm); }
+.voice-body.mood-miss  { border-color: var(--accent); }
+.voice-body.mood-mentor { border-color: var(--good); }
+.voice-body b { color: var(--accent-d); }
+.voice-body i { color: #2b3240; font-style: italic; }
+
+/* stage label tag in the Academy ("I do" / "We do" / "You do") */
+.stage-tag {
+  font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  color: #1a7f37; background: #eaf3ee; border: 1px solid #bfe5ca;
+  padding: 1px 7px; border-radius: 999px; margin-left: 6px; vertical-align: middle;
+}
+
+/* ---- Task brief (the directive card — pops as the primary guidance) ----- */
+.brief-card {
+  background: #ffffff;
+  border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: var(--shadow);
+  border-left: 5px solid var(--accent);
+  padding: 16px 18px 14px;
+}
+.brief-card.brief-job { border-left-color: #6639ba; }
+.brief-eyebrow {
+  font-size: 10.5px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-d); margin-bottom: 6px;
+}
+.brief-card.brief-job .brief-eyebrow { color: #6639ba; }
+.brief-title {
+  margin: 0 0 4px; font-size: 18px; line-height: 1.25; color: var(--ink);
+}
+.brief-stage {
+  display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--accent-d); background: #eef4ff; border: 1px solid #d4e1ff;
+  padding: 3px 9px; border-radius: 999px; margin-bottom: 10px;
+}
+.brief-card.brief-job .brief-stage {
+  color: #6639ba; background: #f3eefb; border-color: #ddccf3;
+}
+/* The single crisp directive — "what do I do right now." Most prominent line
+   in the brief so the action never has to be decoded out of the context prose
+   (player-orientation principle). Sits above the supporting prompt. */
+.brief-task {
+  margin: 0 0 12px; padding: 11px 13px;
+  background: #eef4ff; border: 1px solid #cfe0fb; border-left: 4px solid var(--accent);
+  border-radius: 9px; color: var(--ink);
+  font-size: 15px; font-weight: 600; line-height: 1.4;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.brief-task[hidden] { display: none; } /* flex would otherwise beat the hidden attr */
+.brief-task .task-icon { flex: 0 0 auto; }
+.brief-task .task-do { flex: 1 1 auto; min-width: 0; }
+.brief-task b { color: var(--accent-d); }
+.brief-card.brief-job .brief-task {
+  background: #f3eefb; border-color: #ddccf3; border-left-color: #7c4dff;
+}
+.brief-card.brief-job .brief-task b { color: #6639ba; }
+
+/* THE ASK — the standing goal (why you're here). Calm + always visible, sits
+   above the bright directive. Together they're the orientation backbone. */
+.brief-ask {
+  margin: 0 0 8px; padding: 9px 12px;
+  background: #f4f6fa; border: 1px solid #e4e9f2; border-radius: 9px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.brief-ask[hidden] { display: none; }
+.ask-eyebrow {
+  font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--dim);
+}
+.ask-body { font-size: 14px; line-height: 1.4; color: var(--ink); font-weight: 600; }
+.ask-body b { color: var(--accent-d); }
+.brief-card.brief-job .ask-body b { color: #6639ba; }
+
+/* Steps & context disclosure — collapses the supporting detail on small screens
+   so the rail leads with the ask + directive, not a wall of text. */
+.brief-more { margin: 2px 0 0; }
+.brief-more > .brief-more-summary {
+  cursor: pointer; list-style: none; user-select: none;
+  font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--accent-d); padding: 6px 2px; display: inline-flex; align-items: center; gap: 6px;
+}
+.brief-more > .brief-more-summary::-webkit-details-marker { display: none; }
+.brief-more > .brief-more-summary::before {
+  content: "▸"; font-size: 11px; transition: transform .15s ease;
+}
+.brief-more[open] > .brief-more-summary::before { transform: rotate(90deg); }
+.brief-more > .brief-more-summary:hover { color: var(--accent); }
+.brief-card.brief-job .brief-more > .brief-more-summary { color: #6639ba; }
+.brief-more-body { padding-top: 4px; }
+.brief-more-body .brief-prompt:first-child { margin-top: 0; }
+
+/* Voice card: clamp to a few lines with a fade, reveal full text on demand. */
+.voice-body.is-clamped {
+  max-height: 4.6em; overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent 100%);
+          mask-image: linear-gradient(180deg, #000 60%, transparent 100%);
+}
+.voice-toggle {
+  margin-top: 6px; padding: 2px 0; background: none; border: none; cursor: pointer;
+  font-size: 12px; font-weight: 700; color: var(--accent-d);
+}
+.voice-toggle[hidden] { display: none; }
+.voice-toggle:hover { text-decoration: underline; }
+
+.brief-prompt {
+  margin: 0 0 12px; font-size: 14.5px; line-height: 1.5; color: var(--ink);
+}
+.brief-prompt b { color: var(--accent-d); }
+.brief-sublabel {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 6px;
+}
+.brief-checklist {
+  list-style: none; counter-reset: brief-step; padding: 0; margin: 0 0 12px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.brief-checklist li {
+  counter-increment: brief-step;
+  position: relative; padding: 7px 10px 7px 34px;
+  font-size: 13.5px; line-height: 1.45; color: #2b3240;
+  background: #f7faff; border: 1px solid #dde6f5; border-radius: 8px;
+}
+.brief-checklist li::before {
+  content: counter(brief-step);
+  position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-size: 11px; font-weight: 700;
+}
+.brief-card.brief-job .brief-checklist li {
+  background: #f9f5ff; border-color: #e7dcf6;
+}
+.brief-card.brief-job .brief-checklist li::before { background: #6639ba; }
+.brief-tip {
+  margin: 10px 0 0; padding: 9px 11px; border-radius: 8px;
+  background: #fbf7ec; border: 1px solid #e3d7a5; color: #3b2f10;
+  font-size: 13px; line-height: 1.45;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.tip-icon { flex: 0 0 auto; font-size: 14px; line-height: 1.45; }
+.tip-body { flex: 1 1 auto; min-width: 0; }
+.tip-label { font-weight: 700; color: var(--warm); margin-right: 2px; }
+/* Spaced-retrieval recall chip — calm teal, phase-agnostic so the "you're
+   reusing an earlier skill" signal reads the same in the Academy and the Job. */
+.brief-recall {
+  margin: 0 0 12px; padding: 8px 11px; border-radius: 8px;
+  background: #eafaf4; border: 1px solid #b7e3d2; color: #0f5132;
+  font-size: 13px; line-height: 1.45;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.brief-recall[hidden] { display: none; } /* flex would otherwise beat the hidden attr */
+.brief-recall .recall-icon { flex: 0 0 auto; font-size: 14px; line-height: 1.45; }
+.brief-recall .recall-body { flex: 1 1 auto; min-width: 0; }
+.brief-recall b { color: #0a6b46; font-weight: 700; }
+.file-line { margin: 8px 0 0; font-size: 13px; color: var(--dim); }
+.filename { font-family: "Consolas", ui-monospace, monospace; color: var(--ink); }
+
+/* Multiple-choice options — judgment lessons (M6+) & document/stakeholder waves.
+   Rendered by SACore.renderOptions into the work area, optionally below a sheet. */
+.options { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+.option-card {
+  text-align: left; cursor: pointer; width: 100%; font: inherit; color: var(--ink);
+  background: #fff; border: 1.5px solid #dde6f5; border-radius: 10px;
+  padding: 12px 14px; display: flex; flex-direction: column; gap: 3px;
+  transition: border-color .12s, background .12s;
+}
+.option-card:hover { border-color: #b9cdf3; background: #f7faff; }
+.option-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.option-label { font-size: 14.5px; font-weight: 600; line-height: 1.35; }
+.option-note { font-size: 12.5px; color: var(--dim); line-height: 1.35; }
+.option-card.option-highlight { border-color: #8fb6f5; border-style: dashed; background: #e3f1ff; }
+.option-card.option-selected {
+  border-color: var(--good); border-width: 2px; background: var(--sel);
+}
+.option-card.option-selected .option-label { color: var(--accent-d); }
+/* Teach mode: options are read-only (worked example), so don't invite clicks. */
+.options-locked .option-card { cursor: default; }
+.options-locked .option-card:hover { border-color: #dde6f5; background: #fff; }
+.options-locked .option-card.option-highlight:hover { border-color: #8fb6f5; background: #e3f1ff; }
+
+.help { padding: 14px 16px; }
+/* Help when it lives inside the work surface (not the rail) — softer treatment
+   so it reads as adjacent to the table, not a stacked card. */
+.help.help-inline {
+  background: transparent; border: 0; box-shadow: none; padding: 14px 0 4px;
+}
+.help-btn {
+  width: 100%; padding: 10px 12px; border-radius: 10px;
+  border: 1px dashed #c3ccd8; background: #f7f9fc; color: var(--accent-d);
+  font-weight: 600; font-size: 13.5px; cursor: pointer; transition: background .15s;
+}
+.help-btn:hover:not(:disabled) { background: #eef3fb; }
+.help-btn:disabled { opacity: .55; cursor: default; }
+.help-list { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.help-list li {
+  font-size: 13.5px; line-height: 1.55; color: #36404f;
+  background: #f7f9fc; border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px;
+}
+.tier-tag {
+  display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--accent-d); background: #e6eefe;
+  padding: 1px 7px; border-radius: 999px; margin-right: 6px;
+}
+
+/* ---- Work surface --------------------------------------------------------- */
+.work { padding: 16px; }
+.work-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin-bottom: 12px; flex-wrap: wrap;
+}
+.tab {
+  background: #f0f3f8; border: 1px solid var(--line); border-radius: 8px 8px 0 0;
+  padding: 6px 12px; font-size: 13px; font-weight: 600;
+}
+.tab-name { font-family: "Consolas", ui-monospace, monospace; font-weight: 500; }
+.hint-muted { font-size: 12px; color: var(--dim); }
+
+/* ---- Module stepper (lesson-arc "where you've been / are / going") ------ */
+.stepper {
+  list-style: none; margin: 0 0 14px; padding: 0;
+  display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
+}
+.stepper .step {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px 5px 6px; border-radius: 999px;
+  font-size: 12px; color: var(--dim);
+  background: #f3f5f8; border: 1px solid var(--line);
+  position: relative;
+}
+.stepper .step:not(:last-child)::after {
+  content: ""; display: inline-block; width: 8px; height: 1px;
+  background: var(--line); margin-left: 4px; margin-right: -8px;
+}
+.stepper .step-num {
+  display: inline-grid; place-items: center;
+  width: 18px; height: 18px; border-radius: 50%;
+  font-size: 11px; font-weight: 700;
+  background: #ffffff; color: var(--dim); border: 1px solid var(--line);
+}
+.stepper .step-label { font-weight: 500; }
+
+.stepper .step.is-active {
+  background: #eef4ff; border-color: #b6c8ee; color: var(--accent-d);
+}
+.stepper .step.is-active .step-num {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+  box-shadow: 0 0 0 3px #d8e4ff;
+}
+.stepper .step.is-active .step-label { font-weight: 700; }
+
+.stepper .step.is-done {
+  background: var(--good-bg); border-color: #bfe5ca; color: var(--good);
+}
+.stepper .step.is-done .step-num {
+  background: var(--good); color: #fff; border-color: var(--good);
+}
+
+.sheet { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+.sheet.locked { opacity: .85; pointer-events: none; }
+
+.sheet-table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+.sheet-table th, .sheet-table td {
+  border: 1px solid #e3e8ef; padding: 7px 10px; text-align: left; white-space: nowrap;
+}
+.sheet-table thead th { background: var(--sheet-head); color: var(--dim); font-weight: 600; text-align: center; }
+.sheet-table .corner { width: 36px; }
+.sheet-table .colhead { min-width: 84px; }
+.sheet-table .rowhead {
+  background: var(--sheet-head); color: var(--dim); text-align: center; font-weight: 600;
+  width: 36px; cursor: pointer; user-select: none; position: relative;
+}
+.sheet-table .rowhead:hover { background: #e7ecf4; color: var(--ink); }
+.sheet-table .rowhead:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.sheet-table tbody tr { cursor: pointer; }
+.sheet-table tbody tr:hover td { background: #f8fafd; }
+
+.merged-title {
+  background: #fbf7ec; color: var(--warm); font-weight: 600; font-style: italic;
+  text-align: center;
+}
+.is-blank td.blank { background: #fcfdfe; height: 14px; }
+
+.sheet-table tr.selected td,
+.sheet-table tr.selected .rowhead {
+  background: var(--sel) !important;
+}
+.sheet-table tr.selected { box-shadow: inset 3px 0 0 var(--sel-line); }
+
+/* clickable cells (Day 1 "click cell B3" style lessons) */
+.sheet-table td.clickable-cell { cursor: pointer; }
+.sheet-table td.clickable-cell:hover { background: #eef4ff; outline: 1px solid #c4d8fb; outline-offset: -1px; }
+.sheet-table td.clickable-cell:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.sheet-table td.cell-highlight {
+  background: #e3f1ff !important;
+  outline: 2px dashed #8fb6f5; outline-offset: -2px;
+}
+.sheet-table td.cell-selected {
+  background: var(--sel) !important;
+  outline: 3px solid var(--good); outline-offset: -3px;
+  font-weight: 600;
+}
+
+/* clickable column headers (Module 3+ "tag this column's type" lessons) */
+.sheet-table th.clickable-col { cursor: pointer; }
+.sheet-table th.clickable-col:hover { background: #e7ecf4; color: var(--ink); }
+.sheet-table th.clickable-col:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+/* highlight — the whole column lights up softly (teach + guided modes) */
+.sheet-table th.col-highlight,
+.sheet-table td.col-highlight {
+  background: #e3f1ff !important;
+  outline: 2px dashed #8fb6f5; outline-offset: -2px;
+}
+
+/* selected — the column header is the anchor, body cells get a gentle tint */
+.sheet-table th.col-selected {
+  background: var(--sel) !important;
+  outline: 3px solid var(--good); outline-offset: -3px;
+  color: var(--ink); font-weight: 700;
+}
+.sheet-table td.col-selected {
+  background: #fff9e0 !important;
+}
+
+/* "numbers stored as text" — Excel's green corner flag (Module 4).
+   Intrinsic to the cell's data; layers under highlight/selected tints. */
+.sheet-table td.text-number { position: relative; }
+.sheet-table td.text-number .tn-flag {
+  position: absolute; top: 0; left: 0;
+  width: 0; height: 0;
+  border-top: 7px solid var(--good);
+  border-right: 7px solid transparent;
+  pointer-events: none;
+}
+
+/* soft "look here" highlight used in Academy teach/guided modes */
+.sheet-table tr.highlight td,
+.sheet-table tr.highlight .rowhead {
+  background: #e3f1ff;
+  box-shadow: inset 0 0 0 9999px rgba(47,109,240,.06);
+}
+.sheet-table tr.highlight { outline: 2px dashed #8fb6f5; outline-offset: -2px; }
+.sheet-table tr.highlight.selected td,
+.sheet-table tr.highlight.selected .rowhead { background: var(--sel) !important; }
+
+/* ---- Feedback line (never covers the grid or the button) ------------------ */
+.feedback {
+  margin: 12px 0 0; padding: 9px 13px; border-radius: 9px; font-size: 13.5px; font-weight: 500;
+}
+.feedback.neutral { background: #eef2f7; color: var(--dim); }
+.feedback.good { background: var(--good-bg); color: var(--good); }
+.feedback.bad  { background: var(--bad-bg); color: var(--bad); }
+
+/* ---- Primary action ------------------------------------------------------- */
+.action-row { margin-top: 14px; display: flex; justify-content: flex-end; }
+.primary {
+  background: var(--accent); color: #fff; border: 0; border-radius: 10px;
+  padding: 11px 22px; font-size: 14.5px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(47,109,240,.35); transition: background .15s, transform .05s;
+}
+.primary:hover:not(:disabled) { background: var(--accent-d); }
+.primary:active:not(:disabled) { transform: translateY(1px); }
+.primary:disabled { background: #b9c4d4; box-shadow: none; cursor: default; }
+
+.slice-note {
+  margin-top: 16px; padding: 13px 15px; border-radius: 10px;
+  background: var(--good-bg); border: 1px solid #bfe5ca; color: #18532b;
+  font-size: 13.5px; line-height: 1.55;
+}
+
+/* ---- Footer --------------------------------------------------------------- */
+.foot {
+  max-width: 1180px; margin: 8px auto 30px; padding: 0 18px;
+  display: flex; justify-content: space-between; color: var(--dim); font-size: 12px;
+}
+.foot .build { font-family: "Consolas", ui-monospace, monospace; }
+
+/* ---- Welcome / landing ---------------------------------------------------- */
+.welcome {
+  max-width: 920px; margin: 24px auto 40px; padding: 0 18px;
+}
+.welcome-card {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+  box-shadow: var(--shadow); padding: 28px 32px;
+}
+.welcome-head { margin-bottom: 14px; }
+.welcome-title { display: flex; align-items: center; gap: 14px; }
+.welcome-logo { font-size: 26px; width: 48px; height: 48px; }
+.welcome-title h1 { margin: 0; font-size: 24px; line-height: 1.2; }
+.welcome-sub { margin: 4px 0 0; color: var(--dim); font-size: 14px; }
+.welcome-sub i { font-style: italic; color: var(--ink); }
+
+.welcome-premise {
+  margin: 16px 0 22px; padding: 16px 18px;
+  background: #f7faff; border: 1px solid #dde6f5; border-radius: 12px;
+  font-size: 14.5px; line-height: 1.6;
+}
+.welcome-premise p { margin: 0 0 10px; }
+.welcome-premise p:last-child { margin: 0; }
+.welcome-taglineline {
+  font-size: 13.5px !important; color: var(--dim);
+  border-top: 1px dashed #cdd6e6; padding-top: 10px; margin-top: 12px !important;
+}
+
+.syllabus h3 {
+  font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--dim);
+  margin: 0 0 12px;
+}
+.syl-note { text-transform: none; letter-spacing: 0; color: var(--dim); font-weight: 400; font-size: 12px; margin-left: 6px; }
+.syl-stack { display: flex; flex-direction: column; gap: 14px; }
+.syl-section {
+  background: #f7f9fc; border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px;
+}
+.syl-section h4 {
+  margin: 0 0 10px; font-size: 13px; color: var(--accent-d);
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+.syl-progress { font-size: 11px; color: var(--dim); font-weight: 500; }
+.syl-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.syl-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; padding: 6px 8px; border-radius: 7px;
+  background: #ffffff; border: 1px solid var(--line); color: var(--ink);
+}
+.syl-item.is-built { cursor: pointer; transition: background .12s, border-color .12s; }
+.syl-item.is-built:hover { background: #eef4ff; border-color: #b6c8ee; }
+.syl-item.is-locked { color: var(--dim); background: #f3f5f8; }
+/* Available-but-unplayed: the ○ reads as a muted "to-do", distinct from a ✅. */
+.syl-item.is-built:not(.is-done) .syl-icon { color: var(--dim); }
+.syl-item.is-done { background: #f2fbf5; border-color: #bfe6cd; }
+.syl-icon { width: 18px; text-align: center; }
+.welcome-reset { margin-top: 14px; }
+
+.welcome-cta { margin-top: 24px; text-align: center; }
+.primary.primary-xl { padding: 14px 32px; font-size: 16px; border-radius: 12px; }
+.primary.primary-sm { padding: 7px 14px; font-size: 12.5px; border-radius: 8px; }
+.welcome-foot { margin: 12px 0 0; color: var(--dim); font-size: 12.5px; }
+
+/* ---- Curriculum drawer ---------------------------------------------------- */
+.curriculum-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 360px; max-width: 92vw;
+  background: #ffffff; border-left: 1px solid var(--line);
+  box-shadow: -8px 0 24px rgba(20,30,50,.10);
+  display: flex; flex-direction: column;
+  z-index: 30;
+}
+.curriculum-drawer[hidden] { display: none; }
+.cur-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; border-bottom: 1px solid var(--line);
+}
+.cur-head strong { font-size: 14px; }
+.icon-btn {
+  background: transparent; border: 0; color: var(--dim); cursor: pointer; font-size: 16px;
+  width: 30px; height: 30px; border-radius: 6px;
+}
+.icon-btn:hover { background: #f3f5f8; color: var(--ink); }
+
+.cur-meta { padding: 8px 16px; font-size: 12px; color: var(--dim); background: #faf9ee; border-bottom: 1px solid #efe9c8; }
+
+.cur-controls {
+  padding: 12px 16px; display: flex; flex-direction: column; gap: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.cur-toggle { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink); cursor: pointer; }
+.ghost-btn {
+  background: transparent; border: 1px solid var(--line); color: var(--dim);
+  padding: 6px 10px; border-radius: 8px; font-size: 12.5px; cursor: pointer;
+}
+.ghost-btn:hover { background: #f3f5f8; color: var(--ink); }
+
+.cur-section { padding: 12px 16px; overflow-y: auto; }
+.cur-section + .cur-section { border-top: 1px solid var(--line); }
+.cur-section h4 { margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--dim); }
+.cur-count { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--dim); font-size: 11px; margin-left: 4px; }
+.cur-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.cur-item {
+  display: grid; grid-template-columns: 22px 54px 1fr; align-items: center; gap: 6px;
+  padding: 7px 8px; border-radius: 7px; border: 1px solid var(--line);
+  background: #fff; font-size: 13px;
+}
+.cur-item.is-built { cursor: pointer; }
+.cur-item.is-built:hover { background: #eef4ff; border-color: #b6c8ee; }
+.cur-item.is-locked { color: var(--dim); background: #f6f7f9; }
+.cur-item.is-built:not(.is-done) .cur-icon { color: var(--dim); }
+.cur-item.is-done { background: #f2fbf5; border-color: #bfe6cd; }
+.cur-week { font-family: "Consolas", ui-monospace, monospace; font-size: 11.5px; color: var(--dim); }
+
+/* ---- Celebration FX (Duolingo-warm tier) --------------------------------- */
+/* All positioned by JS via inline left/top/width/height in page coords. */
+.fx-pulse {
+  position: absolute; pointer-events: none; z-index: 25;
+  border: 2px solid var(--good); border-radius: 8px;
+  box-shadow: 0 0 0 6px rgba(26,127,55,.25);
+  opacity: 0;
+  animation: fxPulse .6s ease-out forwards;
+}
+@keyframes fxPulse {
+  0%   { transform: scale(.92); opacity: 0; }
+  20%  { opacity: 1; }
+  100% { transform: scale(1.08); opacity: 0; box-shadow: 0 0 0 14px rgba(26,127,55,0); }
+}
+
+.fx-toast {
+  position: fixed; top: 18px; left: 50%; transform: translate(-50%, -24px);
+  padding: 11px 18px; border-radius: 12px;
+  background: var(--good-bg); color: var(--good); border: 1px solid #bfe5ca;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 8px 28px rgba(20,30,50,.18);
+  opacity: 0; transition: transform .35s cubic-bezier(.2,.9,.3,1.2), opacity .35s ease;
+  z-index: 40; max-width: 92vw; text-align: center;
+}
+.fx-toast.show { transform: translate(-50%, 0); opacity: 1; }
+.fx-toast.big {
+  background: #fdf6e3; color: var(--warm); border-color: #e3d7a5;
+  font-size: 15px; padding: 13px 22px;
+}
+
+.fx-confetti-root {
+  position: fixed; inset: 0; pointer-events: none; z-index: 35; overflow: hidden;
+}
+.fx-confetto {
+  position: absolute; top: -16px; width: 8px; height: 12px; border-radius: 1px;
+  transform: rotate(0deg);
+  animation: fxFall var(--dur, 2.2s) cubic-bezier(.4,.1,.6,1) forwards;
+}
+@keyframes fxFall {
+  0%   { transform: translate(0, -10px) rotate(0deg); opacity: 0; }
+  10%  { opacity: 1; }
+  100% { transform: translate(var(--dx, 0), 110vh) rotate(720deg); opacity: 0; }
+}
+
+/* respect reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .fx-pulse, .fx-toast, .fx-confetto { animation: none !important; transition: none !important; }
+  .fx-toast { opacity: 1; transform: translate(-50%, 0); }
+  .fx-confetti-root { display: none; }
+}
+
+/* ---- Responsive ----------------------------------------------------------- */
+/* Lowered breakpoint from 880 -> 720 so common desktop zoom levels (125%-200%
+   on a 1080p monitor) stay in the 2-col layout where the brief is visible
+   alongside the file. Real mobile widths still fall back to the stack below. */
+@media (max-width: 720px) {
+  .stage { grid-template-columns: 1fr; }
+  /* Reading order on narrow screens: directive (rail) FIRST, then work surface.
+     Sticky no longer applies once stacked — natural document flow takes over. */
+  .rail {
+    position: static; order: 1;
+    max-height: none; overflow-y: visible; padding-right: 0;
+  }
+  .work { order: 2; }
+  .orient { gap: 10px; }
+  .brand-text .sub { display: none; }
+  .syl-stack { gap: 10px; }
+  .curriculum-drawer { width: 100%; }
+  .welcome-card { padding: 20px 18px; }
+  .welcome-title h1 { font-size: 20px; }
+}
+
+/* ============================================================================
+ * TABLEAU WORKSPACE MOCKUP (SACore.renderViz) — display-only reference picture
+ * Calm-analyst skin + Tableau's signature blue (dimension) / green (measure)
+ * pill colors. Non-interactive: the player acts via the option cards below it.
+ * ========================================================================== */
+:root {
+  --tab-dim:      #2e5d8a;   /* discrete / dimension — blue  */
+  --tab-dim-bg:   #e9f0f8;
+  --tab-dim-line: #b7d0ea;
+  --tab-meas:     #2f7d32;   /* continuous / measure — green */
+  --tab-meas-bg:  #e7f4e8;
+  --tab-meas-line:#b3ddb6;
+}
+.viz {
+  border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+  background: #fff; box-shadow: var(--shadow); font-size: 13px; margin-bottom: 4px;
+}
+.viz-titlebar {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--sheet-head); border-bottom: 1px solid var(--line);
+  padding: 7px 12px; font-family: "Consolas", ui-monospace, monospace;
+  font-size: 12px; color: var(--dim);
+}
+.viz-dot { width: 9px; height: 9px; border-radius: 50%; background: #d3a4ff; flex: none;
+  box-shadow: 6px 0 0 #ffd27a, 12px 0 0 #9adf9a; margin-right: 14px; }
+.viz-body { display: flex; align-items: stretch; }
+
+/* ---- Data pane (left) ---- */
+.viz-pane {
+  flex: none; width: 168px; border-right: 1px solid var(--line);
+  background: #fbfcfe; padding: 8px 0;
+}
+.viz-pane-head {
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+  color: var(--dim); padding: 2px 12px 8px; border-bottom: 1px solid var(--line); margin-bottom: 6px;
+}
+.viz-pane-group { padding: 4px 10px; border-radius: 8px; margin: 0 4px 4px; }
+.viz-pane-label { font-size: 11px; font-weight: 700; color: var(--dim); margin: 2px 0 5px; }
+.viz-field { padding: 2px 0; }
+
+/* ---- Pills (blue dimension / green measure) ---- */
+.viz-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 9px 3px 8px; border-radius: 999px; font-size: 12px; font-weight: 600;
+  line-height: 1.3; border: 1px solid; white-space: nowrap;
+}
+.viz-pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.viz-pill-dim { color: var(--tab-dim); background: var(--tab-dim-bg); border-color: var(--tab-dim-line); }
+.viz-pill-dim::before { background: var(--tab-dim); }
+.viz-pill-measure { color: var(--tab-meas); background: var(--tab-meas-bg); border-color: var(--tab-meas-line); }
+.viz-pill-measure::before { background: var(--tab-meas); }
+
+/* ---- Worksheet (right) ---- */
+.viz-sheet { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.viz-shelves { border-bottom: 1px solid var(--line); }
+.viz-shelf {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 10px; border-bottom: 1px dashed #e6ebf2;
+}
+.viz-shelf:last-child { border-bottom: 0; }
+.viz-shelf-label {
+  flex: none; width: 60px; font-size: 11px; font-weight: 700; color: var(--dim);
+  text-transform: uppercase; letter-spacing: .03em;
+}
+.viz-shelf-well {
+  flex: 1; min-height: 26px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  background: #f7f9fc; border: 1px solid #eceff4; border-radius: 7px; padding: 3px 6px;
+}
+
+.viz-lower { display: flex; align-items: stretch; min-height: 168px; }
+.viz-marks {
+  flex: none; width: 116px; border-right: 1px solid var(--line);
+  background: #fbfcfe; padding: 8px 9px; display: flex; flex-direction: column; gap: 6px;
+}
+.viz-marks-head { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--dim); }
+.viz-marks-type {
+  font-size: 12px; font-weight: 600; color: var(--ink);
+  background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 3px 7px;
+}
+.viz-marks-btns { display: flex; flex-direction: column; gap: 4px; }
+.viz-marks-btns span {
+  font-size: 11px; color: var(--dim); background: #fff; border: 1px solid var(--line);
+  border-radius: 6px; padding: 3px 7px;
+}
+.viz-mark-pill { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.viz-mark-on { font-size: 10px; color: var(--dim); }
+
+/* ---- Canvas (the chart) ---- */
+.viz-canvas { flex: 1; position: relative; padding: 12px 14px 8px; min-width: 0; }
+.viz-axis-y {
+  font-size: 11px; color: var(--dim); margin-bottom: 6px; font-family: "Consolas", ui-monospace, monospace;
+}
+.viz-bars { display: flex; align-items: flex-end; gap: 14px; height: 130px; padding: 0 4px; }
+.viz-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 6px; }
+.viz-bar {
+  width: 100%; max-width: 46px; min-height: 4px; border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, #6fa8dc, var(--tab-dim));
+}
+.viz-bar-col span { font-size: 11px; color: var(--dim); text-align: center; }
+.viz-line { width: 100%; height: 120px; color: var(--tab-dim); display: block; }
+.viz-cats { display: flex; justify-content: space-between; margin-top: 4px; }
+.viz-cats span { font-size: 11px; color: var(--dim); }
+.viz-empty {
+  display: flex; align-items: center; justify-content: center; height: 120px;
+  border: 1.5px dashed #cfd8e4; border-radius: 8px; color: var(--dim); font-size: 12.5px; font-style: italic;
+}
+
+/* ---- "Look here" highlight (teach + guided) ---- */
+.viz-hi {
+  box-shadow: inset 0 0 0 2px var(--sel-line), 0 0 0 3px #fff6d8;
+  background: var(--sel) !important; border-radius: 8px; position: relative;
+}
+.viz-pane-group.viz-hi { background: var(--sel) !important; }
+.viz-shelf.viz-hi { background: var(--sel); }
+
+@media (max-width: 720px) {
+  .viz-body { flex-wrap: wrap; }
+  .viz-pane { width: 100%; border-right: 0; border-bottom: 1px solid var(--line); }
+  .viz-sheet { flex-basis: 100%; }
+}
+
+/* ----------------------------------------------------------------------------
+ * Sam's guidance moved into the work column, full-width directly ABOVE the
+ * workbook (was cramped in the left rail). Flattened so it doesn't read as a
+ * card-inside-a-card; a divider separates it from the view.
+ * -------------------------------------------------------------------------- */
+.voice-lead {
+  background: transparent; border: 0; box-shadow: none; border-radius: 0;
+  padding: 0 0 12px; margin: 0 0 14px; border-bottom: 1px solid var(--line);
+}
+.voice-lead .voice-body.is-clamped { max-height: 7em; }
+
+/* The ask relocated to lead the work area, directly under the workbook tab. */
+.brief-ask-lead { margin: 2px 0 12px; }
+
+/* ↺ Restart control in the brief eyebrow — start the current module/file over. */
+.brief-eyebrow-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.brief-eyebrow-row .brief-eyebrow { margin-bottom: 0; }
+.brief-restart {
+  background: none; border: 1px solid var(--line); color: var(--dim);
+  border-radius: 8px; padding: 3px 9px; font-size: 11.5px; font-weight: 700;
+  cursor: pointer; white-space: nowrap; transition: background .12s, color .12s, border-color .12s;
+}
+.brief-restart:hover { color: var(--accent-d); border-color: #b6c8ee; background: #eef4ff; }
