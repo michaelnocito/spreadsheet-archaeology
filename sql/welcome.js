@@ -1,0 +1,145 @@
+/* ============================================================================
+ * Getting It Wrong Gets You There Faster (SQL) — WELCOME / LANDING
+ * ----------------------------------------------------------------------------
+ * The first thing a brand-new player sees. Sets the premise, introduces the
+ * mentor, shows the full Academy + 5-wave Job syllabus so they know what
+ * they're signing up for, then drops them into Module 1.
+ *
+ * Locked / unbuilt items show a 🔒 so the road ahead is visible but honest.
+ *
+ * Reads:  MENTOR, ACADEMY_PLAN (lessons.js), WAVES (waves.js)
+ * Calls:  opts.onStart(idx)   when "Start Module 1 →" is clicked
+ *         opts.onJumpLesson   when user clicks any built lesson in the list
+ *         opts.onJumpWave     when user clicks any built wave in the list
+ * ========================================================================== */
+
+(function () {
+  "use strict";
+
+  function render(host, opts) {
+    const lessonsHtml = `
+      <div class="syl-section">
+        <h4>🎓 Onboarding packet
+          <span class="syl-progress">${lessonsDone()}/${ACADEMY_PLAN.length} done</span>
+        </h4>
+        <ol class="syl-list">
+          ${ACADEMY_PLAN.map((d) => syllabusItem("lesson", d)).join("")}
+        </ol>
+      </div>`;
+
+    const wavesHtml = `
+      <div class="syl-section">
+        <h4>💼 On the job
+          <span class="syl-progress">${wavesDone()}/5 done</span>
+        </h4>
+        <ol class="syl-list">
+          ${WAVES.map((w, i) => syllabusItem("wave", {
+            day: i + 1, name: w.concept.name, built: true, idx: i
+          })).join("")}
+          ${Array.from({ length: Math.max(0, 5 - WAVES.length) }, (_, i) =>
+            syllabusItem("wave", { day: WAVES.length + i + 1, name: futureWaveName(WAVES.length + i - 1), built: false })
+          ).join("")}
+        </ol>
+      </div>`;
+
+    host.innerHTML = `
+      <div class="welcome">
+        <div class="welcome-card">
+          <div class="welcome-head">
+            <div class="welcome-title">
+              <span class="logo welcome-logo">▦</span>
+              <div>
+                <h1>You just got hired.</h1>
+                <p class="welcome-sub">Junior data analyst, day one — the <b>SQL</b> desk. <i>Getting It Wrong Gets You There Faster</i> — a job sim.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="welcome-premise">
+            <p><b>Here's the deal.</b> The analyst who had this desk before you — the Predecessor — left in a hurry, and the queries they left behind are a mess. Numbers that don't reconcile, filters that quietly drop rows, joins that double-count revenue, zero comments. You're going to inherit all of it.</p>
+            <p><b>First, you train.</b> Two weeks with <b>${MENTOR.name}</b>, your mentor ${MENTOR.avatar} — clean little tables, one clause at a time. <b>Then you're on the job</b> — same skills, but reading the Predecessor's cursed queries and figuring out where each one lies. Help is right there when you want it.</p>
+            <p class="welcome-taglineline">Failing is the curriculum. <b>Getting it wrong gets you there faster.</b></p>
+          </div>
+
+          <div class="syllabus">
+            <h3>Your training path <span class="syl-note">(live beta — build in progress)</span></h3>
+            <div class="syl-stack">
+              ${lessonsHtml}
+              ${wavesHtml}
+            </div>
+          </div>
+
+          <div class="welcome-cta">
+            <button id="welcome-start" class="primary primary-xl">Start Module 1 →</button>
+            <p class="welcome-foot">Tip: the <b>📋 Curriculum</b> button up top lets you jump to any built lesson or wave anytime. It's live beta — feel free to explore.</p>
+            ${hasProgress() ? `<button id="welcome-reset" class="ghost-btn welcome-reset" type="button">↺ Start over (clear my ✅ progress)</button>` : ""}
+          </div>
+        </div>
+      </div>`;
+
+    // Start button — also doubles as the audio-unlock gesture.
+    host.querySelector("#welcome-start").addEventListener("click", () => {
+      if (window.Celebrate) Celebrate.armAudio();
+      opts.onStart(0);
+    });
+
+    // Built syllabus items are clickable
+    host.querySelectorAll(".syl-item.is-built").forEach((el) => {
+      el.addEventListener("click", () => {
+        if (el.dataset.type === "lesson") opts.onJumpLesson(Number(el.dataset.idx));
+        else opts.onJumpWave(Number(el.dataset.idx));
+      });
+    });
+
+    // Start over — wipe completion and re-render so every ✅ clears back to ○.
+    const resetBtn = host.querySelector("#welcome-reset");
+    if (resetBtn) resetBtn.addEventListener("click", () => {
+      if (window.Progress) Progress.reset();
+      render(host, opts);
+    });
+  }
+
+  // ----- Completion helpers (read window.Progress; degrade to "nothing done") -
+  function itemDone(type, idx) {
+    if (!window.Progress || idx < 0) return false;
+    return type === "lesson" ? Progress.isLessonDone(LESSONS[idx].id)
+                             : Progress.isWaveDone(WAVES[idx].concept.id);
+  }
+  function lessonsDone() {
+    return ACADEMY_PLAN.reduce((n, d) => {
+      const idx = LESSONS.findIndex((l) => l.day === d.day);
+      return n + (d.built && itemDone("lesson", idx) ? 1 : 0);
+    }, 0);
+  }
+  function wavesDone() {
+    return WAVES.reduce((n, _w, i) => n + (itemDone("wave", i) ? 1 : 0), 0);
+  }
+  function hasProgress() {
+    return !!window.Progress && (Progress.counts().lessons + Progress.counts().waves) > 0;
+  }
+
+  // Render one syllabus row. Lessons map by day → LESSONS index; waves come with idx.
+  function syllabusItem(type, item) {
+    let idx = -1;
+    if (type === "lesson") {
+      idx = LESSONS.findIndex((l) => l.day === item.day);
+    } else {
+      idx = item.idx != null ? item.idx : -1;
+    }
+    const clickable = item.built && idx >= 0;
+    const done = clickable && itemDone(type, idx);
+    // 🔒 locked (not built) · ○ available, not played yet · ✅ actually completed.
+    const cls = "syl-item" + (clickable ? " is-built" : " is-locked") + (done ? " is-done" : "");
+    const icon = !clickable ? "🔒" : done ? "✅" : "○";
+    const label = type === "lesson" ? `Module ${item.day} — ${item.name}` : `Wave ${item.day} — ${item.name}`;
+    return `<li class="${cls}" data-type="${type}" data-idx="${idx}">
+      <span class="syl-icon">${icon}</span><span class="syl-label">${label}</span>
+    </li>`;
+  }
+
+  function futureWaveName(i) {
+    return ["Filter honestly", "Aggregate at the right grain", "Mind the NULLs", "Join without lying"][i] || "TBD";
+  }
+
+  window.Welcome = { render };
+})();

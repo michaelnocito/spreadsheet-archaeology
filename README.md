@@ -1,13 +1,14 @@
 # Analyst Job Simulator — *Getting It Wrong Gets You There Faster*
 
-A day-in-the-life **data-analyst job simulator**. You don't read about the job — you *do* it: train with a mentor, then de-curse the messy files left behind by **the Predecessor** (the analyst before you). One reusable engine, **two skill tracks**, more on the way.
+A day-in-the-life **data-analyst job simulator**. You don't read about the job — you *do* it: train with a mentor, then de-curse the messy files left behind by **the Predecessor** (the analyst before you). One reusable engine, **three skill tracks**, more on the way.
 
 | Track | Play it | You learn |
 |---|---|---|
 | 📊 **Excel** | **[▶ Live](https://michaelnocito.github.io/spreadsheet-archaeology/)** | Reading a sheet, header/type integrity, working on a copy, documenting, answering a stakeholder ask |
 | 📈 **Tableau** | **[▶ Live](https://michaelnocito.github.io/spreadsheet-archaeology/tableau/)** | Dimensions vs measures, aggregation, the Marks card, choosing the right chart, honest dashboards |
+| 🗄️ **SQL** | **[▶ Live](https://michaelnocito.github.io/spreadsheet-archaeology/sql/)** | Reading a query, WHERE/ORDER BY, aggregates & GROUP BY, NULL traps, joins, and sanity-checking a result before you send it |
 
-> *SQL and Python tracks are planned — they reuse the same engine; only the content data changes.*
+> *A Python track is planned — it reuses the same engine; only the content data changes.*
 
 ---
 
@@ -29,14 +30,14 @@ Both tracks are **feature-complete** (all 10 modules + all 5 waves) and covered 
 - **100% client-side, no build step.** Vanilla HTML/CSS/JS. Hosts free on GitHub Pages, runs on a phone.
 - **`engine.js` / `academy.js`** — generic players that know no specific lesson; they dispatch on an interaction `kind` (`select_row` / `select_cell` / `select_column` / `select_option`).
 - **`core.js`** — the safe (no-`eval`) check evaluator plus `renderSheet` (Excel grid) and `renderViz` (Tableau workspace mockup).
-- **`lessons.js` / `waves.js`** — all content as **pure JSON data**. To add a lesson, push an object — no engine changes. The Tableau track lives in `/tableau/` and reuses the same engine with its own content + the `renderViz` view.
+- **`lessons.js` / `waves.js`** — all content as **pure JSON data**. To add a lesson, push an object — no engine changes. The Tableau track lives in `/tableau/` and reuses the same engine with its own content + the `renderViz` view; the SQL track lives in `/sql/` with its own content + a `renderQuery` view (a read-only SQL console + result grid). Each track is a sibling folder that swaps in its data and one display renderer.
 
 The whole narrative lives in each lesson's copy; the engine just plays it back.
 
 ## Run it locally
 
 ```bash
-python -m http.server 8000   # then open http://localhost:8000  (Excel)  ·  /tableau/  (Tableau)
+python -m http.server 8000   # open http://localhost:8000 (Excel) · /tableau/ (Tableau) · /sql/ (SQL)
 ```
 
 `DESIGN_SYSTEM.md` documents the reusable calm-analyst design system.
