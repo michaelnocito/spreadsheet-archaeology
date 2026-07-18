@@ -63,48 +63,80 @@ Apply to:
 
 ---
 
-## Color palette
+## Color palette — **Zinc & Sky** (current, 2026-07)
 
-CSS variables on `:root`. Copy verbatim into any new project's stylesheet.
+> ⚠️ **PALETTE HISTORY.** This portfolio has been through three brand eras:
+> calm-blue (`#2f6df0`) → Grain clay/terracotta (`#C5511F`, rejected as "too
+> neutral") → **Zinc & Sky** (current). The values below are Zinc & Sky. The
+> **machine-readable canonical source** is
+> `analyst-prep-kit/assets/grain/zinc-sky.css` — that file wins on any conflict;
+> this doc is the human-readable summary. If you see baked calm-blue tints
+> (`#2f6df0`, `#eef4ff`, `rgba(47,109,240,…)`) in the component examples further
+> down, read them as the **accent** below — the component-hex sweep is a tracked
+> follow-up.
+
+Zinc & Sky is **light + dark**, not light-only. CSS variables on `:root`
+(light) and a dark override. Copy into any new project's stylesheet.
 
 ```css
 :root {
-  /* Surfaces */
-  --bg:         #eef1f5;   /* page background — soft cool gray */
+  /* Surfaces — cool zinc neutrals */
+  --bg:         #F5F7F8;   /* page background — cool zinc */
   --panel:      #ffffff;   /* card surface */
-  --line:       #d6dce4;   /* border / divider */
-  --shadow:     0 1px 2px rgba(20,30,50,.06), 0 6px 20px rgba(20,30,50,.06);
+  --line:       #E4E7EA;   /* border / divider */
+  --shadow:     0 1px 2px rgba(9,9,11,.05), 0 6px 20px rgba(9,9,11,.06);
 
   /* Text */
-  --ink:        #1f2328;   /* primary text */
-  --dim:        #5b6470;   /* secondary text, labels */
+  --ink:        #09090B;   /* primary text — near-black zinc */
+  --dim:        #52525B;   /* secondary text, labels */
 
-  /* Accent (primary action / focus) */
-  --accent:     #2f6df0;   /* primary blue */
-  --accent-d:   #1f4fc4;   /* hover / strong link */
+  /* Accent (primary action / focus) — deep cyan, AA on white */
+  --accent:     #0E7490;   /* primary */
+  --accent-d:   #0B5E75;   /* hover / strong link */
 
   /* Semantic */
-  --good:       #1a7f37;   /* success */
-  --good-bg:    #e7f6ec;   /* success surface */
-  --bad:        #cf222e;   /* error */
-  --bad-bg:     #fdecee;   /* error surface */
-  --warm:       #9a6700;   /* pro-tip / warning copy */
+  --good:       #059669;   /* success — emerald */
+  --good-bg:    #ECFDF5;
+  --bad:        #DC2626;   /* error — red */
+  --bad-bg:     #FEF2F2;
+  --warm:       #D97706;   /* pro-tip / warning copy — amber */
+  --info:       #4F46E5;   /* info — indigo (never cyan, so it can't collide
+                              with the primary accent) */
 
   /* Optional secondary phase (if your project has a "mode switch") */
-  --phase-2:    #6639ba;   /* purple — used here for the "On the Job" phase */
-  --phase-2-bg: #f3eefb;
-  --phase-2-bd: #ddccf3;
+  --phase-2:    #4F46E5;   /* indigo — replaces the old purple */
+  --phase-2-bg: #EEF2FF;
+  --phase-2-bd: #C7D2FE;
 
   /* Spreadsheet-specific (skip if not rendering a sheet) */
-  --sheet-head: #f3f5f8;
-  --sel:        #fff4cf;
-  --sel-line:   #e0a200;
+  --sheet-head: #F5F7F8;
+  --sel:        #E0F2F7;   /* cyan-tinted selection */
+  --sel-line:   #0E7490;
+}
+
+/* Dark mode — zinc near-black + electric sky */
+:root[data-theme="dark"], html.dark {
+  --bg:         #09090B;   /* page background */
+  --panel:      #18181B;   /* card surface */
+  --line:       #27272A;   /* elevated / border */
+  --ink:        #F5F7F8;   /* primary text */
+  --dim:        #A1A1AA;   /* secondary text */
+  --accent:     #38BDF8;   /* electric sky — needs DARK text on it (#082032) */
+  --accent-d:   #7DD3FC;
+  --shadow:     0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.35);
 }
 ```
 
-**Hex quick-reference:** `#2f6df0` (blue) · `#1a7f37` (green) · `#9a6700` (warm)
-· `#6639ba` (secondary purple) · `#cf222e` (error) · `#eef1f5` (page bg) ·
-`#ffffff` (panels) · `#d6dce4` (borders).
+> **Contrast gotcha:** the dark-mode accent `#38BDF8` (electric sky) is light —
+> text/icons ON an accent-filled button must be **dark** (`#082032`), not white.
+> zinc-sky.css enforces this with `!important` overrides; replicate it if you
+> hand-roll accent buttons.
+
+**Hex quick-reference:** `#0E7490` (deep cyan, light accent) · `#38BDF8`
+(electric sky, dark accent) · `#059669` (emerald success) · `#DC2626` (red
+error) · `#D97706` (amber warning) · `#4F46E5` (indigo info/secondary) ·
+`#F5F7F8` (light bg) · `#09090B` (dark bg / light ink) · `#18181B` (dark card) ·
+`#E4E7EA` (light border).
 
 ---
 
