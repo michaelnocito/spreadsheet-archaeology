@@ -124,7 +124,7 @@
   // Soft confetti: ~N small colored squares fall + drift + fade.
   function confetti(level) {
     const N = level === "big" ? 60 : 28;
-    const COLORS = ["#2f6df0", "#1a7f37", "#e3b97a", "#9a6700", "#6639ba", "#cf222e"];
+    const COLORS = ["#0E7490", "#1a7f37", "#e3b97a", "#9a6700", "#6639ba", "#cf222e"];
     const W = window.innerWidth;
     const root = document.createElement("div");
     root.className = "fx-confetti-root";
