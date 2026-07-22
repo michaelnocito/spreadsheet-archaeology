@@ -703,3 +703,81 @@ body {
   cursor: pointer; white-space: nowrap; transition: background .12s, color .12s, border-color .12s;
 }
 .brief-restart:hover { color: var(--accent-d); border-color: #A5E1ED; background: #E0F5F9; }
+
+/* ============================================================================
+ * PHONE PASS — kept LAST in the file so these overrides win specificity ties.
+ * All rules are gated behind media queries / pointer:coarse, so desktop stays
+ * pixel-identical. Patterns proven in sql-quest / sql-trail.
+ * ========================================================================== */
+/* phone pass v1 */
+
+/* ---- Touch tier: every interactive control is a comfortable tap target ---- */
+@media (pointer: coarse) {
+  .primary,
+  .help-btn,
+  .ghost-btn,
+  .curriculum-btn,
+  .voice-toggle,
+  .brief-restart,
+  .option-card,
+  .cur-toggle,
+  .syl-item.is-built,
+  .cur-item.is-built,
+  .brief-more > .brief-more-summary {
+    min-height: 44px;
+  }
+  /* icon-only buttons get a full 44x44 square */
+  .icon-btn { width: 44px; height: 44px; font-size: 18px; }
+  /* tiny button text bumped so labels stay legible on phones */
+  .brief-restart { font-size: 13px; padding: 8px 12px; }
+  .voice-toggle { font-size: 13px; }
+  .ghost-btn { font-size: 13px; }
+  .primary.primary-sm { font-size: 13px; }
+  /* checkboxes in the curriculum drawer are the tap surface — grow them */
+  .cur-toggle input[type="checkbox"] { width: 22px; height: 22px; flex: 0 0 auto; }
+  /* spreadsheet cells ARE the interaction surface: taller rows + roomier
+     row/column heads so taps land where they're aimed */
+  .sheet-table th, .sheet-table td { padding: 12px 12px; }
+  .sheet-table .rowhead, .sheet-table .corner { width: 44px; min-width: 44px; }
+  .sheet-table thead th { min-height: 44px; }
+  .stepper .step { padding: 8px 12px 8px 8px; }
+}
+
+/* ---- Phone tier (<=600px): one concept per screen, stacked, reachable ---- */
+@media (max-width: 600px) {
+  /* stop iOS auto-zoom on focus: form text must be >=16px */
+  input, select, textarea { font-size: 16px; }
+
+  /* tighter page padding, fluid */
+  .stage, .foot, .welcome { padding-left: clamp(8px, 3vw, 18px); padding-right: clamp(8px, 3vw, 18px); }
+  .stage { margin-top: 12px; gap: 12px; }
+  .work { padding: 12px; }
+  .welcome-card { padding: 18px 14px; }
+
+  /* topbar: never force the page wide — wrap and shed the nice-to-haves */
+  .topbar { flex-wrap: wrap; padding: 8px 12px; row-gap: 6px; }
+  .orient { flex-wrap: wrap; justify-content: flex-end; }
+  .habit-chip { display: none; }
+
+  /* sheet text slightly larger so data is readable at arm's length */
+  .sheet-table { font-size: 14px; }
+  .sheet-table .colhead { min-width: 72px; }
+
+  /* primary actions go full-width so the thumb can't miss */
+  .action-row { justify-content: stretch; }
+  .action-row .primary { width: 100%; }
+  .welcome-cta .primary-xl { width: 100%; }
+  .help-btn { width: 100%; }
+
+  /* cap tall panels so the sheet + its action button stay reachable; wide
+     content scrolls inside its own container, never the page body */
+  .brief-card { max-height: 44vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .voice-lead { max-height: 44vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .curriculum-drawer .cur-section { -webkit-overflow-scrolling: touch; }
+  .sheet { -webkit-overflow-scrolling: touch; }
+
+  /* guard: nothing pushes the body into horizontal scroll at 375px */
+  body { overflow-x: hidden; }
+  .work-head { flex-wrap: wrap; }
+  .feedback, .slice-note, .voice-body { overflow-wrap: anywhere; }
+}
