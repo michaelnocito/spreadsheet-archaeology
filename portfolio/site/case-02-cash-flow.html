@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Money You Already Earned — case study</title>
+<meta name="description" content="A QuickBooks invoice export where the header isn't on row 1 and every invoice is counted twice, cleaned into an AR aging model and a collections shortlist.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="topbar">
+  <a class="home" href="index.html">← Case studies</a>
+  <button class="theme-btn" id="theme" type="button" aria-label="Toggle light and dark theme">Theme</button>
+</header>
+
+<main>
+  <p class="eyebrow">Case study 02 · SMB services</p>
+  <h1>The Money You Already Earned</h1>
+  <p class="lede">
+    A services business with a cash-flow problem and no cash-flow problem. The
+    money was earned, invoiced, and sitting in other people's bank accounts.
+  </p>
+
+  <ul class="chips">
+    <li class="chip accent">Tableau</li>
+    <li class="chip accent">Python / pandas</li>
+    <li class="chip">AR aging &amp; DSO</li>
+    <li class="chip warn">Synthetic data</li>
+    <li class="chip">~2.5 hours build</li>
+  </ul>
+
+  <div class="note warn">
+    <p>
+      <strong>This one uses synthetic data, and says so everywhere it appears.</strong>
+      There is no public accounts-receivable dataset. The invoices are generated;
+      the <em>file shape</em> is a faithful reproduction of a QuickBooks
+      “Open Invoices” export. Presenting generated data as a real client's would
+      be the fastest way to lose a client who checks.
+    </p>
+  </div>
+
+  <h2>The question</h2>
+  <p class="prose">
+    <strong>Who owes us, how late, and what is it costing us to wait?</strong>
+    Every business that invoices asks this. Most answer it by scrolling a
+    QuickBooks report, which is why most answer it wrong.
+  </p>
+
+  <h2>The trap: it's a report, not a table</h2>
+  <p class="prose">
+    QuickBooks doesn't export data. It exports a <em>report</em>, and that
+    difference is where the money goes missing:
+  </p>
+
+<pre class="raw"><code><b>Bright Fork Services LLC</b>              ← company name
+<b>Open Invoices</b>                        ← report name
+<b>As of July 29, 2026</b>                  ← as-of line
+                                      ← blank row
+Num,Customer,Date,Due Date,Terms,...  <b>← the real header, line 5</b>
+10501,Blue Harbor Auto Group,06/03/2026,07/03/2026,Net 30,"1,599.64",...
+10502,Blue Harbor Auto Group,05/18/2026,<b></b>,Net 60,"3,033.81",...
+     ,<b>Total Blue Harbor Auto Group</b>,,,,"5,465.49",...   <b>← subtotal INSIDE the data</b>
+                                      ← spacer row</code></pre>
+
+  <div class="note bad">
+    <p>
+      <strong>Sum the Amount column as-is and you get roughly double the truth.</strong>
+      Every invoice is counted once as a detail row and again inside its customer
+      subtotal. The total looks plausible. It's just wrong — and nothing in the
+      file tells you.
+    </p>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Structural defect</th><th>Rows</th><th>Handling</th></tr></thead>
+      <tbody>
+        <tr><td>Preamble above the header</td><td>4</td><td>Header located by content, never by position</td></tr>
+        <tr><td>Customer subtotals + grand total</td><td>41</td><td>Removed via one structural test</td></tr>
+        <tr><td>Blank spacer rows</td><td>40</td><td>Removed</td></tr>
+        <tr><td>Credit memos in accounting parentheses</td><td>4</td><td><code>(1,250.00)</code> parsed as <em>negative</em></td></tr>
+        <tr><td>Missing due dates</td><td>3</td><td>Derived from invoice date + terms</td></tr>
+        <tr><td>Name variants &amp; job sub-customers</td><td>22</td><td>Rolled up to the parent customer</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>The decisions that mattered</h2>
+
+  <h3>The header is found, not assumed</h3>
+  <p class="prose">
+    The preamble is four rows here. It's a different number next month, and a
+    different number again on a colleague's QuickBooks version. The pipeline
+    scans for the row containing both <code>Num</code> and <code>Customer</code>.
+    Hardcoding <code>skiprows=4</code> works right up until it fails silently.
+  </p>
+
+  <h3>Scaffolding is removed by structure, not by keyword</h3>
+  <p class="prose">
+    One test does it: <em>is the document number numeric?</em> Real invoices have
+    one; subtotals, spacers and the grand total don't. Pattern-matching on the
+    word "Total" would also delete a customer legitimately named
+    <em>Total Comfort HVAC</em>.
+  </p>
+
+  <h3>Only the open balance ages</h3>
+  <p class="prose">
+    On a partly-paid invoice, what's aging is what's still outstanding — not the
+    original amount. Aging the full amount overstates old receivables and sends
+    collections chasing money that already arrived. That call alone is the
+    difference between a report people trust and one they quietly stop opening.
+  </p>
+
+  <h3>Missing due dates are derived, not guessed</h3>
+  <p class="prose">
+    Where the due date is blank but terms and invoice date are present, it's
+    rebuilt as <code>invoice_date + terms</code>. That's recovery from a known
+    business rule. Those rows are flagged, and the dashboard footer states how
+    much of the aging rests on a derived date. Where terms are <em>also</em>
+    missing, the row is excluded from aging rather than assigned a default.
+  </p>
+
+  <h2>The result</h2>
+
+  <div class="kpis">
+    <div class="kpi"><span class="v">$194,786</span><span class="l">Open AR</span></div>
+    <div class="kpi"><span class="v">113.7</span><span class="l">DSO (days)</span></div>
+    <div class="kpi"><span class="v">$8,232</span><span class="l">Over 90 days</span></div>
+    <div class="kpi"><span class="v">7 of 40</span><span class="l">Chronic late payers</span></div>
+  </div>
+
+  <p class="prose">
+    218 lines in the export. 137 of them were actual invoices. The other 81 were
+    the report talking to itself.
+  </p>
+
+  <div class="embed">
+    <strong>Dashboard: “The Money You Already Earned”</strong>
+    Embed the Tableau Public viz here once published.
+  </div>
+
+  <div class="note good">
+    <p>
+      <strong>The recommendation.</strong> The over-90 balance isn't spread across
+      the customer base — it concentrates in seven accounts out of forty. That
+      turns an abstract cash-flow problem into seven phone calls, in a named
+      order, with the invoice detail already assembled for each one. The
+      dashboard's job is to produce the call list, not the chart.
+    </p>
+  </div>
+
+  <p class="prose">
+    The cost-of-float figure is driven by a <em>parameter</em>, not a hardcoded
+    rate. I don't know a client's line-of-credit rate, and pretending otherwise
+    puts a fabricated number on a page about money. Letting the owner move the
+    slider themselves is also the moment they start trusting the rest of it.
+  </p>
+
+  <h2>Scope</h2>
+  <p class="prose">
+    About two and a half hours. Reruns against next month's export with one
+    command and a pinned as-of date.
+  </p>
+
+  <p class="prose">
+    <a href="https://github.com/michaelnocito/spreadsheet-archaeology/tree/main/portfolio/data/02-cash-flow">Pipeline and full decisions log →</a>
+  </p>
+</main>
+
+<footer>
+  <p><a href="index.html">← All case studies</a></p>
+</footer>
+
+</div>
+<script>
+(function () {
+  var root = document.documentElement, saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  if (saved) root.setAttribute('data-theme', saved);
+  document.getElementById('theme').addEventListener('click', function () {
+    var isDark = root.getAttribute('data-theme') === 'dark' ||
+      (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var next = isDark ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

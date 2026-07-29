@@ -1,0 +1,41 @@
+customer,open_balance,total_billed,invoices,avg_days_past_due,worst_days_past_due,risk
+Willow Park Contracting,27001.44,28691.89,6,-3.3333333333333335,28,On time
+Brightwater Auto Group,18229.579999999998,20226.19,6,-28.166666666666668,14,On time
+Granite Clinic,17550.35,17550.35,1,-5.0,-5,On time
+Brightwater Family Practice,9641.08,11434.11,5,-10.8,32,On time
+Granite Dental,8736.779999999999,8846.17,5,25.6,49,Slow
+Ironside Dental,8725.92,9333.240000000002,5,68.6,98,Chronic
+Cedar Ridge Family Practice,7836.39,14133.050000000001,5,16.0,31,Slow
+Cedar Ridge Contracting,7089.0,7089.0,4,-13.25,1,On time
+Redstone Family Practice,6882.16,7211.42,3,30.333333333333332,61,Late
+Fairview Contracting,6639.76,6722.71,4,82.5,148,Chronic
+Stonebridge Builders,5936.43,15092.61,4,-14.25,9,On time
+Lakeshore Property Mgmt,5830.26,5830.26,3,18.333333333333332,37,Slow
+Elmwood Clinic,5738.57,6648.0,6,23.333333333333332,49,Slow
+Willow Park Consulting,5022.38,5576.2300000000005,3,62.666666666666664,97,Chronic
+Fairview Hvac,4416.47,22385.24,6,68.5,128,Chronic
+Cedar Ridge Hvac,4002.17,5554.84,2,22.5,26,Slow
+Ironside Contracting,3907.08,5288.34,3,28.333333333333332,34,Slow
+Blue Harbor Auto Group,3865.85,5465.49,3,10.0,26,Slow
+Cedar Ridge Builders,3428.52,3428.52,5,32.2,61,Late
+Northwind Family Practice,3352.8199999999997,3352.8199999999997,2,3.0,5,Slow
+Cedar Ridge Consulting,3048.02,7402.7,3,0.0,25,On time
+Fairview Dental,3007.34,3263.8199999999997,3,-13.0,15,On time
+Ironside Property Mgmt,3000.13,4057.48,2,-17.5,24,On time
+Harborview Builders,2917.9700000000003,2917.9700000000003,2,26.5,60,Slow
+Cedar Ridge Clinic,2706.65,4544.62,3,67.0,107,Chronic
+Stonebridge Hvac,2683.48,6742.969999999999,3,11.333333333333334,14,Slow
+Blue Harbor Family Practice,2538.08,4747.29,4,-5.25,35,On time
+Stonebridge Family Practice,2442.15,3469.2700000000004,4,25.25,40,Slow
+Copper Creek Landscaping,2146.34,4228.9400000000005,4,-10.0,-4,On time
+Northwind Clinic,1756.21,1756.21,1,133.0,133,Chronic
+Elmwood Auto Group,1280.98,3312.25,3,-25.666666666666668,1,On time
+Granite Consulting,1094.05,2796.52,2,49.0,55,Late
+Meadowlark Consulting,929.0,5479.2,2,30.0,32,Slow
+Northwind Builders,902.27,1940.15,2,71.5,103,Chronic
+Harborview Contracting,724.23,4109.78,4,-7.0,10,On time
+Meadowlark Family Practice,642.56,-2244.6299999999997,3,50.333333333333336,95,Late
+Blue Harbor Hvac,0.0,1573.25,1,45.0,45,Late
+Meadowlark Builders,0.0,3260.47,2,41.0,54,Late
+Copper Creek Property Mgmt,-402.0000000000002,-402.0000000000002,4,13.0,28,Slow
+Copper Creek Contracting,-464.6,6439.67,4,-19.75,25,On time

@@ -1,0 +1,4 @@
+# Generated workbooks are machine-specific — Tableau bakes absolute CSV paths
+# into a .twb. Regenerate with make_twb.py on the machine running Tableau
+# rather than committing one and moving it.
+workbooks/

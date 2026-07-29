@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dashboard case studies — Michael Nocito</title>
+<meta name="description" content="Three dashboard case studies: the messy export, the cleaning decisions, and the recommendation that came out the other end.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="topbar">
+  <a class="home" href="../../">Michael Nocito</a>
+  <nav>
+    <a href="#work">Case studies</a>
+    <a href="#how">How I work</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button class="theme-btn" id="theme" type="button" aria-label="Toggle light and dark theme">Theme</button>
+</header>
+
+<main>
+  <p class="eyebrow">Dashboard &amp; analytics work</p>
+  <h1>I turn the messy export you already have into a dashboard that answers one question.</h1>
+  <p class="lede">
+    Most dashboard work isn't the dashboard. It's the three date formats in one
+    column, the subtotal rows wedged into the data, and the same customer spelled
+    six ways. That's the part these case studies show.
+  </p>
+
+  <ul class="chips">
+    <li class="chip accent">Tableau</li>
+    <li class="chip accent">SQL</li>
+    <li class="chip accent">Python / pandas</li>
+    <li class="chip">Excel</li>
+    <li class="chip">Data cleaning &amp; modelling</li>
+  </ul>
+
+  <h2 id="work">Case studies</h2>
+  <p class="prose">
+    Each one starts from a genuinely broken file. Every cleaning decision is
+    written down — including a bug I shipped and caught.
+  </p>
+
+  <div class="cards">
+    <a class="card" href="case-01-retail-margin.html">
+      <span class="eyebrow">01 · Retail</span>
+      <h3>Where the Margin Went</h3>
+      <p>
+        A liquor retailer's transaction export: three date formats, duplicate
+        nightly loads, and returns booked as negative lines quietly inflating
+        revenue. Ends in a stocking recommendation.
+      </p>
+      <span class="go">Read the case study →</span>
+    </a>
+
+    <a class="card" href="case-02-cash-flow.html">
+      <span class="eyebrow">02 · Services</span>
+      <h3>The Money You Already Earned</h3>
+      <p>
+        A QuickBooks invoice report where the header isn't on row 1 and every
+        invoice is counted twice. Ends in an aging model and a collections
+        shortlist.
+      </p>
+      <span class="go">Read the case study →</span>
+    </a>
+
+    <a class="card" href="case-03-clinic-flow.html">
+      <span class="eyebrow">03 · Healthcare</span>
+      <h3>Where the Wait Actually Is</h3>
+      <p>
+        CMS emergency-department measures, where "Not Available" means four
+        different things. Ends by moving the problem off the ED entirely.
+      </p>
+      <span class="go">Read the case study →</span>
+    </a>
+  </div>
+
+  <h2 id="how">How I work</h2>
+
+  <div class="note">
+    <p>
+      <strong>Every engagement ships a decisions log.</strong> A file that records
+      what I dropped, what I derived, and what I refused to guess at. When someone
+      asks why the dashboard disagrees with their POS report, that file is the
+      answer — and it's the reason the number is trustworthy in the first place.
+    </p>
+  </div>
+
+  <h3>What you get</h3>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>Deliverable</th><th>What it is</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>The dashboard</td><td>Published to Tableau Public or your Tableau Cloud site, tested down to a 1366×768 laptop</td></tr>
+        <tr><td>The pipeline</td><td>A documented script that reruns the whole clean from your raw export — so next month costs you nothing</td></tr>
+        <tr><td>The decisions log</td><td>Every judgment call, written down in plain English</td></tr>
+        <tr><td>An audit file</td><td>Row counts changed at every step, so the numbers can be traced</td></tr>
+        <tr><td>A walkthrough</td><td>30 minutes, recorded, so it survives staff turnover</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>What I won't do</h3>
+  <p class="prose">
+    Fill a missing value with a plausible one. Zero-fill a suppressed measure.
+    Drop rows I can't explain without telling you the count. Present a
+    correlation as a cause. Every one of those makes a dashboard look better and
+    makes it worth less.
+  </p>
+
+  <h2 id="contact">Working together</h2>
+  <p class="prose">
+    Best fit: you have a report someone rebuilds by hand every month, and one
+    question you keep asking that the report doesn't answer. Send me the file —
+    including the ugly one. Especially the ugly one.
+  </p>
+  <p class="prose">
+    <a href="mailto:mnocito11@yahoo.com">mnocito11@yahoo.com</a>
+  </p>
+</main>
+
+<footer>
+  <p>
+    Pipelines, specs and decisions logs for all three case studies are on
+    <a href="https://github.com/michaelnocito/spreadsheet-archaeology/tree/main/portfolio">GitHub</a>.
+  </p>
+</footer>
+
+</div>
+
+<script>
+// Theme toggle — respects the OS setting until the visitor overrides it.
+(function () {
+  var root = document.documentElement;
+  var saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  if (saved) root.setAttribute('data-theme', saved);
+
+  document.getElementById('theme').addEventListener('click', function () {
+    var isDark = root.getAttribute('data-theme') === 'dark' ||
+      (!root.getAttribute('data-theme') &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var next = isDark ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

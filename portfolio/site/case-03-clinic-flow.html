@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Where the Wait Actually Is — case study</title>
+<meta name="description" content="CMS emergency-department measures where 'Not Available' means four different things, cleaned into a patient-flow model that moves the problem off the ED.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="topbar">
+  <a class="home" href="index.html">← Case studies</a>
+  <button class="theme-btn" id="theme" type="button" aria-label="Toggle light and dark theme">Theme</button>
+</header>
+
+<main>
+  <p class="eyebrow">Case study 03 · Healthcare operations</p>
+  <h1>Where the Wait Actually Is</h1>
+  <p class="lede">
+    Everyone assumed the emergency department was slow. Nearly half of an
+    admitted patient's time was spent waiting for an inpatient bed — after the
+    ED had already finished with them.
+  </p>
+
+  <ul class="chips">
+    <li class="chip accent">Tableau</li>
+    <li class="chip accent">Python / pandas</li>
+    <li class="chip">Long→wide reshape</li>
+    <li class="chip">~3 hours build</li>
+  </ul>
+
+  <div class="note">
+    <p>
+      <strong>Data:</strong> CMS <em>Timely and Effective Care – Hospital</em>,
+      the public facility-level file behind Hospital Compare. Real, public,
+      updated quarterly.
+    </p>
+  </div>
+
+  <h2>The question</h2>
+  <p class="prose">
+    <strong>Where does patient time actually go, and which sites are losing
+    patients to the wait?</strong> A patient who leaves without being seen is
+    revenue gone and a clinical risk accepted. Sites track that rate. Few track
+    it against the thing causing it.
+  </p>
+
+  <h2>What the file actually looked like</h2>
+  <p class="prose">
+    The mess here isn't dirty values. It's structural, and it's the kind that
+    produces confidently wrong answers.
+  </p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Defect</th><th>Scale</th><th>What it would have cost</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Long format</strong> — one row per facility <em>per measure</em></td><td>600 rows / 120 facilities</td><td>Throughput and walk-out rate can't share a chart until pivoted</td></tr>
+        <tr><td>State benchmark rows mixed into facility rows</td><td>40</td><td>Every state counted into its own average</td></tr>
+        <tr><td><code>Score</code> is a text column</td><td>61 non-numeric</td><td>Naive cast nulls the entire column</td></tr>
+        <tr><td>Footnote codes encode <em>why</em> a value is missing</td><td>4 distinct meanings</td><td>“Too few cases” and “didn't submit” are opposite findings</td></tr>
+        <tr><td>Minutes and percentages in one <code>Score</code> column</td><td>5 measures</td><td>Any cross-measure average is meaningless</td></tr>
+        <tr><td>Facility name and address drift between rows</td><td>51 facilities</td><td>See below — this one is dangerous</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>The bug I shipped, and caught</h2>
+
+  <div class="note bad">
+    <p>
+      First run reported <strong>120 facilities</strong> but produced
+      <strong>334 rows</strong> of pivoted output, and the derived boarding-share
+      metric came out null across the board.
+    </p>
+  </div>
+
+  <p class="prose">
+    The pivot was keyed on facility ID <em>plus</em> city, county and ZIP. Those
+    address fields drift between rows the same way the facility name does. So one
+    hospital with three ZIP spellings became three pivot rows, each holding a
+    fraction of its measures — which reads as <em>more facilities, each reporting
+    less data</em>.
+  </p>
+  <p class="prose">
+    Nothing errored. The row count looked plausible. Every per-facility rate
+    would have been quietly wrong.
+  </p>
+
+  <div class="note good">
+    <p>
+      <strong>The fix is the general rule:</strong> resolve <em>every</em>
+      attribute to one value per entity key before you group or pivot anything —
+      not just the label you happened to notice was dirty.
+    </p>
+  </div>
+
+  <p class="prose">
+    This is in the case study on purpose. A flawless narrative proves nothing;
+    anyone can produce one by leaving things out. Showing a bug caught in my own
+    pipeline demonstrates the thing a client is actually buying, which is that I
+    check.
+  </p>
+
+  <h2>The decisions that mattered</h2>
+
+  <h3>“Not Available” is never zero</h3>
+  <p class="prose">
+    A suppressed walk-out rate is not a 0% walk-out rate. Zero-filling would rank
+    the facilities with the <em>worst reporting</em> as the best performers — an
+    inversion that destroys trust in a dashboard on first read. Missing values
+    stay missing and display their reason.
+  </p>
+
+  <h3>The suppression reason is preserved, because it splits two findings</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Footnote</th><th>Count</th><th>Meaning</th><th>Is it a finding?</th></tr></thead>
+      <tbody>
+        <tr><td>3, 5</td><td>29</td><td>Too few cases to report reliably</td><td>No — a small rural site. Expected.</td></tr>
+        <tr><td>25</td><td>20</td><td>Facility did not submit data</td><td><strong>Yes</strong> — a compliance gap</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose">
+    Collapsing both into “missing” throws away the only interesting part. In a
+    real engagement the did-not-submit list is usually the first thing the
+    operations director asks for.
+  </p>
+
+  <h3>Units stay explicit</h3>
+  <p class="prose">
+    A <code>unit</code> column travels with every measure. Minutes and
+    percentages never share an axis, and no aggregate is ever computed across
+    measures of different units.
+  </p>
+
+  <h2>The result</h2>
+
+  <div class="kpis">
+    <div class="kpi"><span class="v">181 min</span><span class="l">Median ED stay</span></div>
+    <div class="kpi"><span class="v">2.6%</span><span class="l">Median walk-out rate</span></div>
+    <div class="kpi"><span class="v">45%</span><span class="l">Boarding share</span></div>
+    <div class="kpi"><span class="v">89.8%</span><span class="l">Measures reportable</span></div>
+  </div>
+
+  <div class="embed">
+    <strong>Dashboard: “Where the Wait Actually Is”</strong>
+    Embed the Tableau Public viz here once published.
+  </div>
+
+  <div class="note good">
+    <p>
+      <strong>The recommendation.</strong> The derived metric — boarding time as a
+      share of an admitted patient's total stay — reframes the entire
+      conversation. At a median of 45%, the constraint isn't ED throughput. It's
+      inpatient bed availability. That's a different problem, with a different
+      owner and a different budget line, and no amount of ED staffing fixes it.
+    </p>
+  </div>
+
+  <p class="prose">
+    A derived metric that changes <em>who owns the problem</em> is what makes a
+    dashboard worth paying for. Restating numbers the client already has does not.
+  </p>
+
+  <h2>What this dashboard refuses to say</h2>
+  <p class="prose">
+    Congestion and walk-out rates are <em>associated</em> in this data. That is
+    not the same as one causing the other, and the footer says so. Case mix,
+    acuity and staffing — the likeliest actual drivers — aren't in this file, so
+    facilities are grouped by reported volume rather than ranked against each
+    other. A trauma centre and a rural ED are not comparable on raw minutes.
+  </p>
+  <p class="prose">
+    Healthcare buyers have been burned by dashboards that zero-filled suppressed
+    measures and by consultants who asserted causation from a scatter plot.
+    Naming both limits unprompted is the credential.
+  </p>
+
+  <h2>Scope</h2>
+  <p class="prose">
+    About three hours, including the hour spent chasing the pivot bug. Reruns
+    against each quarterly CMS release with one command.
+  </p>
+
+  <p class="prose">
+    <a href="https://github.com/michaelnocito/spreadsheet-archaeology/tree/main/portfolio/data/03-clinic-flow">Pipeline and full decisions log →</a>
+  </p>
+</main>
+
+<footer>
+  <p><a href="index.html">← All case studies</a></p>
+</footer>
+
+</div>
+<script>
+(function () {
+  var root = document.documentElement, saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  if (saved) root.setAttribute('data-theme', saved);
+  document.getElementById('theme').addEventListener('click', function () {
+    var isDark = root.getAttribute('data-theme') === 'dark' ||
+      (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var next = isDark ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+step,rows_affected,detail
+dedupe,45,exact duplicate rows removed
+returns_flagged,45,"negative lines kept, flagged"
+missing_cost,67,"kept for revenue, excluded from margin"
+store_name_variants,7,stores whose name was spelled more than one way
+category_backfill,514,"left as 'Uncategorized' — visible in the dashboard, not hidden"

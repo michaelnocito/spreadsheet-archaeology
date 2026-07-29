@@ -1,0 +1,138 @@
+invoice_no,customer,invoice_date,due_date,terms,amount,open_balance,aged_balance,status,days_past_due,aging_bucket,due_date_estimated,last_payment
+10501,Blue Harbor Auto Group,2026-06-03,2026-07-03,Net 30,1599.64,0.0,,Paid,26,1-30,False,2026-06-09
+10502,Blue Harbor Auto Group,2026-05-18,2026-07-17,Net 60,3033.81,3033.81,3033.81,Open,12,1-30,True,
+10503,Blue Harbor Auto Group,2026-06-22,2026-08-06,Net 45,832.04,832.04,832.04,Open,-8,Current,False,
+10504,Blue Harbor Family Practice,2026-06-24,2026-06-24,Due on receipt,2452.25,612.55,612.55,Partial,35,31-60,True,2026-06-29
+10505,Blue Harbor Family Practice,2026-07-11,2026-08-10,Net 30,575.45,575.45,575.45,Open,-12,Current,False,
+10506,Blue Harbor Family Practice,2026-07-04,2026-08-03,Net 30,369.51,0.0,,Paid,-5,Current,False,2026-07-09
+10507,Blue Harbor Family Practice,2026-07-23,2026-09-06,Net 45,1350.08,1350.08,1350.08,Open,-39,Current,False,
+10508,Blue Harbor Hvac,2026-05-30,2026-06-14,Net 15,1573.25,0.0,,Paid,45,31-60,False,2026-06-21
+10509,Brightwater Auto Group,2026-07-28,2026-09-11,Net 45,9842.16,9842.16,9842.16,Open,-44,Current,False,
+10510,Brightwater Auto Group,2026-07-15,2026-07-15,Due on receipt,1834.84,1834.84,1834.84,Open,14,1-30,False,
+10511,Brightwater Auto Group,2026-07-15,2026-09-13,Net 60,1698.61,0.0,,Paid,-46,Current,False,2026-07-17
+10512,Brightwater Auto Group,2026-07-24,2026-08-23,Net 30,583.85,285.85,285.85,Partial,-25,Current,False,2026-08-22
+10513,Brightwater Auto Group,2026-07-17,2026-08-16,Net 30,4201.26,4201.26,4201.26,Open,-18,Current,False,
+10514,Brightwater Auto Group,2026-07-19,2026-09-17,Net 60,2065.47,2065.47,2065.47,Open,-50,Current,False,
+10515,Brightwater Family Practice,2026-07-21,2026-09-04,Net 45,2524.76,2524.76,2524.76,Open,-37,Current,False,
+10516,Brightwater Family Practice,2026-06-27,2026-07-27,Net 30,2798.69,2798.69,2798.69,Open,2,1-30,False,
+10517,Brightwater Family Practice,2026-06-27,2026-06-27,Due on receipt,1793.03,0.0,,Paid,32,31-60,False,2026-07-26
+10518,Brightwater Family Practice,2026-07-26,2026-09-09,Net 45,2788.45,2788.45,2788.45,Open,-42,Current,False,
+10519,Brightwater Family Practice,2026-07-23,2026-08-07,Net 15,1529.18,1529.18,1529.18,Open,-9,Current,False,
+10520,Cedar Ridge Builders,2026-05-29,2026-05-29,Due on receipt,773.53,773.53,773.53,Open,61,61-90,False,
+10521,Cedar Ridge Builders,2026-06-16,2026-07-01,Net 15,307.79,307.79,307.79,Open,28,1-30,False,
+10522,Cedar Ridge Builders,2026-06-08,2026-07-08,Net 30,722.49,722.49,722.49,Open,21,1-30,False,
+10523,Cedar Ridge Builders,2026-06-06,2026-06-21,Net 15,1351.44,1351.44,1351.44,Open,38,31-60,False,
+10524,Cedar Ridge Builders,2026-07-01,2026-07-16,Net 15,273.27,273.27,273.27,Open,13,1-30,False,
+10525,Cedar Ridge Clinic,2026-06-10,2026-06-25,Net 15,2706.65,2706.65,2706.65,Open,34,31-60,True,
+10526,Cedar Ridge Clinic,2026-03-29,2026-04-13,Net 15,974.63,0.0,,Paid,107,90+,False,2026-03-30
+10527,Cedar Ridge Clinic,2026-04-15,2026-05-30,Net 45,863.34,0.0,,Paid,60,31-60,False,2026-04-28
+10528,Cedar Ridge Consulting,2026-07-28,2026-07-28,Due on receipt,2329.81,2329.81,2329.81,Open,1,1-30,False,
+10529,Cedar Ridge Consulting,2026-07-10,2026-08-24,Net 45,984.99,718.21,718.21,Partial,-26,Current,False,2026-08-03
+10530,Cedar Ridge Consulting,2026-06-19,2026-07-04,Net 15,4087.9,0.0,,Paid,25,1-30,False,2026-07-14
+10531,Cedar Ridge Contracting,2026-07-13,2026-07-28,Net 15,1782.03,1782.03,1782.03,Open,1,1-30,False,
+10532,Cedar Ridge Contracting,2026-07-12,2026-08-11,Net 30,2175.05,2175.05,2175.05,Open,-13,Current,False,
+10533,Cedar Ridge Contracting,2026-07-28,2026-08-27,Net 30,1152.64,1152.64,1152.64,Open,-29,Current,False,
+10534,Cedar Ridge Contracting,2026-07-11,2026-08-10,Net 30,1979.28,1979.28,1979.28,Open,-12,Current,False,
+10535,Cedar Ridge Family Practice,2026-06-17,2026-08-01,Net 45,5806.39,5806.39,5806.39,Open,-3,Current,False,
+10536,Cedar Ridge Family Practice,2026-05-22,2026-07-21,Net 60,2030.0,2030.0,2030.0,Open,8,1-30,False,
+10537,Cedar Ridge Family Practice,2026-05-15,2026-07-14,Net 60,1885.21,0.0,,Paid,15,1-30,False,2026-06-15
+10538,Cedar Ridge Family Practice,2026-05-31,2026-06-30,Net 30,3606.32,0.0,,Paid,29,1-30,False,2026-06-13
+10539,Cedar Ridge Family Practice,2026-06-13,2026-06-28,Net 15,805.13,0.0,,Paid,31,31-60,False,2026-06-27
+10540,Cedar Ridge Hvac,2026-06-10,2026-07-10,Net 30,1552.67,0.0,,Paid,19,1-30,False,2026-07-13
+10541,Cedar Ridge Hvac,2026-06-03,2026-07-03,Net 30,4002.17,4002.17,4002.17,Open,26,1-30,False,
+10542,Copper Creek Contracting,2026-07-01,2026-08-30,Net 60,-1192.35,-464.6,-464.6,Credit Memo,-32,Current,False,2026-07-28
+10543,Copper Creek Contracting,2026-07-29,2026-09-27,Net 60,2542.48,0.0,,Paid,-60,Current,False,2026-08-23
+10544,Copper Creek Contracting,2026-07-26,2026-08-10,Net 15,3007.87,0.0,,Paid,-12,Current,False,2026-08-13
+10545,Copper Creek Contracting,2026-06-19,2026-07-04,Net 15,2081.67,0.0,,Paid,25,1-30,False,2026-07-16
+10546,Copper Creek Landscaping,2026-07-08,2026-08-07,Net 30,564.81,564.81,564.81,Open,-9,Current,False,
+10547,Copper Creek Landscaping,2026-07-19,2026-08-03,Net 15,910.32,910.32,910.32,Open,-5,Current,False,
+10548,Copper Creek Landscaping,2026-07-21,2026-08-20,Net 30,1028.38,261.88,261.88,Partial,-22,Current,False,2026-07-29
+10549,Copper Creek Landscaping,2026-07-03,2026-08-02,Net 30,1725.43,409.33,409.33,Partial,-4,Current,False,2026-07-12
+10550,Copper Creek Property Mgmt,2026-06-03,2026-08-02,Net 60,-4587.1,-4587.1,-4587.1,Credit Memo,-4,Current,False,
+10551,Copper Creek Property Mgmt,2026-07-01,2026-07-01,Due on receipt,606.01,606.01,606.01,Open,28,1-30,False,
+10552,Copper Creek Property Mgmt,2026-06-29,2026-07-14,Net 15,1806.13,1806.13,1806.13,Open,15,1-30,False,
+10553,Copper Creek Property Mgmt,2026-07-01,2026-07-16,Net 15,1772.96,1772.96,1772.96,Open,13,1-30,False,
+10554,Elmwood Auto Group,2026-07-14,2026-09-12,Net 60,1771.55,0.0,,Paid,-45,Current,False,2026-08-10
+10555,Elmwood Auto Group,2026-07-02,2026-08-31,Net 60,1151.39,1151.39,1151.39,Open,-33,Current,False,
+10556,Elmwood Auto Group,2026-06-28,2026-07-28,Net 30,389.31,129.59,129.59,Partial,1,1-30,False,2026-07-23
+10557,Elmwood Clinic,2026-06-02,2026-06-17,Net 15,1096.36,515.05,515.05,Partial,42,31-60,False,2026-06-25
+10558,Elmwood Clinic,2026-05-19,2026-07-18,Net 60,1533.67,1533.67,1533.67,Open,11,1-30,False,
+10559,Elmwood Clinic,2026-06-28,2026-07-28,Net 30,630.19,630.19,630.19,Open,1,1-30,False,
+10560,Elmwood Clinic,2026-06-19,2026-07-04,Net 15,1543.71,1543.71,1543.71,Open,25,1-30,False,
+10561,Elmwood Clinic,2026-05-11,2026-06-10,Net 30,1327.03,1327.03,1327.03,Open,49,31-60,False,
+10562,Elmwood Clinic,2026-06-17,2026-07-17,Net 30,517.04,188.92,188.92,Partial,12,1-30,False,2026-06-18
+10563,Fairview Contracting,2026-03-03,2026-03-03,Due on receipt,1353.12,1353.12,1353.12,Open,148,90+,False,
+10564,Fairview Contracting,2026-04-30,2026-06-14,Net 45,4102.84,4102.84,4102.84,Open,45,31-60,False,
+10565,Fairview Contracting,2026-04-11,2026-05-11,Net 30,391.55,308.6,308.6,Partial,79,61-90,False,2026-05-10
+10566,Fairview Contracting,2026-05-02,2026-06-01,Net 30,875.2,875.2,875.2,Open,58,31-60,False,
+10567,Fairview Dental,2026-07-12,2026-08-26,Net 45,1036.56,1036.56,1036.56,Open,-28,Current,False,
+10568,Fairview Dental,2026-07-25,2026-08-24,Net 30,1041.06,1041.06,1041.06,Open,-26,Current,False,
+10569,Fairview Dental,2026-06-29,2026-07-14,Net 15,1186.2,929.72,929.72,Partial,15,1-30,False,2026-07-18
+10570,Fairview Hvac,2026-04-09,2026-04-24,Net 15,2315.08,975.17,975.17,Partial,96,90+,False,2026-04-14
+10571,Fairview Hvac,2026-05-07,2026-06-06,Net 30,1958.86,0.0,,Paid,53,31-60,False,2026-06-08
+10572,Fairview Hvac,2026-05-05,2026-07-04,Net 60,2318.8,1838.68,1838.68,Partial,25,1-30,False,2026-05-27
+10573,Fairview Hvac,2026-03-23,2026-03-23,Due on receipt,354.96,72.24,72.24,Partial,128,90+,False,2026-04-21
+10574,Fairview Hvac,2026-05-23,2026-06-22,Net 30,13907.16,0.0,,Paid,37,31-60,False,2026-07-02
+10575,Fairview Hvac,2026-05-03,2026-05-18,Net 15,1530.38,1530.38,1530.38,Open,72,61-90,False,
+10576,Granite Clinic,2026-06-19,2026-08-03,Net 45,17550.35,17550.35,17550.35,Open,-5,Current,False,
+10577,Granite Consulting,2026-05-20,2026-06-04,Net 15,1702.47,0.0,,Paid,55,31-60,False,2026-06-05
+10578,Granite Consulting,2026-06-01,2026-06-16,Net 15,1094.05,1094.05,1094.05,Open,43,31-60,False,
+10579,Granite Dental,2026-07-03,2026-08-02,Net 30,1500.94,1500.94,1500.94,Open,-4,Current,False,
+10580,Granite Dental,2026-06-09,2026-07-09,Net 30,642.41,642.41,642.41,Open,20,1-30,False,
+10581,Granite Dental,2026-06-10,2026-06-10,Due on receipt,476.68,367.29,367.29,Partial,49,31-60,False,2026-06-15
+10582,Granite Dental,2026-06-13,2026-06-13,Due on receipt,652.85,652.85,652.85,Open,46,31-60,False,
+10583,Granite Dental,2026-06-12,2026-07-12,Net 30,5573.29,5573.29,5573.29,Open,17,1-30,False,
+10584,Harborview Builders,2026-06-06,2026-08-05,Net 60,1119.69,1119.69,1119.69,Open,-7,Current,False,
+10585,Harborview Builders,2026-05-30,2026-05-30,Due on receipt,1798.28,1798.28,1798.28,Open,60,31-60,False,
+10586,Harborview Contracting,2026-06-23,2026-07-23,Net 30,724.23,724.23,724.23,Open,6,1-30,False,
+10587,Harborview Contracting,2026-06-19,2026-07-19,Net 30,2268.45,0.0,,Paid,10,1-30,False,2026-06-22
+10588,Harborview Contracting,2026-07-21,2026-08-05,Net 15,556.1,0.0,,Paid,-7,Current,False,2026-07-22
+10589,Harborview Contracting,2026-07-21,2026-09-04,Net 45,561.0,0.0,,Paid,-37,Current,False,2026-07-22
+10590,Ironside Contracting,2026-06-21,2026-07-06,Net 15,2226.99,2226.99,2226.99,Open,23,1-30,False,
+10591,Ironside Contracting,2026-06-10,2026-06-25,Net 15,1381.26,0.0,,Paid,34,31-60,False,2026-06-17
+10592,Ironside Contracting,2026-05-17,2026-07-01,Net 45,1680.09,1680.09,1680.09,Open,28,1-30,False,
+10593,Ironside Dental,2026-04-12,2026-04-27,Net 15,607.32,0.0,,Paid,93,90+,False,2026-05-11
+10594,Ironside Dental,2026-04-30,2026-05-30,Net 30,3578.61,3578.61,3578.61,Open,60,31-60,False,
+10595,Ironside Dental,2026-04-18,2026-05-18,Net 30,397.8,397.8,397.8,Open,72,61-90,False,
+10596,Ironside Dental,2026-03-23,2026-04-22,Net 30,3606.86,3606.86,3606.86,Open,98,90+,False,
+10597,Ironside Dental,2026-05-10,2026-07-09,Net 60,1142.65,1142.65,1142.65,Open,20,1-30,False,
+10598,Ironside Property Mgmt,2026-07-28,2026-09-26,Net 60,3000.13,3000.13,3000.13,Open,-59,Current,False,
+10599,Ironside Property Mgmt,2026-07-05,2026-07-05,Due on receipt,1057.35,0.0,,Paid,24,1-30,False,2026-07-11
+10600,Lakeshore Property Mgmt,2026-06-14,2026-06-29,Net 15,4139.91,4139.91,4139.91,Open,30,1-30,False,
+10601,Lakeshore Property Mgmt,2026-05-23,2026-06-22,Net 30,391.78,391.78,391.78,Open,37,31-60,False,
+10602,Lakeshore Property Mgmt,2026-07-11,2026-08-10,Net 30,1298.57,1298.57,1298.57,Open,-12,Current,False,
+10603,Meadowlark Builders,2026-06-01,2026-07-01,Net 30,2823.41,0.0,,Paid,28,1-30,False,2026-06-07
+10604,Meadowlark Builders,2026-05-21,2026-06-05,Net 15,437.06,0.0,,Paid,54,31-60,False,2026-05-23
+10605,Meadowlark Consulting,2026-05-13,2026-06-27,Net 45,3159.2,0.0,,Paid,32,31-60,False,2026-06-20
+10606,Meadowlark Consulting,2026-06-01,2026-07-01,Net 30,2320.0,929.0,929.0,Partial,28,1-30,False,2026-06-22
+10607,Meadowlark Family Practice,2026-05-05,2026-06-19,Net 45,818.46,642.56,642.56,Partial,40,31-60,False,2026-05-29
+10608,Meadowlark Family Practice,2026-04-25,2026-04-25,Due on receipt,1115.56,0.0,,Paid,95,90+,False,2026-05-02
+10609,Meadowlark Family Practice,2026-05-14,2026-07-13,Net 60,-4178.65,-0.0,,Credit Memo,16,1-30,False,2026-05-31
+10610,Northwind Builders,2026-02-16,2026-04-17,Net 60,1037.88,0.0,,Paid,103,90+,False,2026-03-16
+10611,Northwind Builders,2026-04-20,2026-06-19,Net 60,902.27,902.27,902.27,Open,40,31-60,False,
+10612,Northwind Clinic,2026-02-16,2026-03-18,Net 30,1756.21,1756.21,1756.21,Open,133,90+,False,
+10613,Northwind Family Practice,2026-05-29,2026-07-28,Net 60,1246.78,1246.78,1246.78,Open,1,1-30,False,
+10614,Northwind Family Practice,2026-05-25,2026-07-24,Net 60,2106.04,2106.04,2106.04,Open,5,1-30,False,
+10615,Redstone Family Practice,2026-06-21,2026-07-06,Net 15,1715.7,1715.7,1715.7,Open,23,1-30,False,
+10616,Redstone Family Practice,2026-05-29,2026-05-29,Due on receipt,1485.27,1156.01,1156.01,Partial,61,61-90,False,2026-06-10
+10617,Redstone Family Practice,2026-06-22,2026-07-22,Net 30,4010.45,4010.45,4010.45,Open,7,1-30,False,
+10618,Stonebridge Builders,2026-07-02,2026-08-01,Net 30,2844.16,2153.7,2153.7,Partial,-3,Current,False,2026-07-30
+10619,Stonebridge Builders,2026-07-07,2026-08-21,Net 45,2276.09,553.54,553.54,Partial,-23,Current,False,2026-07-17
+10620,Stonebridge Builders,2026-07-20,2026-07-20,Due on receipt,3229.19,3229.19,3229.19,Open,9,1-30,False,
+10621,Stonebridge Builders,2026-07-24,2026-09-07,Net 45,6743.17,0.0,,Paid,-40,Current,False,2026-08-01
+10622,Stonebridge Family Practice,2026-06-06,2026-07-06,Net 30,-1627.11,-1627.11,-1627.11,Credit Memo,23,1-30,False,
+10623,Stonebridge Family Practice,2026-05-31,2026-07-30,Net 60,1507.43,1507.43,1507.43,Open,-1,Current,False,
+10624,Stonebridge Family Practice,2026-06-04,2026-06-19,Net 15,1682.94,1682.94,1682.94,Open,40,31-60,False,
+10625,Stonebridge Family Practice,2026-05-21,2026-06-20,Net 30,1906.01,878.89,878.89,Partial,39,31-60,False,2026-06-04
+10626,Stonebridge Hvac,2026-05-31,2026-07-15,Net 45,2327.6,2327.6,2327.6,Open,14,1-30,False,
+10627,Stonebridge Hvac,2026-06-02,2026-07-17,Net 45,1746.85,355.88,355.88,Partial,12,1-30,False,2026-06-09
+10628,Stonebridge Hvac,2026-06-21,2026-07-21,Net 30,2668.52,0.0,,Paid,8,1-30,False,2026-07-03
+10629,Willow Park Consulting,2026-03-09,2026-04-23,Net 45,1022.63,468.78,468.78,Partial,97,90+,False,2026-03-30
+10630,Willow Park Consulting,2026-04-08,2026-05-23,Net 45,2119.59,2119.59,2119.59,Open,67,61-90,False,
+10631,Willow Park Consulting,2026-05-06,2026-07-05,Net 60,2434.01,2434.01,2434.01,Open,24,1-30,False,
+10632,Willow Park Contracting,2026-06-28,2026-08-12,Net 45,13567.42,13567.42,13567.42,Open,-14,Current,False,
+10633,Willow Park Contracting,2026-07-10,2026-08-09,Net 30,2386.46,2386.46,2386.46,Open,-11,Current,False,
+10634,Willow Park Contracting,2026-07-19,2026-08-18,Net 30,3612.06,3612.06,3612.06,Open,-20,Current,False,
+10635,Willow Park Contracting,2026-06-21,2026-08-05,Net 45,4910.47,4910.47,4910.47,Open,-7,Current,False,
+10636,Willow Park Contracting,2026-07-01,2026-07-01,Due on receipt,2395.65,705.2,705.2,Partial,28,1-30,False,2026-07-31
+10637,Willow Park Contracting,2026-06-25,2026-07-25,Net 30,1819.83,1819.83,1819.83,Open,4,1-30,False,

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Where the Margin Went — case study</title>
+<meta name="description" content="A retail transaction export with three date formats, duplicate loads and returns inflating revenue, cleaned into a margin model and a stocking recommendation.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="topbar">
+  <a class="home" href="index.html">← Case studies</a>
+  <button class="theme-btn" id="theme" type="button" aria-label="Toggle light and dark theme">Theme</button>
+</header>
+
+<main>
+  <p class="eyebrow">Case study 01 · SMB retail</p>
+  <h1>Where the Margin Went</h1>
+  <p class="lede">
+    A multi-store retailer knew its revenue. It did not know its margin, because
+    the cost basis lived in a column that half the tooling read as text.
+  </p>
+
+  <ul class="chips">
+    <li class="chip accent">Tableau</li>
+    <li class="chip accent">Python / pandas</li>
+    <li class="chip">Star schema</li>
+    <li class="chip">~3 hours build</li>
+  </ul>
+
+  <div class="note">
+    <p>
+      <strong>Data:</strong> Iowa Liquor Sales — a real, public, transaction-grain
+      feed published by the State of Iowa. Every defect described below is in the
+      actual file.
+    </p>
+  </div>
+
+  <h2>The question</h2>
+  <p class="prose">
+    Not "how are we doing." The owner of a multi-site retailer asks one question
+    every month and can't answer it: <strong>which products are taking up shelf
+    space without earning it?</strong> Revenue reporting can't answer that,
+    because the highest-revenue item and the highest-margin item are rarely the
+    same thing.
+  </p>
+
+  <h2>What the file actually looked like</h2>
+  <p class="prose">
+    Three rows, three different problems:
+  </p>
+
+<pre class="raw"><code>invoice_line_no,date,store,name,city,zipcode,...,state_bottle_cost,sale_dollars
+INV-200000,<b>05/25/2026</b>,4829,Casey's General Store #2879,ANKENY,<b>50021.0</b>,...,<b>$11.00</b>,<b>$36.30</b>
+INV-200001,<b>2026-07-01</b>,2648,<b>WILKIE LIQUORS</b>,Iowa City,52240,...,<b>9.75 </b>,<b>73.15 </b>
+INV-200002,<b>30-Jun-2026</b>,2633,Hometown Foods,CEDAR RAPIDS,52402,...,11.00,108.90</code></pre>
+
+  <p class="prose">
+    Three date formats. Currency as <code>$11.00</code>, as <code>9.75&nbsp;</code>
+    with a trailing space, and as a bare number. A ZIP code Excel helpfully
+    converted to <code>50021.0</code> on a round-trip. And a store whose name is
+    spelled six ways across the file.
+  </p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Defect</th><th>Rows</th><th>What it would have cost</th></tr></thead>
+      <tbody>
+        <tr><td>Exact duplicate rows (re-run nightly load)</td><td>45</td><td>That day's revenue counted twice</td></tr>
+        <tr><td>Returns booked as negative lines</td><td>45</td><td>Dropping them overstates revenue</td></tr>
+        <tr><td>Missing cost basis</td><td>67</td><td>Margin computed on the wrong denominator</td></tr>
+        <tr><td>Stores with more than one spelling</td><td>7 of 7</td><td>Store totals split across phantom stores</td></tr>
+        <tr><td>Blank / <code>N/A</code> / <code>-</code> category</td><td>514</td><td>An entire product line invisible</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>The decisions that mattered</h2>
+
+  <h3>Returns are kept, not dropped</h3>
+  <p class="prose">
+    1.1% of lines have a negative quantity. They're returns. Filtering them out
+    is the most common way a retail dashboard ends up overstating revenue — and
+    it's invisible, because the resulting number still looks reasonable. They're
+    retained, and carry an <code>is_return</code> flag so units-per-transaction
+    analysis can exclude them <em>deliberately</em>.
+  </p>
+
+  <h3>Missing cost is excluded from margin, not imputed</h3>
+  <p class="prose">
+    67 lines have no cost basis. The tempting fix is to fill them with the item's
+    average cost. That would smooth over exactly the pricing errors the dashboard
+    exists to find. Instead those rows keep their revenue and carry a null
+    margin, so Tableau excludes them from margin aggregates automatically.
+  </p>
+
+  <div class="note warn">
+    <p>
+      <strong>Margin % is therefore computed on 98.3% of revenue, not 100%.</strong>
+      That caveat is printed on the dashboard, not buried in a footnote. A number
+      whose coverage you can't state isn't a number you should act on.
+    </p>
+  </div>
+
+  <h3>Margin % is an aggregate, never an average of percentages</h3>
+  <p class="prose">
+    <code>AVG(margin_pct)</code> weights a $6 bottle the same as a $600 case.
+    The dashboard uses <code>SUM(gross_margin) / SUM(sale_dollars)</code>. On this
+    dataset the two differ by several points — enough to move an item across the
+    cut threshold.
+  </p>
+
+  <h2>The result</h2>
+
+  <div class="kpis">
+    <div class="kpi"><span class="v">$284,918</span><span class="l">Revenue</span></div>
+    <div class="kpi"><span class="v">$87,211</span><span class="l">Gross margin</span></div>
+    <div class="kpi"><span class="v">30.6%</span><span class="l">Margin rate</span></div>
+    <div class="kpi"><span class="v">4,046→4,001</span><span class="l">Rows in / out</span></div>
+  </div>
+
+  <div class="embed">
+    <strong>Dashboard: “Where the Margin Went”</strong>
+    Embed the Tableau Public viz here once published.
+  </div>
+
+  <div class="note good">
+    <p>
+      <strong>The recommendation.</strong> One product line — slow-moving, 10%
+      margin, and missing a category in the POS entirely — accounts for a
+      meaningful share of shelf space and almost none of the profit. It sits
+      alone in the bottom-left quadrant of the scatter: slow <em>and</em> thin.
+      Cutting it frees shelf for the top-quartile items without touching revenue
+      in any way the owner would feel.
+    </p>
+  </div>
+
+  <p class="prose">
+    That the item was also <em>uncategorized</em> is not a coincidence. Products
+    nobody has classified are products nobody is managing.
+  </p>
+
+  <h2>Scope</h2>
+  <p class="prose">
+    About three hours end to end: one to build the pipeline, two in Tableau.
+    Rerunning it against next month's export is a single command, which is the
+    part that makes this worth paying for once rather than every month.
+  </p>
+
+  <p class="prose">
+    <a href="https://github.com/michaelnocito/spreadsheet-archaeology/tree/main/portfolio/data/01-retail-margin">Pipeline and full decisions log →</a>
+  </p>
+</main>
+
+<footer>
+  <p><a href="index.html">← All case studies</a></p>
+</footer>
+
+</div>
+<script>
+(function () {
+  var root = document.documentElement, saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  if (saved) root.setAttribute('data-theme', saved);
+  document.getElementById('theme').addEventListener('click', function () {
+    var isDark = root.getAttribute('data-theme') === 'dark' ||
+      (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var next = isDark ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>
