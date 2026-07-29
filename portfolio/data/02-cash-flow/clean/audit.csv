@@ -1,0 +1,8 @@
+step,rows_affected,detail
+header_located,4,"real header found at line 5, not line 1"
+subtotal_rows,41,customer subtotals + grand total removed
+spacer_rows,40,blank separator rows removed
+detail_rows,137,real invoices retained
+credit_memos,4,"negative lines kept — they reduce AR, not noise"
+due_date_derived,3,rebuilt from invoice date + terms
+customer_dedupe,22,name variants + job sub-customers collapsed to parent

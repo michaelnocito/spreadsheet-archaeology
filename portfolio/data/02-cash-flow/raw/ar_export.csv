@@ -1,0 +1,223 @@
+Bright Fork Services LLC,,,,,,,,
+Open Invoices,,,,,,,,
+"As of July 29, 2026",,,,,,,,
+,,,,,,,,
+Num,Customer,Date,Due Date,Terms,Amount,Open Balance,Status,Last Payment
+10501,Blue Harbor Auto Group,06/03/2026,07/03/2026,Net 30,"1,599.64",0.00,Paid,06/09/2026
+10502,Blue Harbor Auto Group,05/18/2026,,Net 60,"3,033.81","3,033.81",Open,
+10503,Blue Harbor Auto Group,06/22/2026,"Aug 06, 2026",Net 45,832.04,832.04,Open,
+,Total Blue Harbor Auto Group,,,,"5,465.49","3,865.85",,
+,,,,,,,,
+10504,Blue Harbor Family Practice,06/24/2026,,Due on receipt,"2,452.25",612.55,Partial,06/29/2026
+10505,Blue Harbor Family Practice,"Jul 11, 2026",08/10/2026,Net 30,575.45,575.45,Open,
+10506,Blue Harbor Family Practice ,07/04/2026,08/03/2026,Net 30,369.51,0.00,Paid,07/09/2026
+10507,Blue Harbor Family Practice,07/23/2026,09/06/2026,Net 45,"1,350.08","1,350.08",Open,
+,Total Blue Harbor Family Practice,,,,"4,747.29","2,538.08",,
+,,,,,,,,
+10508,Blue Harbor HVAC,05/30/2026,06/14/2026,Net 15,"1,573.25",0.00,Paid,06/21/2026
+,Total Blue Harbor HVAC,,,,"1,573.25",0.00,,
+,,,,,,,,
+10509,Brightwater Auto Group,07/28/2026,09/11/2026,Net 45,"9,842.16","9,842.16",Open,
+10510,Brightwater Auto Group,"Jul 15, 2026",07/15/2026,Due on receipt,"1,834.84","1,834.84",Open,
+10511,Brightwater Auto Group,07/15/2026,09/13/2026,Net 60,"1,698.61",0.00,Paid,07/17/2026
+10512,Brightwater Auto Group,07/24/2026,08/23/2026,Net 30,583.85,285.85,Partial,08/22/2026
+10513,Brightwater Auto Group,07/17/2026,"Aug 16, 2026",Net 30,"4,201.26","4,201.26",Open,
+10514,Brightwater Auto Group,07/19/2026,"Sep 17, 2026",Net 60,"2,065.47","2,065.47",Open,
+,Total Brightwater Auto Group,,,,"20,226.19","18,229.58",,
+,,,,,,,,
+10515,BRIGHTWATER FAMILY PRACTICE,07/21/2026,09/04/2026,Net 45,"2,524.76","2,524.76",Open,
+10516,Brightwater Family Practice,"Jun 27, 2026",07/27/2026,Net 30,"2,798.69","2,798.69",Open,
+10517,Brightwater Family Practice:02,06/27/2026,06/27/2026,Due on receipt,"1,793.03",0.00,Paid,07/26/2026
+10518,Brightwater Family Practice,07/26/2026,09/09/2026,Net 45,"2,788.45","2,788.45",Open,
+10519,Brightwater Family Practice,"Jul 23, 2026",08/07/2026,Net 15,"1,529.18","1,529.18",Open,
+,Total Brightwater Family Practice,,,,"11,434.11","9,641.08",,
+,,,,,,,,
+10520,Cedar Ridge Builders,05/29/2026,05/29/2026,Due on receipt,773.53,773.53,Open,
+10521,Cedar Ridge Builders,06/16/2026,"Jul 01, 2026",Net 15,307.79,307.79,Open,
+10522,CEDAR RIDGE BUILDERS,06/08/2026,07/08/2026,Net 30,722.49,722.49,Open,
+10523,Cedar Ridge Builders ,06/06/2026,06/21/2026,Net 15,"1,351.44","1,351.44",Open,
+10524,Cedar Ridge Builders,"Jul 01, 2026",07/16/2026,Net 15,273.27,273.27,Open,
+,Total Cedar Ridge Builders,,,,"3,428.52","3,428.52",,
+,,,,,,,,
+10525,CEDAR RIDGE CLINIC,06/10/2026,,Net 15,"2,706.65","2,706.65",Open,
+10526,Cedar Ridge Clinic,03/29/2026,04/13/2026,Net 15,974.63,0.00,Paid,03/30/2026
+10527,Cedar Ridge Clinic,04/15/2026,05/30/2026,Net 45,863.34,0.00,Paid,04/28/2026
+,Total Cedar Ridge Clinic,,,,"4,544.62","2,706.65",,
+,,,,,,,,
+10528,Cedar Ridge Consulting,"Jul 28, 2026","Jul 28, 2026",Due on receipt,"2,329.81","2,329.81",Open,
+10529,Cedar Ridge Consulting,07/10/2026,08/24/2026,Net 45,984.99,718.21,Partial,08/03/2026
+10530,Cedar Ridge Consulting,06/19/2026,07/04/2026,Net 15,"4,087.90",0.00,Paid,07/14/2026
+,Total Cedar Ridge Consulting,,,,"7,402.70","3,048.02",,
+,,,,,,,,
+10531,Cedar Ridge Contracting,07/13/2026,07/28/2026,Net 15,"1,782.03","1,782.03",Open,
+10532,Cedar Ridge Contracting,07/12/2026,08/11/2026,Net 30,"2,175.05","2,175.05",Open,
+10533,Cedar Ridge Contracting,"Jul 28, 2026","Aug 27, 2026",Net 30,"1,152.64","1,152.64",Open,
+10534,Cedar Ridge Contracting,07/11/2026,"Aug 10, 2026",Net 30,"1,979.28","1,979.28",Open,
+,Total Cedar Ridge Contracting,,,,"7,089.00","7,089.00",,
+,,,,,,,,
+10535,CEDAR RIDGE FAMILY PRACTICE,06/17/2026,08/01/2026,Net 45,"5,806.39","5,806.39",Open,
+10536,Cedar Ridge Family Practice,05/22/2026,07/21/2026,Net 60,"2,030.00","2,030.00",Open,
+10537,Cedar Ridge Family Practice,05/15/2026,07/14/2026,Net 60,"1,885.21",0.00,Paid,06/15/2026
+10538,Cedar Ridge Family Practice,05/31/2026,06/30/2026,Net 30,"3,606.32",0.00,Paid,06/13/2026
+10539,Cedar Ridge Family Practice,06/13/2026,"Jun 28, 2026",Net 15,805.13,0.00,Paid,"Jun 27, 2026"
+,Total Cedar Ridge Family Practice,,,,"14,133.05","7,836.39",,
+,,,,,,,,
+10540,CEDAR RIDGE HVAC,06/10/2026,07/10/2026,Net 30,"1,552.67",0.00,Paid,"Jul 13, 2026"
+10541,Cedar Ridge HVAC,06/03/2026,"Jul 03, 2026",Net 30,"4,002.17","4,002.17",Open,
+,Total Cedar Ridge HVAC,,,,"5,554.84","4,002.17",,
+,,,,,,,,
+10542,Copper Creek Contracting ,07/01/2026,"Aug 30, 2026",Net 60,"(1,192.35)",(464.60),Credit Memo,07/28/2026
+10543,Copper Creek Contracting,07/29/2026,09/27/2026,Net 60,"2,542.48",0.00,Paid,08/23/2026
+10544,Copper Creek Contracting,"Jul 26, 2026",08/10/2026,Net 15,"3,007.87",0.00,Paid,"Aug 13, 2026"
+10545,Copper Creek Contracting,06/19/2026,07/04/2026,Net 15,"2,081.67",0.00,Paid,"Jul 16, 2026"
+,Total Copper Creek Contracting,,,,"6,439.67",(464.60),,
+,,,,,,,,
+10546,Copper Creek Landscaping,"Jul 08, 2026",08/07/2026,Net 30,564.81,564.81,Open,
+10547,Copper Creek Landscaping,"Jul 19, 2026",08/03/2026,Net 15,910.32,910.32,Open,
+10548,Copper Creek Landscaping,"Jul 21, 2026",08/20/2026,Net 30,"1,028.38",261.88,Partial,07/29/2026
+10549,COPPER CREEK LANDSCAPING,07/03/2026,08/02/2026,Net 30,"1,725.43",409.33,Partial,07/12/2026
+,Total Copper Creek Landscaping,,,,"4,228.94","2,146.34",,
+,,,,,,,,
+10550,Copper Creek Property Mgmt,06/03/2026,"Aug 02, 2026",Net 60,"(4,587.10)","(4,587.10)",Credit Memo,
+10551,COPPER CREEK PROPERTY MGMT,07/01/2026,"Jul 01, 2026",Due on receipt,606.01,606.01,Open,
+10552,Copper Creek Property Mgmt,06/29/2026,"Jul 14, 2026",Net 15,"1,806.13","1,806.13",Open,
+10553,Copper Creek Property Mgmt,"Jul 01, 2026",07/16/2026,Net 15,"1,772.96","1,772.96",Open,
+,Total Copper Creek Property Mgmt,,,,(402.00),(402.00),,
+,,,,,,,,
+10554,ELMWOOD AUTO GROUP,07/14/2026,"Sep 12, 2026",Net 60,"1,771.55",0.00,Paid,08/10/2026
+10555,Elmwood Auto Group:02,07/02/2026,"Aug 31, 2026",Net 60,"1,151.39","1,151.39",Open,
+10556,Elmwood Auto Group,"Jun 28, 2026",07/28/2026,Net 30,389.31,129.59,Partial,07/23/2026
+,Total Elmwood Auto Group,,,,"3,312.25","1,280.98",,
+,,,,,,,,
+10557,Elmwood Clinic,06/02/2026,06/17/2026,Net 15,"1,096.36",515.05,Partial,06/25/2026
+10558,Elmwood Clinic:01,05/19/2026,"Jul 18, 2026",Net 60,"1,533.67","1,533.67",Open,
+10559,Elmwood Clinic,"Jun 28, 2026",07/28/2026,Net 30,630.19,630.19,Open,
+10560,ELMWOOD CLINIC,"Jun 19, 2026","Jul 04, 2026",Net 15,"1,543.71","1,543.71",Open,
+10561,Elmwood Clinic,05/11/2026,06/10/2026,Net 30,"1,327.03","1,327.03",Open,
+10562,Elmwood Clinic,"Jun 17, 2026","Jul 17, 2026",Net 30,517.04,188.92,Partial,06/18/2026
+,Total Elmwood Clinic,,,,"6,648.00","5,738.57",,
+,,,,,,,,
+10563,Fairview Contracting,03/03/2026,03/03/2026,Due on receipt,"1,353.12","1,353.12",Open,
+10564,Fairview Contracting,04/30/2026,"Jun 14, 2026",Net 45,"4,102.84","4,102.84",Open,
+10565,Fairview Contracting,"Apr 11, 2026",05/11/2026,Net 30,391.55,308.60,Partial,05/10/2026
+10566,Fairview Contracting,05/02/2026,06/01/2026,Net 30,875.20,875.20,Open,
+,Total Fairview Contracting,,,,"6,722.71","6,639.76",,
+,,,,,,,,
+10567,Fairview Dental,07/12/2026,08/26/2026,Net 45,"1,036.56","1,036.56",Open,
+10568,Fairview Dental,07/25/2026,"Aug 24, 2026",Net 30,"1,041.06","1,041.06",Open,
+10569,Fairview Dental,06/29/2026,07/14/2026,Net 15,"1,186.20",929.72,Partial,07/18/2026
+,Total Fairview Dental,,,,"3,263.82","3,007.34",,
+,,,,,,,,
+10570,Fairview HVAC,04/09/2026,04/24/2026,Net 15,"2,315.08",975.17,Partial,04/14/2026
+10571,Fairview HVAC,05/07/2026,"Jun 06, 2026",Net 30,"1,958.86",0.00,Paid,"Jun 08, 2026"
+10572,Fairview HVAC,05/05/2026,07/04/2026,Net 60,"2,318.80","1,838.68",Partial,05/27/2026
+10573,Fairview HVAC,03/23/2026,"Mar 23, 2026",Due on receipt,354.96,72.24,Partial,04/21/2026
+10574,Fairview HVAC,05/23/2026,06/22/2026,Net 30,"13,907.16",0.00,Paid,07/02/2026
+10575,Fairview HVAC,"May 03, 2026",05/18/2026,Net 15,"1,530.38","1,530.38",Open,
+,Total Fairview HVAC,,,,"22,385.24","4,416.47",,
+,,,,,,,,
+10576,Granite Clinic,06/19/2026,08/03/2026,Net 45,"17,550.35","17,550.35",Open,
+,Total Granite Clinic,,,,"17,550.35","17,550.35",,
+,,,,,,,,
+10577,Granite Consulting,05/20/2026,06/04/2026,Net 15,"1,702.47",0.00,Paid,06/05/2026
+10578,Granite Consulting,06/01/2026,06/16/2026,Net 15,"1,094.05","1,094.05",Open,
+,Total Granite Consulting,,,,"2,796.52","1,094.05",,
+,,,,,,,,
+10579,Granite Dental,07/03/2026,"Aug 02, 2026",Net 30,"1,500.94","1,500.94",Open,
+10580,GRANITE DENTAL,06/09/2026,07/09/2026,Net 30,642.41,642.41,Open,
+10581,Granite Dental:02,06/10/2026,06/10/2026,Due on receipt,476.68,367.29,Partial,06/15/2026
+10582,Granite Dental,"Jun 13, 2026",06/13/2026,Due on receipt,652.85,652.85,Open,
+10583,GRANITE DENTAL,06/12/2026,07/12/2026,Net 30,"5,573.29","5,573.29",Open,
+,Total Granite Dental,,,,"8,846.17","8,736.78",,
+,,,,,,,,
+10584,Harborview Builders,06/06/2026,08/05/2026,Net 60,"1,119.69","1,119.69",Open,
+10585,Harborview Builders,05/30/2026,"May 30, 2026",Due on receipt,"1,798.28","1,798.28",Open,
+,Total Harborview Builders,,,,"2,917.97","2,917.97",,
+,,,,,,,,
+10586,Harborview Contracting,06/23/2026,07/23/2026,Net 30,724.23,724.23,Open,
+10587,Harborview Contracting,06/19/2026,"Jul 19, 2026",Net 30,"2,268.45",0.00,Paid,06/22/2026
+10588,Harborview Contracting,07/21/2026,08/05/2026,Net 15,556.10,0.00,Paid,07/22/2026
+10589,Harborview Contracting,07/21/2026,09/04/2026,Net 45,561.00,0.00,Paid,07/22/2026
+,Total Harborview Contracting,,,,"4,109.78",724.23,,
+,,,,,,,,
+10590,Ironside Contracting,06/21/2026,07/06/2026,Net 15,"2,226.99","2,226.99",Open,
+10591,Ironside Contracting ,06/10/2026,06/25/2026,Net 15,"1,381.26",0.00,Paid,06/17/2026
+10592,Ironside Contracting,"May 17, 2026",07/01/2026,Net 45,"1,680.09","1,680.09",Open,
+,Total Ironside Contracting,,,,"5,288.34","3,907.08",,
+,,,,,,,,
+10593,Ironside Dental,04/12/2026,04/27/2026,Net 15,607.32,0.00,Paid,05/11/2026
+10594,IRONSIDE DENTAL,04/30/2026,05/30/2026,Net 30,"3,578.61","3,578.61",Open,
+10595,Ironside Dental,04/18/2026,"May 18, 2026",Net 30,397.80,397.80,Open,
+10596,Ironside Dental,"Mar 23, 2026",04/22/2026,Net 30,"3,606.86","3,606.86",Open,
+10597,Ironside Dental ,05/10/2026,07/09/2026,Net 60,"1,142.65","1,142.65",Open,
+,Total Ironside Dental,,,,"9,333.24","8,725.92",,
+,,,,,,,,
+10598,Ironside Property Mgmt:03,07/28/2026,09/26/2026,Net 60,"3,000.13","3,000.13",Open,
+10599,Ironside Property Mgmt,07/05/2026,07/05/2026,Due on receipt,"1,057.35",0.00,Paid,07/11/2026
+,Total Ironside Property Mgmt,,,,"4,057.48","3,000.13",,
+,,,,,,,,
+10600,LAKESHORE PROPERTY MGMT,06/14/2026,"Jun 29, 2026",Net 15,"4,139.91","4,139.91",Open,
+10601,Lakeshore Property Mgmt:01,05/23/2026,06/22/2026,Net 30,391.78,391.78,Open,
+10602,Lakeshore Property Mgmt,07/11/2026,08/10/2026,Net 30,"1,298.57","1,298.57",Open,
+,Total Lakeshore Property Mgmt,,,,"5,830.26","5,830.26",,
+,,,,,,,,
+10603,Meadowlark Builders,06/01/2026,07/01/2026,Net 30,"2,823.41",0.00,Paid,"Jun 07, 2026"
+10604,Meadowlark Builders,05/21/2026,06/05/2026,Net 15,437.06,0.00,Paid,05/23/2026
+,Total Meadowlark Builders,,,,"3,260.47",0.00,,
+,,,,,,,,
+10605,Meadowlark Consulting,05/13/2026,"Jun 27, 2026",Net 45,"3,159.20",0.00,Paid,06/20/2026
+10606,Meadowlark Consulting,06/01/2026,07/01/2026,Net 30,"2,320.00",929.00,Partial,06/22/2026
+,Total Meadowlark Consulting,,,,"5,479.20",929.00,,
+,,,,,,,,
+10607,Meadowlark Family Practice,05/05/2026,06/19/2026,Net 45,818.46,642.56,Partial,05/29/2026
+10608,MEADOWLARK FAMILY PRACTICE,"Apr 25, 2026",04/25/2026,Due on receipt,"1,115.56",0.00,Paid,05/02/2026
+10609,Meadowlark Family Practice,"May 14, 2026","Jul 13, 2026",Net 60,"(4,178.65)",-0.00,Credit Memo,"May 31, 2026"
+,Total Meadowlark Family Practice,,,,"(2,244.63)",642.56,,
+,,,,,,,,
+10610,Northwind Builders,"Feb 16, 2026","Apr 17, 2026",Net 60,"1,037.88",0.00,Paid,03/16/2026
+10611,Northwind Builders,04/20/2026,06/19/2026,Net 60,902.27,902.27,Open,
+,Total Northwind Builders,,,,"1,940.15",902.27,,
+,,,,,,,,
+10612,Northwind Clinic,"Feb 16, 2026",03/18/2026,Net 30,"1,756.21","1,756.21",Open,
+,Total Northwind Clinic,,,,"1,756.21","1,756.21",,
+,,,,,,,,
+10613,Northwind Family Practice,05/29/2026,07/28/2026,Net 60,"1,246.78","1,246.78",Open,
+10614,Northwind Family Practice,05/25/2026,"Jul 24, 2026",Net 60,"2,106.04","2,106.04",Open,
+,Total Northwind Family Practice,,,,"3,352.82","3,352.82",,
+,,,,,,,,
+10615,Redstone Family Practice,06/21/2026,07/06/2026,Net 15,"1,715.70","1,715.70",Open,
+10616,Redstone Family Practice,"May 29, 2026",05/29/2026,Due on receipt,"1,485.27","1,156.01",Partial,"Jun 10, 2026"
+10617,Redstone Family Practice,06/22/2026,07/22/2026,Net 30,"4,010.45","4,010.45",Open,
+,Total Redstone Family Practice,,,,"7,211.42","6,882.16",,
+,,,,,,,,
+10618,Stonebridge Builders,07/02/2026,08/01/2026,Net 30,"2,844.16","2,153.70",Partial,"Jul 30, 2026"
+10619,Stonebridge Builders:02,07/07/2026,08/21/2026,Net 45,"2,276.09",553.54,Partial,07/17/2026
+10620,Stonebridge Builders:03,07/20/2026,07/20/2026,Due on receipt,"3,229.19","3,229.19",Open,
+10621,Stonebridge Builders,07/24/2026,"Sep 07, 2026",Net 45,"6,743.17",0.00,Paid,08/01/2026
+,Total Stonebridge Builders,,,,"15,092.61","5,936.43",,
+,,,,,,,,
+10622,Stonebridge Family Practice,"Jun 06, 2026","Jul 06, 2026",Net 30,"(1,627.11)","(1,627.11)",Credit Memo,
+10623,Stonebridge Family Practice,05/31/2026,07/30/2026,Net 60,"1,507.43","1,507.43",Open,
+10624,Stonebridge Family Practice,06/04/2026,06/19/2026,Net 15,"1,682.94","1,682.94",Open,
+10625,Stonebridge Family Practice,"May 21, 2026",06/20/2026,Net 30,"1,906.01",878.89,Partial,06/04/2026
+,Total Stonebridge Family Practice,,,,"3,469.27","2,442.15",,
+,,,,,,,,
+10626,Stonebridge HVAC,05/31/2026,07/15/2026,Net 45,"2,327.60","2,327.60",Open,
+10627,Stonebridge HVAC,06/02/2026,"Jul 17, 2026",Net 45,"1,746.85",355.88,Partial,"Jun 09, 2026"
+10628,Stonebridge HVAC,06/21/2026,07/21/2026,Net 30,"2,668.52",0.00,Paid,07/03/2026
+,Total Stonebridge HVAC,,,,"6,742.97","2,683.48",,
+,,,,,,,,
+10629,Willow Park Consulting,"Mar 09, 2026",04/23/2026,Net 45,"1,022.63",468.78,Partial,03/30/2026
+10630,Willow Park Consulting,04/08/2026,"May 23, 2026",Net 45,"2,119.59","2,119.59",Open,
+10631,Willow Park Consulting,05/06/2026,07/05/2026,Net 60,"2,434.01","2,434.01",Open,
+,Total Willow Park Consulting,,,,"5,576.23","5,022.38",,
+,,,,,,,,
+10632,WILLOW PARK CONTRACTING,06/28/2026,08/12/2026,Net 45,"13,567.42","13,567.42",Open,
+10633,Willow Park Contracting,"Jul 10, 2026",08/09/2026,Net 30,"2,386.46","2,386.46",Open,
+10634,Willow Park Contracting,07/19/2026,08/18/2026,Net 30,"3,612.06","3,612.06",Open,
+10635,Willow Park Contracting,06/21/2026,"Aug 05, 2026",Net 45,"4,910.47","4,910.47",Open,
+10636,Willow Park Contracting,"Jul 01, 2026",07/01/2026,Due on receipt,"2,395.65",705.20,Partial,07/31/2026
+10637,Willow Park Contracting,06/25/2026,07/25/2026,Net 30,"1,819.83","1,819.83",Open,
+,Total Willow Park Contracting,,,,"28,691.89","27,001.44",,
+,,,,,,,,
+,TOTAL,,,,"279,256.41","194,785.87",,
