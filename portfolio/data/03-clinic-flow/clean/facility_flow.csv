@@ -1,0 +1,121 @@
+facility_id,facility_name,city,state,county,zip_code,admit_boarding_minutes,ed_median_minutes,ed_psych_median_minutes,left_without_being_seen_pct,stroke_scan_45min_pct,measures_reported,measures_possible,boarding_share
+140005,North Grove County Hospital,North Grove,SD,Pine,50071,22.0,225.0,521.0,3.6,44.0,5,5,0.08906882591093117
+140007,Prairie View Memorial Hospital,Prairie View,IA,Cedar,50430,206.0,236.0,691.0,7.0,53.0,5,5,0.4660633484162896
+140019,Grand Junction Memorial Hospital,Grand Junction,NE,North,51328,124.0,128.0,299.0,1.2,102.0,5,5,0.49206349206349204
+140028,River Ridge Medical Center,River Ridge,WI,North,51706,88.0,190.0,183.0,1.6,87.0,5,5,0.31654676258992803
+140049,Pine Rapids Community Hospital,Pine Rapids,MO,Fair,50168,205.0,217.0,481.0,4.5,46.0,5,5,0.48578199052132703
+140050,River View Medical Center,River View,KS,Prairie,55257,146.0,174.0,231.0,4.1,82.0,5,5,0.45625
+140053,River Grove Regional Medical Center,River Grove,WI,Cedar,51899,179.0,164.0,418.0,2.6,37.0,5,5,0.521865889212828
+140057,Elk Ridge County Hospital,Elk Ridge,MN,North,52865,324.0,201.0,378.0,2.5,,4,5,0.6171428571428571
+140081,Elk Ridge County Hospital,Elk Ridge,KS,Fair,55313,128.0,71.0,362.0,1.3,68.0,5,5,0.6432160804020101
+140089,North Haven County Hospital,North Haven,KS,Cedar,50579,22.0,164.0,47.0,3.9,65.0,5,5,0.11827956989247312
+140111,Elk Rapids Medical Center,Elk Rapids,IA,Fair,51694,103.0,199.0,239.0,0.5,53.0,5,5,0.34105960264900664
+140112,Pine Junction Community Hospital,Pine Junction,MO,Elk,50577,85.0,,55.0,0.6,54.0,4,5,
+140113,Fair Bluff Health System,Fair Bluff,SD,River,51419,52.0,90.0,336.0,1.6,,4,5,0.36619718309859156
+160002,Prairie View County Hospital,Prairie View,SD,Cedar,51571,68.0,92.0,557.0,2.0,77.0,5,5,0.425
+160030,Cedar View Health System,Cedar View,IA,North,52312,,188.0,344.0,5.2,50.0,4,5,
+160037,Pine Ridge Health System,Pine Ridge,IA,Cedar,51833,208.0,210.0,393.0,5.2,40.0,5,5,0.49760765550239233
+160040,Grand Rapids Health System,Grand Rapids,NE,Cedar,52449,53.0,67.0,158.0,3.3,84.0,5,5,0.44166666666666665
+160046,Pine Falls County Hospital,Pine Falls,IA,Pine,50850,197.0,47.0,312.0,2.0,65.0,5,5,0.8073770491803278
+160048,River Rapids Health System,River Rapids,IL,North,53673,116.0,150.0,399.0,,82.0,4,5,0.43609022556390975
+160060,Pine View Health System,Pine View,MN,Prairie,55806,129.0,154.0,32.0,,101.0,4,5,0.4558303886925795
+160064,Pine Haven Medical Center,Pine Haven,IL,Elk,51176,145.0,202.0,302.0,3.2,87.0,5,5,0.41786743515850144
+160067,North Ridge County Hospital,North Ridge,IA,Cedar,50877,83.0,144.0,150.0,0.2,118.0,5,5,0.3656387665198238
+160073,Grand View County Hospital,Grand View,IA,Elk,50649,84.0,86.0,237.0,2.8,87.0,5,5,0.49411764705882355
+160074,Pine Haven Medical Center,Pine Haven,SD,River,50297,36.0,128.0,145.0,2.8,98.0,5,5,0.21951219512195122
+160075,River Falls Regional Medical Center,River Falls,IA,North,50534,77.0,186.0,262.0,3.0,57.0,5,5,0.29277566539923955
+160077,Cedar Grove Regional Medical Center,Cedar Grove,WI,Elk,54568,81.0,134.0,,2.6,79.0,4,5,0.3767441860465116
+160078,Pine Rapids Health System,Pine Rapids,IA,Grand,52878,,89.0,526.0,4.1,50.0,4,5,
+160083,North Bluff Regional Medical Center,North Bluff,KS,Elk,52748,69.0,171.0,411.0,1.3,52.0,5,5,0.2875
+160097,Fair Grove Regional Medical Center,Fair Grove,KS,Elk,53527,217.0,161.0,147.0,4.2,121.0,5,5,0.5740740740740741
+160102,River Bluff Health System,River Bluff,IL,Pine,52617,62.0,151.0,149.0,,26.0,4,5,0.29107981220657275
+160108,Grand Bluff Memorial Hospital,Grand Bluff,IA,Cedar,51450,202.0,133.0,,0.3,,3,5,0.6029850746268657
+160117,Cedar Haven Health System,Cedar Haven,IA,Grand,50710,78.0,,,0.0,80.0,3,5,
+160118,North Falls Health System,North Falls,MO,Cedar,51662,92.0,,213.0,4.7,96.0,4,5,
+170003,Elk Falls Community Hospital,Elk Falls,IA,Elk,50336,,287.0,374.0,3.4,83.0,4,5,
+170011,River Junction Regional Medical Center,River Junction,IA,Fair,51311,,280.0,388.0,3.9,60.0,4,5,
+170013,North Rapids Regional Medical Center,North Rapids,IL,Elk,53478,28.0,99.0,354.0,0.8,95.0,5,5,0.2204724409448819
+170018,Grand Grove County Hospital,Grand Grove,IL,Prairie,50934,79.0,,307.0,1.1,79.0,4,5,
+170021,Prairie Ridge County Hospital,Prairie Ridge,NE,Cedar,51285,203.0,160.0,167.0,1.5,78.0,5,5,0.559228650137741
+170027,Prairie Bluff Community Hospital,Prairie Bluff,WI,North,51914,113.0,94.0,380.0,2.9,47.0,5,5,0.5458937198067633
+170031,Elk Rapids Medical Center,Elk Rapids,KS,Grand,52949,96.0,218.0,424.0,0.0,31.0,5,5,0.3057324840764331
+170034,North Grove Medical Center,North Grove,KS,River,50625,259.0,246.0,56.0,3.1,110.0,5,5,0.5128712871287129
+170036,River Junction Community Hospital,River Junction,KS,Elk,53498,236.0,260.0,418.0,0.0,13.0,5,5,0.47580645161290325
+170047,Cedar Junction Regional Medical Center,Cedar Junction,SD,Grand,51052,150.0,66.0,182.0,,69.0,4,5,0.6944444444444444
+170051,Elk View County Hospital,Elk View,MO,Fair,53057,141.0,136.0,,0.1,131.0,4,5,0.5090252707581228
+170052,North Rapids Community Hospital,North Rapids,MO,North,50733,20.0,,192.0,0.7,60.0,4,5,
+170056,Pine Falls Community Hospital,Pine Falls,IL,Cedar,50608,197.0,228.0,654.0,2.2,42.0,5,5,0.46352941176470586
+170063,Elk Haven Medical Center,Elk Haven,MO,River,51294,83.0,239.0,257.0,,31.0,4,5,0.2577639751552795
+170071,Cedar Ridge Regional Medical Center,Cedar Ridge,NE,North,50740,20.0,145.0,28.0,1.7,113.0,5,5,0.12121212121212122
+170096,Cedar Junction Regional Medical Center,Cedar Junction,IL,Grand,52991,,198.0,528.0,2.4,49.0,4,5,
+170101,Prairie Grove County Hospital,Prairie Grove,IA,North,51868,20.0,199.0,66.0,0.0,61.0,5,5,0.091324200913242
+170115,North View Regional Medical Center,North View,KS,Elk,51272,,157.0,277.0,,91.0,3,5,
+240001,Grand Bluff Memorial Hospital,Grand Bluff,IA,Cedar,51116,21.0,,338.0,2.0,87.0,4,5,
+240006,River Grove Medical Center,River Grove,WI,Grand,50411,133.0,176.0,537.0,2.4,60.0,5,5,0.43042071197411
+240012,Grand Falls Community Hospital,Grand Falls,IA,Cedar,50804,,282.0,390.0,,78.0,3,5,
+240020,Pine Rapids County Hospital,Pine Rapids,IA,Elk,51142,116.0,125.0,201.0,,111.0,4,5,0.48132780082987553
+240022,Fair Bluff Regional Medical Center,Fair Bluff,MO,Elk,53054,63.0,143.0,420.0,3.0,62.0,5,5,0.3058252427184466
+240026,Elk View Medical Center,Elk View,SD,Pine,50037,20.0,157.0,327.0,4.1,68.0,5,5,0.11299435028248588
+240029,Cedar View County Hospital,Cedar View,MN,Prairie,50481,78.0,89.0,118.0,3.6,115.0,5,5,0.46706586826347307
+240035,Pine Haven Medical Center,Pine Haven,SD,Prairie,52937,182.0,278.0,663.0,3.8,49.0,5,5,0.39565217391304347
+240042,Prairie Grove County Hospital,Prairie Grove,IL,Fair,51181,,230.0,152.0,,42.0,3,5,
+240059,Cedar Haven Health System,Cedar Haven,IL,Grand,50764,201.0,247.0,356.0,4.0,71.0,5,5,0.4486607142857143
+240065,Prairie Haven Health System,Prairie Haven,NE,Pine,50192,183.0,90.0,119.0,2.1,67.0,5,5,0.6703296703296703
+240079,North Haven Regional Medical Center,North Haven,MO,Pine,50773,,,221.0,3.5,48.0,3,5,
+240082,Grand Rapids Memorial Hospital,Grand Rapids,IL,Cedar,52110,197.0,233.0,323.0,1.5,37.0,5,5,0.45813953488372094
+240085,Grand Haven Community Hospital,Grand Haven,MN,Elk,50552,83.0,183.0,,2.2,,3,5,0.31203007518796994
+240095,Pine Ridge Medical Center,Pine Ridge,KS,Fair,51068,126.0,22.0,366.0,1.7,125.0,5,5,0.8513513513513513
+240100,Prairie Ridge Community Hospital,Prairie Ridge,WI,Elk,50901,242.0,287.0,306.0,0.9,51.0,5,5,0.45746691871455575
+240105,Prairie Haven Medical Center,Prairie Haven,IA,Prairie,52528,95.0,213.0,481.0,3.1,72.0,5,5,0.30844155844155846
+260004,Elk Haven Medical Center,Elk Haven,NE,Cedar,53783,171.0,118.0,185.0,4.4,70.0,5,5,0.5916955017301038
+260015,Fair View Memorial Hospital,Fair View,MN,Elk,51515,210.0,201.0,496.0,5.8,39.0,5,5,0.5109489051094891
+260032,Fair Junction County Hospital,Fair Junction,MN,Cedar,50132,169.0,99.0,153.0,,55.0,4,5,0.6305970149253731
+260033,River Rapids Health System,River Rapids,KS,Elk,50760,,292.0,370.0,2.2,,3,5,
+260045,North Falls County Hospital,North Falls,MN,Prairie,51363,114.0,219.0,510.0,2.1,39.0,5,5,0.34234234234234234
+260061,Elk Ridge Community Hospital,Elk Ridge,IL,Elk,51705,123.0,,392.0,4.1,39.0,4,5,
+260069,Prairie Bluff Memorial Hospital,Prairie Bluff,IA,Fair,50472,378.0,192.0,330.0,3.2,25.0,5,5,0.6631578947368421
+260076,River View County Hospital,River View,SD,Pine,51294,,183.0,,,62.0,2,5,
+260084,Cedar Haven Community Hospital,Cedar Haven,KS,Elk,50561,180.0,259.0,384.0,3.8,38.0,5,5,0.41002277904328016
+260087,Elk Grove Memorial Hospital,Elk Grove,IA,Elk,51181,183.0,177.0,128.0,2.4,32.0,5,5,0.5083333333333333
+260091,Grand View Community Hospital,Grand View,IA,Fair,51237,121.0,226.0,305.0,,59.0,4,5,0.34870317002881845
+260092,Elk View Community Hospital,Elk View,WI,Grand,50014,20.0,171.0,374.0,3.7,69.0,5,5,0.10471204188481675
+260094,River Ridge Medical Center,River Ridge,NE,North,51805,48.0,20.0,656.0,0.6,70.0,5,5,0.7058823529411765
+260104,North Haven Memorial Hospital,North Haven,IL,Grand,51146,,134.0,387.0,1.2,132.0,4,5,
+260109,River Falls County Hospital,River Falls,IL,Grand,50157,173.0,148.0,485.0,4.5,52.0,5,5,0.5389408099688473
+260119,Fair Ridge Health System,Fair Ridge,SD,Pine,50932,80.0,,236.0,2.9,79.0,4,5,
+280000,Prairie Falls Medical Center,Prairie Falls,NE,Grand,51272,130.0,177.0,336.0,1.2,71.0,5,5,0.4234527687296417
+280008,Elk View Health System,Elk View,NE,Cedar,51174,141.0,186.0,273.0,1.3,68.0,5,5,0.43119266055045874
+280017,Cedar Bluff Regional Medical Center,Cedar Bluff,IA,Fair,50130,217.0,205.0,315.0,2.7,34.0,5,5,0.514218009478673
+280024,Elk Grove Memorial Hospital,Elk Grove,IA,Elk,50399,54.0,93.0,225.0,,77.0,4,5,0.3673469387755102
+280043,Prairie View Regional Medical Center,Prairie View,IA,Grand,51134,234.0,239.0,333.0,3.6,78.0,5,5,0.49471458773784355
+280044,Pine Falls Community Hospital,Pine Falls,IL,Cedar,50631,218.0,266.0,440.0,2.9,77.0,5,5,0.45041322314049587
+280058,Pine Grove Medical Center,Pine Grove,NE,Cedar,51058,85.0,71.0,76.0,1.9,92.0,5,5,0.5448717948717948
+280062,Fair Rapids Community Hospital,Fair Rapids,MN,Fair,51262,163.0,142.0,263.0,0.0,,4,5,0.5344262295081967
+280072,Grand Ridge Regional Medical Center,Grand Ridge,MN,River,51781,182.0,207.0,185.0,6.1,107.0,5,5,0.46786632390745503
+280080,Fair Rapids Memorial Hospital,Fair Rapids,MO,River,50578,114.0,207.0,280.0,0.0,66.0,5,5,0.35514018691588783
+280103,Prairie Junction Community Hospital,Prairie Junction,KS,Cedar,50499,20.0,191.0,156.0,,69.0,4,5,0.0947867298578199
+280106,Cedar View Medical Center,Cedar View,MO,River,52499,247.0,216.0,625.0,,50.0,4,5,0.5334773218142549
+430009,Grand Bluff Community Hospital,Grand Bluff,IL,Cedar,50922,181.0,113.0,513.0,4.0,106.0,5,5,0.6156462585034014
+430010,Grand Haven Medical Center,Grand Haven,MN,Elk,51296,274.0,253.0,277.0,,27.0,4,5,0.5199240986717267
+430014,Fair Rapids Regional Medical Center,Fair Rapids,IL,Cedar,51189,107.0,132.0,475.0,,51.0,4,5,0.4476987447698745
+430023,Pine Bluff County Hospital,Pine Bluff,WI,Fair,51840,173.0,173.0,,0.0,98.0,4,5,0.5
+430025,Fair Bluff County Hospital,Fair Bluff,IL,North,52267,20.0,,20.0,2.9,,3,5,
+430039,Prairie View Memorial Hospital,Prairie View,SD,River,51834,184.0,172.0,240.0,4.9,65.0,5,5,0.5168539325842697
+430041,Fair Haven County Hospital,Fair Haven,IA,Prairie,50049,,197.0,181.0,2.7,71.0,4,5,
+430054,Cedar Grove Health System,Cedar Grove,WI,Grand,51086,56.0,154.0,,2.8,69.0,4,5,0.26666666666666666
+430066,Grand Ridge Medical Center,Grand Ridge,NE,River,50393,63.0,288.0,507.0,1.8,33.0,5,5,0.1794871794871795
+430068,Grand Grove County Hospital,Grand Grove,MO,Fair,53807,176.0,249.0,394.0,4.2,,4,5,0.41411764705882353
+430070,River Ridge Memorial Hospital,River Ridge,MO,River,52628,127.0,147.0,247.0,2.0,,4,5,0.4635036496350365
+430088,Grand Rapids Medical Center,Grand Rapids,SD,Pine,53993,38.0,247.0,197.0,2.2,64.0,5,5,0.13333333333333333
+430093,River Bluff Health System,River Bluff,IL,Prairie,50583,243.0,179.0,335.0,0.0,86.0,5,5,0.5758293838862559
+430107,Elk Haven Community Hospital,Elk Haven,MO,Cedar,55428,169.0,243.0,,5.5,82.0,4,5,0.41019417475728154
+430110,River Ridge Memorial Hospital,River Ridge,NE,Fair,50465,197.0,253.0,242.0,3.8,43.0,5,5,0.43777777777777777
+430116,Elk Grove Medical Center,Elk Grove,MN,Prairie,50281,233.0,168.0,527.0,5.9,25.0,5,5,0.5810473815461347
+520016,Pine Grove Medical Center,Pine Grove,KS,Prairie,51241,115.0,179.0,397.0,,60.0,4,5,0.391156462585034
+520038,Fair Grove Community Hospital,Fair Grove,IL,Fair,50856,227.0,316.0,423.0,4.2,33.0,5,5,0.4180478821362799
+520055,Fair View Memorial Hospital,Fair View,SD,Elk,53539,109.0,205.0,350.0,,55.0,4,5,0.3471337579617834
+520086,North Grove County Hospital,North Grove,KS,Elk,54241,125.0,277.0,291.0,1.3,104.0,5,5,0.31094527363184077
+520090,River Bluff Health System,River Bluff,MO,Cedar,51621,54.0,66.0,20.0,0.7,85.0,5,5,0.45
+520098,Pine Bluff County Hospital,Pine Bluff,WI,Pine,50083,24.0,261.0,253.0,3.5,36.0,5,5,0.08421052631578947
+520099,Grand Ridge Community Hospital,Grand Ridge,KS,River,53606,263.0,313.0,313.0,2.1,,4,5,0.4565972222222222
+520114,Elk Rapids Health System,Elk Rapids,IA,Elk,50818,137.0,322.0,298.0,1.5,94.0,5,5,0.2984749455337691

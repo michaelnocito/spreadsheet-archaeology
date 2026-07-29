@@ -1,0 +1,6 @@
+step,rows_affected,detail
+benchmark_rows,40,state averages separated — they are not facilities
+suppressed_values,61,"no reportable score — reason preserved, not blanked"
+did_not_submit,20,"facility/measure pairs — a finding, not noise"
+too_few_cases,29,"small-volume suppression — expected, not a problem"
+facility_name_variants,51,facilities whose name was spelled more than one way
