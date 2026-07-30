@@ -4,7 +4,8 @@
   "description": "*A day-in-the-life data-analyst job sim. Setting: **Week One** on the job.*",
   "main": "academy.js",
   "scripts": {
-    "test": "playwright test"
+    "test": "playwright test",
+    "guidebook": "node tools/build-guidebook.js"
   },
   "repository": {
     "type": "git",

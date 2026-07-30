@@ -42,6 +42,23 @@ python -m http.server 8000   # open http://localhost:8000 (Excel) · /tableau/ (
 
 `DESIGN_SYSTEM.md` documents the reusable calm-analyst design system.
 
+## The guidebook (PDF)
+
+```bash
+npm run guidebook          # → dist/guidebook.html + dist/guidebook.pdf
+node tools/build-guidebook.js --html   # HTML only, no Chromium needed
+```
+
+All 30 Academy guides — Excel, SQL, Tableau — as one printable book. It reads
+the same `lessons.js` files the site plays, so the book can't drift from the
+app: edit a lesson, rebuild, the PDF follows. Where the site asks you to click
+the answer, the book prints the task, the hint, and the answer with Sam's
+response.
+
+Zero npm dependencies. The PDF step drives a headless Chromium already on the
+machine (Playwright's, or any system Chrome — set `CHROME_PATH` to override).
+`dist/` is a build artifact and is gitignored.
+
 ---
 
 *Built by [Michael Nocito](https://michaelnocito.github.io).*
