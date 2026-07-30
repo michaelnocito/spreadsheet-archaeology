@@ -20,3 +20,6 @@ npm-debug.log*
 NOTES.local.md
 PLAYTEST.md
 BLEND_PLAN.md
+
+# Guidebook build output (the PDF is a build artifact, not source)
+/dist/
