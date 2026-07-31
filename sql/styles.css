@@ -754,3 +754,9 @@ body {
 /* "look here" glow for teach / guided steps */
 .sqlq-hi { position: relative; box-shadow: inset 0 0 0 2px var(--sel-line); }
 .sqlq-code.sqlq-hi { box-shadow: inset 0 0 0 2px var(--sel-line); }
+
+.book-note {
+  margin: 12px 0 0; padding-top: 11px; border-top: 1px solid #bfe5ca;
+  font-size: 13px; line-height: 1.55;
+}
+.book-note a { color: #18532b; font-weight: 700; }
